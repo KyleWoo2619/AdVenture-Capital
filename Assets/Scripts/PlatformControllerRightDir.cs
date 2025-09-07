@@ -1,20 +1,20 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlatformController : MonoBehaviour
+public class PlatformControllerRightDir : MonoBehaviour
 {
-  //Controls a platform that moves in the 'left' direction
-    [SerializeField] private float speed;
+    // Controls a platform that moves in the 'right' direction
+
+   [SerializeField] private float speed;
     void Start()
     {
         speed = 3f;
     }
 
-    
+
     void Update()
     {
-        transform.Translate(Vector3.left * speed*Time.deltaTime);
-        
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
+
     }
 
     private void OnTriggerEnter(Collider other)
