@@ -22,6 +22,7 @@ public class PlatformController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             speed = 0;
+            Destroy(gameObject, 2);
         }
     }
 }
