@@ -4,7 +4,9 @@ public class GameManager : MonoBehaviour
 {
     //Manages game state (win, lose, isPlaying)
     public static GameManager instance { get; private set; }
-    public bool gameIsPlaying { get; private set; }
+    //public bool gameIsPlaying { get; private set; }
+    public bool isDead;
+    public int score { get; private set; }
 
     private void Awake()
     {
@@ -17,7 +19,9 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
-        gameIsPlaying = true;
+        //gameIsPlaying = true;
+        score = 0;
+        isDead = false;
     }
 
 
@@ -30,6 +34,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isDead)
+        {
+            Time.timeScale = 0;
+        }
     }
+
+    public void AddtoScore()
+    {
+        score++;
+    }
+
+    public void AddFourtoScore()
+    {
+        score += 4;
+    }
+
+    
 }

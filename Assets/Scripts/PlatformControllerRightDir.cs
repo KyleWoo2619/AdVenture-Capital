@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlatformControllerRightDir : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class PlatformControllerRightDir : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.right * speed * Time.deltaTime);
+       
+        
+       
+        
 
     }
 
@@ -22,7 +27,11 @@ public class PlatformControllerRightDir : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             speed = 0;
-            Destroy(gameObject, 2);
+            GameManager.instance.AddtoScore();
+            Debug.Log("Your score is " + GameManager.instance.score);
+           // Destroy(gameObject, 2);
         }
     }
+
+    
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlatformSpawner : MonoBehaviour
 {
@@ -17,17 +18,21 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private GameObject platformR;
     [SerializeField] private GameObject platformL;
 
-    
+    [SerializeField] private float distanceBetweenPlatforms;
+
+    private float platformSpawnRate;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        distanceBetweenPlatforms = 0.7f;
+        platformSpawnRate = 3f;
 
         hValue = 5; vValue = 1;
         spawnerPosX = groundPlatform.transform.position.x + hValue; spawnerPosY = groundPlatform.transform.position.y + vValue;
        
         RandNum = Random.Range(0, 5);
-        Debug.Log(RandNum);
+        //Debug.Log(RandNum);
 
         if (RandNum < 3)
         {
@@ -39,21 +44,24 @@ public class PlatformSpawner : MonoBehaviour
         }
         
         transform.position = new Vector3(spawnerPosX, spawnerPosY, player.transform.position.z); //sets initial position of spawner
+
         
-        if (GameManager.instance.gameIsPlaying)
+
+        if (!GameManager.instance.isDead)
         {
-           InvokeRepeating("MoveSpawner", 2, 3);
+           
+           InvokeRepeating("MoveSpawner", 2, platformSpawnRate);
 
            if(spawnerPosX > 0)
             {
-                Debug.Log("spawned L platform");
-                InvokeRepeating("SpawnLeftMovingPlatform", 0, 3);
+              //  Debug.Log("spawned L platform");
+                InvokeRepeating("SpawnLeftMovingPlatform", 0, platformSpawnRate);
                 
             }
             else
             {
                 Debug.Log("spawned R platform");
-                InvokeRepeating("SpawnRightMovingPlatform", 0, 3);
+                InvokeRepeating("SpawnRightMovingPlatform", 0, platformSpawnRate);
                 
             }
 
@@ -75,8 +83,8 @@ public class PlatformSpawner : MonoBehaviour
     void MoveSpawner()
     {
 
-        spawnerPosY += 1;
-        spawnerPosX = -1*spawnerPosX; //sets spawnerPosX to negative of itself to move to otherside
+        spawnerPosY += distanceBetweenPlatforms;
+        //spawnerPosX = -1*spawnerPosX; //sets spawnerPosX to negative of itself to move to otherside
         transform.position = new Vector3(spawnerPosX, spawnerPosY, player.transform.position.z); //moves the transform to the otherside
     }
 
