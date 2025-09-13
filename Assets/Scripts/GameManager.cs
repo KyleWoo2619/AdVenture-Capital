@@ -7,10 +7,13 @@ public class GameManager : MonoBehaviour
     //public bool gameIsPlaying { get; private set; }
     public bool isDead;
     public int score { get; private set; }
+    public float forgivenessValue { get; [SerializeField] private set; }
+    
 
     private void Awake()
     {
-        if(instance != null && instance != this)
+        forgivenessValue = 0.3f;
+        if (instance != null && instance != this)
         {
             Destroy(this);
         }
@@ -42,8 +45,12 @@ public class GameManager : MonoBehaviour
 
     public void AddtoScore()
     {
-        score++;
+        if (!isDead)
+        {
+            score++;
+        }
     }
+        
 
     public void AddFourtoScore()
     {

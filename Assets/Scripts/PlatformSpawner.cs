@@ -60,7 +60,7 @@ public class PlatformSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("spawned R platform");
+                //Debug.Log("spawned R platform");
                 InvokeRepeating("SpawnRightMovingPlatform", 0, platformSpawnRate);
                 
             }
