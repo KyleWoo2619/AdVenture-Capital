@@ -17,6 +17,12 @@ public class PlatformController : MonoBehaviour
         
     }
 
+    void OnEnable()
+    {
+        speed = GameManager.instance.platformSpeed;
+        //UnityEngine.Debug.Log(speed);
+    }
+
     
     void Update()
     {
@@ -40,14 +46,14 @@ public class PlatformController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             speed = 0;
-            
+
             if (hitTransform == null)
             {
                 GameManager.instance.AddtoScore();
             }
-        }
 
-        if (hitTransform != null)
+
+            if (hitTransform != null)
             {
                 if (transform.position.x >= hitTransform.position.x && transform.position.x <= hitTransform.position.x + GameManager.instance.forgivenessValue || transform.position.x <= hitTransform.position.x && transform.position.x >= hitTransform.position.x - GameManager.instance.forgivenessValue)
                 {
@@ -65,9 +71,10 @@ public class PlatformController : MonoBehaviour
                     GameManager.instance.AddtoScore();
                 }
             }
-            
+
+            UnityEngine.Debug.Log(GameManager.instance.score);
+        }    
              
-             UnityEngine.Debug.Log(GameManager.instance.score);
             
     }
 }

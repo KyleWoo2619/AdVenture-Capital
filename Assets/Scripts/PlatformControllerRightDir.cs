@@ -18,8 +18,14 @@ public class PlatformControllerRightDir : MonoBehaviour
     void Start()
     {
         ground = LayerMask.GetMask("Ground");
-        speed = 3f;
+        
        
+    }
+
+    void OnEnable()
+    {
+        speed = GameManager.instance.platformSpeed;
+        //Debug.Log(speed);
     }
 
 
