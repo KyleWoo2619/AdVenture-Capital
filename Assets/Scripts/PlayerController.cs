@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpValue;
     LayerMask groundLayer;
 
+    //gravity settings
     
 
     void Start()
@@ -17,37 +19,41 @@ public class PlayerController : MonoBehaviour
         groundLayer = LayerMask.GetMask("Ground");
         jump = InputSystem.actions.FindAction("Jump");
         player_RB = GetComponent<Rigidbody>();
-        jumpValue = 1.3f;
-        
+        jumpValue = 9.5f;
+              
     }
 
     
 
-    void FixedUpdate()
+    void Update()
     {
+        
         PlayerJump();
-       
         
     }
 
+
+
     void PlayerJump()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, jumpValue, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer))
         {
             Debug.DrawRay(transform.position, Vector3.down, Color.green);
 
-            if (jump.IsPressed())
+            if (jump.WasPressedThisFrame())
             {
                 player_RB.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
-
-
             }
+
+
         }
         else
         {
             Debug.DrawRay(transform.position, Vector3.down, Color.red);
 
         }
+
+        
     }
 
     
