@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7773548101597910717}
   - component: {fileID: 8664502032671090054}
   m_Layer: 0
-  m_Name: Square 1
+  m_Name: Square 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.028657902, b: 0.028657902, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,14 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eb200b14b1a854da71c70cbec8621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundTile
-  dots:
-  - {fileID: 10910592170995232}
-  - {fileID: 10910592170995232, guid: 2ad23bb7ed157a4408a0e0742e86d407, type: 3}
-  - {fileID: 10910592170995232, guid: 4c75f81937cb0974e8fd2c91a6300504, type: 3}
-  - {fileID: 10910592170995232, guid: 25d4fcc0c256c8a4e9417bb459289b27, type: 3}
-  - {fileID: 10910592170995232, guid: 93669d29bc5b075449d37688ecf0ba1a, type: 3}
-  - {fileID: 10910592170995232, guid: f43eea212f77f2f4aa3d35d9f200702e, type: 3}
-  - {fileID: 10910592170995232, guid: 4067dfae642479849a59b310a9454d90, type: 3}
+  dots: []
 --- !u!1 &3729992803041445127
 GameObject:
   m_ObjectHideFlags: 0
