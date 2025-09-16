@@ -129,6 +129,8 @@ GameObject:
   m_Component:
   - component: {fileID: 303999047}
   - component: {fileID: 303999046}
+  - component: {fileID: 303999048}
+  - component: {fileID: 303999049}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -148,9 +150,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623031da62054524baa984804fffe7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
-  width: 6
-  height: 12
+  width: 10
+  height: 16
   tilePrefab: {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
+  dots:
+  - {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
+  - {fileID: 10910592170995232, guid: 2ad23bb7ed157a4408a0e0742e86d407, type: 3}
+  - {fileID: 10910592170995232, guid: 4c75f81937cb0974e8fd2c91a6300504, type: 3}
+  - {fileID: 10910592170995232, guid: 25d4fcc0c256c8a4e9417bb459289b27, type: 3}
+  - {fileID: 10910592170995232, guid: 93669d29bc5b075449d37688ecf0ba1a, type: 3}
+  - {fileID: 10910592170995232, guid: f43eea212f77f2f4aa3d35d9f200702e, type: 3}
+  - {fileID: 10910592170995232, guid: 4067dfae642479849a59b310a9454d90, type: 3}
 --- !u!4 &303999047
 Transform:
   m_ObjectHideFlags: 0
@@ -166,6 +176,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &303999048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303999045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ce3c547cfaea94ba3930a74e8d4696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dots
+  column: 0
+  row: 0
+  swipeAngle: 0
+--- !u!114 &303999049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303999045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a11820ecc7544f479049f59ef761aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwipeController
+  firstPosition: {x: 0, y: 0}
+  moveDirection: {x: 0, y: 0}
+  isControlling: 0
 --- !u!1 &1588072705
 GameObject:
   m_ObjectHideFlags: 0
