@@ -150,10 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623031da62054524baa984804fffe7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
-  width: 10
-  height: 16
+  width: 3
+  height: 6
   tilePrefab: {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
-  dots:
+  dot:
   - {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
   - {fileID: 10910592170995232, guid: 2ad23bb7ed157a4408a0e0742e86d407, type: 3}
   - {fileID: 10910592170995232, guid: 4c75f81937cb0974e8fd2c91a6300504, type: 3}
@@ -190,6 +190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dots
   column: 0
   row: 0
+  targetX: 0
+  targetY: 0
+  previousColumn: 0
+  previousRow: 0
   swipeAngle: 0
 --- !u!114 &303999049
 MonoBehaviour:

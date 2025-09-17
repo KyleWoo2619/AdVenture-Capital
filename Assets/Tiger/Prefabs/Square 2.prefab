@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7773548101597910717}
   - component: {fileID: 8664502032671090054}
   - component: {fileID: 422020686268618565}
+  - component: {fileID: -2698322944390673592}
   m_Layer: 0
   m_Name: Square 2
   m_TagString: Untagged
@@ -108,7 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eb200b14b1a854da71c70cbec8621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundTile
-  dots: []
 --- !u!61 &422020686268618565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,6 +155,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-2698322944390673592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10910592170995232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ce3c547cfaea94ba3930a74e8d4696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dot
+  column: 0
+  row: 0
+  targetX: 0
+  targetY: 0
+  previousColumn: 0
+  previousRow: 0
+  swipeAngle: 0
 --- !u!1 &3729992803041445127
 GameObject:
   m_ObjectHideFlags: 0
