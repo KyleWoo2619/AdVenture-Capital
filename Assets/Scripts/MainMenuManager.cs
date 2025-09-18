@@ -18,6 +18,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadCandyJump()
     {
-        
+        return;
+    }
+
+    public void ReturnToStart()
+    {
+        SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
     }
 }
