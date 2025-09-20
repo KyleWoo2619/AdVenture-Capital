@@ -1,0 +1,76 @@
+using System.Collections;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    //Manages game state (win, lose, isPlaying)
+    public static GameManager instance { get; private set; }
+    //public bool gameIsPlaying { get; private set; }
+    public bool isDead;
+    public int score { get; private set; }
+    public float forgivenessValue { get; [SerializeField] private set; }
+
+    public float platformSpeed { get; private set; }
+    [SerializeField] float platformSpeedScalar;
+    [SerializeField] float platformSpeedTime;
+    private void Awake()
+    {
+        forgivenessValue = 0.3f;
+        platformSpeedScalar = 0.4f;
+        platformSpeedTime = 60f;
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        //gameIsPlaying = true;
+        score = 0;
+        isDead = false;
+    }
+
+
+
+    void Start()
+    {
+        platformSpeed = 3f;
+        StartCoroutine(IncreasePlatformSpeed());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isDead)
+        {
+            Time.timeScale = 0;
+        }
+    }
+
+    public void AddtoScore()
+    {
+        if (!isDead)
+        {
+            score++;
+        }
+    }
+
+
+    public void AddFourtoScore()
+    {
+        score += 4;
+    }
+
+    public IEnumerator IncreasePlatformSpeed()
+    {
+        for (; ; )
+        {
+            yield return new WaitForSeconds(platformSpeedTime);
+            platformSpeed += platformSpeedScalar;
+        }
+    }
+
+    
+}
