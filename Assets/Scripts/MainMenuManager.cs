@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadCandyJump()
     {
-        return;
+        SceneManager.LoadScene("BonBonCrushAP", LoadSceneMode.Single);
     }
 
     public void ReturnToStart()
