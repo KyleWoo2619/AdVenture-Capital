@@ -714,6 +714,18 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.735849
       objectReference: {fileID: 0}
+    - target: {fileID: 7543316170266843494, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543316170266843494, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543316170266843494, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 336
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3648,10 +3660,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 805684404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -1.73, y: -1868}
-  m_SizeDelta: {x: 3.46, y: 0.56}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -1.73, y: 52}
+  m_SizeDelta: {x: 3.46, y: 0.5600586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2020576346
 MonoBehaviour:
