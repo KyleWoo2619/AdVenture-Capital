@@ -1,5 +1,5 @@
-using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadCandyJump()
     {
-        return;
+        SceneManager.LoadScene("BonBonCrushAP", LoadSceneMode.Single);
     }
 
     public void ReturnToStart()
