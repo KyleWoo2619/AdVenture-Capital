@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &302652391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302652393}
+  - component: {fileID: 302652392}
+  m_Layer: 0
+  m_Name: FindMatch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &302652392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302652391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd43aaeb374565c4eb3df5845b5e4df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FindMatches
+  currentMatches:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!4 &302652393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302652391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.93295, y: 4.57611, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &303999045
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +180,7 @@ GameObject:
   - component: {fileID: 303999046}
   - component: {fileID: 303999048}
   - component: {fileID: 303999049}
+  - component: {fileID: 303999050}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -150,17 +200,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623031da62054524baa984804fffe7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
-  width: 6
-  height: 6
+  currentState: 1
+  width: 7
+  height: 9
+  offSet: 0
   tilePrefab: {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
-  dot:
-  - {fileID: 10910592170995232, guid: 7aec295f820bac54d9a3307afa5f50a0, type: 3}
+  dots:
   - {fileID: 10910592170995232, guid: 2ad23bb7ed157a4408a0e0742e86d407, type: 3}
   - {fileID: 10910592170995232, guid: 4c75f81937cb0974e8fd2c91a6300504, type: 3}
   - {fileID: 10910592170995232, guid: 25d4fcc0c256c8a4e9417bb459289b27, type: 3}
   - {fileID: 10910592170995232, guid: 93669d29bc5b075449d37688ecf0ba1a, type: 3}
   - {fileID: 10910592170995232, guid: f43eea212f77f2f4aa3d35d9f200702e, type: 3}
   - {fileID: 10910592170995232, guid: 4067dfae642479849a59b310a9454d90, type: 3}
+  destroyParticle: {fileID: 10910592170995232, guid: 05ee0a2ffc267cd45a052474196ab8f2, type: 3}
+  currentDot: {fileID: 0}
 --- !u!4 &303999047
 Transform:
   m_ObjectHideFlags: 0
@@ -183,19 +236,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303999045}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39ce3c547cfaea94ba3930a74e8d4696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dots
   column: 0
   row: 0
-  targetX: 0
-  targetY: 0
   previousColumn: 0
   previousRow: 0
+  targetX: 0
+  targetY: 0
   isMatched: 0
+  otherDot: {fileID: 0}
   swipeAngle: 0
+  swipeResist: 1
+  isColorBomb: 0
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 351732721193788346, guid: d2263e0e2646d2e4a993c5182014727a, type: 3}
+  columnArrow: {fileID: 2087016595307649765, guid: d89855985079e394aa3460832de56ac4, type: 3}
+  colorBomb: {fileID: 0}
 --- !u!114 &303999049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +272,18 @@ MonoBehaviour:
   firstPosition: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0}
   isControlling: 0
+--- !u!114 &303999050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303999045}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a656cdae5840d241b48fd9177c344a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyParticle
 --- !u!1001 &1489679115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -416,3 +489,4 @@ SceneRoots:
   - {fileID: 1588072708}
   - {fileID: 303999047}
   - {fileID: 1489679115}
+  - {fileID: 302652393}
