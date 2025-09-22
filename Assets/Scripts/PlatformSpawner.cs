@@ -25,7 +25,7 @@ public class PlatformSpawner : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        distanceBetweenPlatforms = 0.7f;
+        // distanceBetweenPlatforms = 0.95f;
         platformSpawnRate = 3f;
 
         hValue = 5; vValue = 1;
