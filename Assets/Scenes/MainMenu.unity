@@ -1063,8 +1063,9 @@ GameObject:
   - component: {fileID: 1501508025}
   - component: {fileID: 1501508027}
   - component: {fileID: 1501508026}
+  - component: {fileID: 1501508028}
   m_Layer: 5
-  m_Name: Stickman Fighter
+  m_Name: MainMenuBannerAdTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,6 +1128,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501508024}
   m_CullTransparentMesh: 1
+--- !u!114 &1501508028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501508024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d815bc026585ea8458df2e344ce1c550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  targetImage: {fileID: 1501508026}
+  banners:
+  - {fileID: 1274299836955854301, guid: d4082aff4966f2b4891518b03f55aa66, type: 3}
+  - {fileID: -595353952390168928, guid: 94c41beffcc05a240b9a0ac29fc41003, type: 3}
+  - {fileID: -3612473473856642037, guid: 08e0a92ddc0bc8245a093863a356d44a, type: 3}
+  minInterval: 10
+  maxInterval: 15
+  playOnEnable: 1
+  randomizeFirst: 1
+  runDuringPause: 1
+  crossfade: 1
+  fadeDuration: 0.25
 --- !u!224 &1567892408 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
