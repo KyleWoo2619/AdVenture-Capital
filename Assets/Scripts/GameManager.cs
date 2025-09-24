@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +12,15 @@ public class GameManager : MonoBehaviour
     public int score { get; private set; }
     public float forgivenessValue { get; [SerializeField] private set; }
 
+
+    // Coroutine IncreasePlatformSpeedRoutine;
+    // Coroutine DisplayScoreRoutine;
+
     public float platformSpeed { get; private set; }
     [SerializeField] float platformSpeedScalar;
     [SerializeField] float platformSpeedTime;
+
+    public UnityEvent onPlayerDeath;
     private void Awake()
     {
         forgivenessValue = 0.3f;
@@ -30,13 +38,15 @@ public class GameManager : MonoBehaviour
         //gameIsPlaying = true;
         score = 0;
         isDead = false;
-    }
 
+
+    }
 
 
     void Start()
     {
         platformSpeed = 3f;
+
         StartCoroutine(IncreasePlatformSpeed());
     }
 
@@ -45,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         if (isDead)
         {
+            onPlayerDeath.Invoke();
             Time.timeScale = 0;
         }
     }
@@ -60,8 +71,13 @@ public class GameManager : MonoBehaviour
 
     public void AddFourtoScore()
     {
-        score += 4;
+        if (!isDead)
+        {
+            score += 4;
+        }
     }
+
+
 
     public IEnumerator IncreasePlatformSpeed()
     {
@@ -73,4 +89,5 @@ public class GameManager : MonoBehaviour
     }
 
     
+
 }

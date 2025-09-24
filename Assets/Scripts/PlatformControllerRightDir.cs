@@ -72,11 +72,12 @@ public class PlatformControllerRightDir : MonoBehaviour
                 {
                     GameManager.instance.AddtoScore();
                 }
-                
+
             }
-            
-             
-             Debug.Log(GameManager.instance.score);
+
+
+            Debug.Log(GameManager.instance.score);
+            DisplayScore.UpdateScore();
         }
     }
 
