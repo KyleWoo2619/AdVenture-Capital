@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,6 +49,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     private Coroutine loop;
     private bool isShowing = false;
     private int showToken = 0; // to cancel stale coroutines safely
+    public FailMenuManager FailMenuInstance;
 
     void Awake()
     {
@@ -102,8 +104,9 @@ public class FullscreenAdSpawner : MonoBehaviour
         }
     }
 
-    void ShowAd()
+    public void ShowAd()
     {
+        Time.timeScale = 0f;
         showToken++; // invalidate any old EnableClose coroutines
         isShowing = true;
 
@@ -125,12 +128,19 @@ public class FullscreenAdSpawner : MonoBehaviour
 
     public void CloseAd()
     {
-        if (!isShowing)
+
+        if (!isShowing && !GameManager.instance.isDead)
             return;
 
         isShowing = false;
         SetCloseButtonVisible(false);
         SetAdVisible(false);
+        Time.timeScale = 1f;
+
+        if (isShowing &&GameManager.instance.isDead)
+        {
+            FailMenuInstance.DisplayFailMenu();
+        }
     }
 
     // ---------- helpers ----------
