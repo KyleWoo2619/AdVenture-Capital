@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Written by Kyle
+// This script rotates through a list of banner images at random intervals, with optional crossfade effect.
+// Attach to a GameObject with an Image component (or assign one in the inspector).
+
 [DisallowMultipleComponent]
 public class AdRotator : MonoBehaviour
 {
