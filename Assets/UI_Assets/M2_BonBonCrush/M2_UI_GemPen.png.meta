@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ceffb69db9fd8cd4aa12461f906662b0
+guid: 837d604b8ef3f334583785ac73e33a12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6459583996230307713
-    second: M2_UI_GemTri_0
+      213: -3412435131681045415
+    second: M2_UI_GemPen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +109,56 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: M2_UI_GemTri_0
+      name: M2_UI_GemPen_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 17
-        width: 254
-        height: 228
+        x: 3
+        y: 1
+        width: 250
+        height: 253
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 18f0b149b6d05a950800000000000000
-      internalID: 6459583996230307713
+      spriteID: 954861dd35894a0d0800000000000000
+      internalID: -3412435131681045415
       vertices: []
       indices: 
       edges: []
@@ -148,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      M2_UI_GemTri_0: 6459583996230307713
+      M2_UI_GemPen_0: -3412435131681045415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

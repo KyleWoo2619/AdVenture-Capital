@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
         //gameIsPlaying = true;
         score = 0;
         isDead = false;
-
-
     }
 
 
@@ -51,14 +49,6 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isDead)
-        {
-            onPlayerDeath.Invoke();
-            Time.timeScale = 0;
-        }
-    }
 
     public void AddtoScore()
     {
@@ -88,6 +78,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-
+    public void TriggerPlayerDeath()
+    {
+       
+        onPlayerDeath.Invoke(); 
+       
+        if (isDead) return;          // <-- gate
+        isDead = true;
+        Time.timeScale = 0f;
+             // <-- fires once
+        //Time.timeScale = 0f;         // or let the ad spawner pause, your choice
+    }
 }
