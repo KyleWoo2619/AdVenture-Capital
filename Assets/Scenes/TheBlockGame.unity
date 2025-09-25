@@ -1751,11 +1751,11 @@ PrefabInstance:
       objectReference: {fileID: 1411840763}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: maxInterval
-      value: 45
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: minInterval
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: FailMenuInstance
