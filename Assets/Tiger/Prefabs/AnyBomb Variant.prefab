@@ -77,6 +77,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VArrow (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3048662388055883157, guid: d89855985079e394aa3460832de56ac4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5885728928699681554, guid: d89855985079e394aa3460832de56ac4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

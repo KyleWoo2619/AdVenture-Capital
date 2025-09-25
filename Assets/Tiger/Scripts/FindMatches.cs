@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class FindMatches : MonoBehaviour
 {
 
     private Board board;
     public List<GameObject> currentMatches = new List<GameObject>();
+
+    public int score = 0; //
+
+    public Text scoreText;
+
+    public int Score
+    {
+        get { return score; }
+        set { score = value; }
+    }
 
     // Use this for initialization
     void Start()
@@ -74,6 +85,9 @@ public class FindMatches : MonoBehaviour
         AddToListAndMatch(dot1);
         AddToListAndMatch(dot2);
         AddToListAndMatch(dot3);
+
+        score += 1;
+        Debug.Log("Score is : {score}");
     }
 
     private IEnumerator FindAllMatchesCo()
@@ -181,6 +195,13 @@ public class FindMatches : MonoBehaviour
             }
         }
         return dots;
+    }
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 
     public void CheckBombs()

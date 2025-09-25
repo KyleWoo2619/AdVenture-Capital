@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VArrow Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3627666855627408586, guid: d2263e0e2646d2e4a993c5182014727a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5312355044067766861, guid: d2263e0e2646d2e4a993c5182014727a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.61
