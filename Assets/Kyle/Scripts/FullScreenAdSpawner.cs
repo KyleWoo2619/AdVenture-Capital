@@ -1,73 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
-
-// Written by Kyle
-// This script spawns a fullscreen ad at random intervals, with a close button that appears after a short delay.
-// Attach to a GameObject in your UI Canvas.
 
 [DisallowMultipleComponent]
 public class FullscreenAdSpawner : MonoBehaviour
 {
     [Header("Hook up your UI")]
     [SerializeField]
-    private Image adImage; // Fullscreen Image child
-
+    private Canvas adCanvas; // Ad canvas (Overlay)
     [SerializeField]
+
+    private Image adImage; // Fullscreen Image child
+    [SerializeField]
+
     private Button closeButton; // Transparent Button child (top-right)
 
     [Header("Ad Content")]
     [SerializeField]
-    private List<Sprite> adSprites = new(); // Random pick, repeats allowed
+    private List<Sprite> adSprites = new();
 
     [Header("Schedule (seconds)")]
-    [Tooltip("Random wait before each popup. Set both equal for a fixed interval.")]
     [SerializeField]
     private float minInterval = 30f;
-
     [SerializeField]
     private float maxInterval = 30f;
 
     [Header("Close Button Delay (seconds)")]
-    [Tooltip("Close button appears after this random delay.")]
     [SerializeField]
     private float minCloseDelay = 1f;
-
     [SerializeField]
     private float maxCloseDelay = 3f;
 
     [Header("Behavior")]
     [SerializeField]
-    private bool startOnEnable = true;
-
-    [Tooltip("Keep timing even when the game is paused (timeScale = 0).")]
+    private bool startOnEnable = false; // you call ShowAd() on death
     [SerializeField]
-    private bool runDuringPause = true;
+
+    private bool runDuringPause = true; // unscaled timing
+    [SerializeField]
+    private bool pauseGameOnShow = true; // set timeScale=0 while ad visible
+    [SerializeField]
+    private int onTopSortingOrder = 5000;
+
+    [Header("External")]
+    public FailMenuManager FailMenuInstance;
 
     private Coroutine loop;
+    private Coroutine closeButtonCoroutine;
     private bool isShowing = false;
-    private int showToken = 0; // to cancel stale coroutines safely
-    public FailMenuManager FailMenuInstance;
+    private int showToken = 0;
 
     void Awake()
     {
+        if (!adCanvas)
+            adCanvas = GetComponentInParent<Canvas>();
         if (closeButton != null)
         {
             closeButton.onClick.RemoveAllListeners();
             closeButton.onClick.AddListener(CloseAd);
         }
 
-        // Ensure children are hidden at start
+        // start hidden
         SetAdVisible(false);
         SetCloseButtonVisible(false);
+
+        // the ad image shouldn’t steal clicks; the button will
+        if (adImage)
+            adImage.raycastTarget = false;
     }
 
     void OnEnable()
     {
         if (startOnEnable && loop == null)
+        {
             loop = StartCoroutine(SpawnLoop());
+        }
     }
 
     void OnDisable()
@@ -77,8 +85,7 @@ public class FullscreenAdSpawner : MonoBehaviour
             StopCoroutine(loop);
             loop = null;
         }
-        StopAllCoroutines(); // also cancels any pending close-delay
-        // Hide children so you never see leftover UI during scene swaps
+        StopAllCoroutines();
         SetAdVisible(false);
         SetCloseButtonVisible(false);
         isShowing = false;
@@ -88,87 +95,123 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         while (true)
         {
-            // wait for next popup
             float wait = Mathf.Max(0f, Random.Range(minInterval, maxInterval));
             yield return WaitRealtime(wait);
 
-            // show a random sprite (repeats allowed)
             if (adSprites != null && adSprites.Count > 0 && adImage != null)
             {
                 adImage.sprite = adSprites[Random.Range(0, adSprites.Count)];
                 ShowAd();
             }
 
-            // wait until the player closes it
+            // wait until closed
             yield return new WaitUntil(() => !isShowing);
         }
     }
 
+    // Called by GameManager On Player Death
     public void ShowAd()
     {
-        Time.timeScale = 0f;
-        showToken++; // invalidate any old EnableClose coroutines
-        isShowing = true;
+        if (isShowing) return; // already showing
+        // make sure this canvas is on top
+        if (adCanvas)
+        {
+            adCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            adCanvas.overrideSorting = true;
+            adCanvas.sortingOrder = onTopSortingOrder;
+        }
 
-        SetAdVisible(true);
-        SetCloseButtonVisible(false);
+            if (pauseGameOnShow)
+                Time.timeScale = 0f;
 
-        // enable the close button after a small random delay
-        float delay = Random.Range(minCloseDelay, maxCloseDelay);
-        StartCoroutine(EnableCloseAfter(delay, showToken));
+            showToken++;
+            isShowing = true;
+
+            SetAdVisible(true);
+            SetCloseButtonVisible(false);
+
+            float delay = Random.Range(minCloseDelay, maxCloseDelay);
+            if (closeButtonCoroutine != null)
+                StopCoroutine(closeButtonCoroutine);
+            closeButtonCoroutine = StartCoroutine(EnableCloseAfter(delay, showToken));
     }
 
     IEnumerator EnableCloseAfter(float seconds, int token)
     {
         yield return WaitRealtime(seconds);
-        // only enable if we are still showing the same ad
+
+        // Ensure button is enabled before making it visible
+        if (closeButton != null && !closeButton.gameObject.activeSelf)
+            closeButton.gameObject.SetActive(true);
+
+        // Wait one frame for UI update
+        yield return null;
+
         if (isShowing && token == showToken)
+        {
             SetCloseButtonVisible(true);
+            if (closeButton)
+            {
+                if (closeButton.targetGraphic)
+                    closeButton.targetGraphic.raycastTarget = true;
+                closeButton.interactable = true;
+                closeButton.transform.SetAsLastSibling();
+            }
+        }
     }
 
     public void CloseAd()
     {
-
-        if (!isShowing && !GameManager.instance.isDead)
-            return;
+        // simple guard: if no ad up, do nothing
+        if (!isShowing) return;
 
         isShowing = false;
+
+        if (closeButtonCoroutine != null)
+        {
+            StopCoroutine(closeButtonCoroutine);
+            closeButtonCoroutine = null;
+        }
+
         SetCloseButtonVisible(false);
         SetAdVisible(false);
-        Time.timeScale = 1f;
 
-        if (isShowing &&GameManager.instance.isDead)
-        {
+        if (pauseGameOnShow)
+            Time.timeScale = 1f;
+
+        // now show the fail menu if the player actually died
+        if (GameManager.instance != null && GameManager.instance.isDead && FailMenuInstance != null)
             FailMenuInstance.DisplayFailMenu();
-        }
     }
 
-    // ---------- helpers ----------
+    // ------- helpers -------
     void SetAdVisible(bool visible)
     {
-        if (adImage != null)
+        if (adImage)
             adImage.gameObject.SetActive(visible);
     }
 
     void SetCloseButtonVisible(bool visible)
     {
-        if (closeButton != null)
-            closeButton.gameObject.SetActive(visible);
+        if (!closeButton)
+            return;
+        closeButton.gameObject.SetActive(visible);
+
+        if (closeButton.targetGraphic)
+            closeButton.targetGraphic.raycastTarget = visible;
+        closeButton.interactable = visible;
     }
 
-    // Always use realtime so pause menus don't stall the timers.
     WaitForSecondsRealtime WaitRealtime(float seconds)
     {
+        // predictable timing; uses unscaled time so it works while paused
         return new WaitForSecondsRealtime(Mathf.Max(0f, seconds));
     }
 
-    // Optional utility for QA:
-    [ContextMenu("Show Now")]
-    public void ShowNowForQA()
+    public void ShowAdOnRestart()
     {
-        if (adSprites == null || adSprites.Count == 0 || adImage == null)
-            return;
-        adImage.sprite = adSprites[Random.Range(0, adSprites.Count)];
         ShowAd();
+        float delay = Random.Range(minCloseDelay, maxCloseDelay);
+        StartCoroutine(EnableCloseAfter(delay, showToken));
     }
 }
