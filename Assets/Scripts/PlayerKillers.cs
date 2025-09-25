@@ -8,7 +8,7 @@ public class PlayerKillers : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.isDead = true;
+            GameManager.instance.TriggerPlayerDeath();
             Debug.Log("Player is dead");
         }
     }
