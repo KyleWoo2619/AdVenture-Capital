@@ -80,9 +80,13 @@ public class GameManager : MonoBehaviour
 
     public void TriggerPlayerDeath()
     {
+       
+        onPlayerDeath.Invoke(); 
+       
         if (isDead) return;          // <-- gate
         isDead = true;
-        onPlayerDeath.Invoke();      // <-- fires once
-        Time.timeScale = 0f;         // or let the ad spawner pause, your choice
+        Time.timeScale = 0f;
+             // <-- fires once
+        //Time.timeScale = 0f;         // or let the ad spawner pause, your choice
     }
 }

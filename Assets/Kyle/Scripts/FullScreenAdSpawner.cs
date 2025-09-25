@@ -176,8 +176,7 @@ public class FullscreenAdSpawner : MonoBehaviour
         SetCloseButtonVisible(false);
         SetAdVisible(false);
 
-        if (pauseGameOnShow)
-            Time.timeScale = 1f;
+       
 
         // now show the fail menu if the player actually died
         if (GameManager.instance != null && GameManager.instance.isDead && FailMenuInstance != null)
