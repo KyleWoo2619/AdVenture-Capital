@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class FullscreenAdSpawner : MonoBehaviour
@@ -50,6 +52,11 @@ public class FullscreenAdSpawner : MonoBehaviour
     private Coroutine closeButtonCoroutine;
     private bool isShowing = false;
     private int showToken = 0;
+    private Action onCloseOneShot;
+    private bool IsPlayerDeadSafe =>
+        GameManager.instance != null && GameManager.instance.isDead;
+
+    private bool showFailOnClose = false;
 
     void Awake()
     {
@@ -95,12 +102,12 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         while (true)
         {
-            float wait = Mathf.Max(0f, Random.Range(minInterval, maxInterval));
+            float wait = Mathf.Max(0f, UnityEngine.Random.Range(minInterval, maxInterval));
             yield return WaitRealtime(wait);
 
             if (adSprites != null && adSprites.Count > 0 && adImage != null)
             {
-                adImage.sprite = adSprites[Random.Range(0, adSprites.Count)];
+                adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
                 ShowAd();
             }
 
@@ -112,28 +119,22 @@ public class FullscreenAdSpawner : MonoBehaviour
     // Called by GameManager On Player Death
     public void ShowAd()
     {
-        if (isShowing) return; // already showing
-        // make sure this canvas is on top
-        if (adCanvas)
-        {
-            adCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            adCanvas.overrideSorting = true;
-            adCanvas.sortingOrder = onTopSortingOrder;
-        }
+        if (isShowing) return;
 
-            if (pauseGameOnShow)
-                Time.timeScale = 0f;
+        // if nothing assigned yet, pick one (covers death path too)
+        AssignRandomSpriteIfNeeded();
 
-            showToken++;
-            isShowing = true;
+        if (adCanvas) { adCanvas.renderMode = RenderMode.ScreenSpaceOverlay; adCanvas.overrideSorting = true; adCanvas.sortingOrder = onTopSortingOrder; }
+        if (pauseGameOnShow) Time.timeScale = 0f;
 
-            SetAdVisible(true);
-            SetCloseButtonVisible(false);
+        showToken++; isShowing = true;
+        SetAdVisible(true);
+        SetCloseButtonVisible(false);
+        if (adImage) adImage.raycastTarget = true;
 
-            float delay = Random.Range(minCloseDelay, maxCloseDelay);
-            if (closeButtonCoroutine != null)
-                StopCoroutine(closeButtonCoroutine);
-            closeButtonCoroutine = StartCoroutine(EnableCloseAfter(delay, showToken));
+        float delay = UnityEngine.Random.Range(minCloseDelay, maxCloseDelay);
+        if (closeButtonCoroutine != null) StopCoroutine(closeButtonCoroutine);
+        closeButtonCoroutine = StartCoroutine(EnableCloseAfter(delay, showToken));
     }
 
     IEnumerator EnableCloseAfter(float seconds, int token)
@@ -162,32 +163,32 @@ public class FullscreenAdSpawner : MonoBehaviour
 
     public void CloseAd()
     {
-        // simple guard: if no ad up, do nothing
         if (!isShowing) return;
-
         isShowing = false;
-
-        if (closeButtonCoroutine != null)
-        {
-            StopCoroutine(closeButtonCoroutine);
-            closeButtonCoroutine = null;
-        }
+        if (closeButtonCoroutine != null) { StopCoroutine(closeButtonCoroutine); closeButtonCoroutine = null; }
 
         SetCloseButtonVisible(false);
         SetAdVisible(false);
+        if (adImage) adImage.raycastTarget = false;
 
-        if(pauseGameOnShow)
+        // Resume time ONLY for non-death flows
+        if (pauseGameOnShow && !showFailOnClose)
+            Time.timeScale = 1f;
+
+        // Death flow -> show fail menu (keep time paused unless your fail menu resumes it)
+        if (showFailOnClose && FailMenuInstance != null)
+            FailMenuInstance.DisplayFailMenu();
+
+        // Non-death flow -> run the queued action (e.g., load scene)
+        if (!showFailOnClose)
         {
-            if (!GameManager.instance.isDead)
-            {
-               Time.timeScale = 1;
-            }
-            
+            var cb = onCloseOneShot;
+            onCloseOneShot = null;
+            cb?.Invoke();
         }
 
-        // now show the fail menu if the player actually died
-        if (GameManager.instance != null && GameManager.instance.isDead && FailMenuInstance != null)
-            FailMenuInstance.DisplayFailMenu();
+        // reset flag
+        showFailOnClose = false;
     }
 
     // ------- helpers -------
@@ -217,7 +218,48 @@ public class FullscreenAdSpawner : MonoBehaviour
     public void ShowAdOnRestart()
     {
         ShowAd();
-        float delay = Random.Range(minCloseDelay, maxCloseDelay);
+        float delay = UnityEngine.Random.Range(minCloseDelay, maxCloseDelay);
         StartCoroutine(EnableCloseAfter(delay, showToken));
     }
+
+    // Show ad, then run a callback exactly once when the user closes it
+    public void ShowAdThen(Action afterClose)
+    {
+        if (isShowing) return;          // ignore double-clicks
+        onCloseOneShot += afterClose;   // queue once
+        ShowAd();
+    }
+
+    // Pick a random sprite, then show ad and run callback
+    public void ShowAdRandomThen(Action afterClose)
+    {
+        if (adSprites != null && adSprites.Count > 0 && adImage != null)
+            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+        ShowAdThen(afterClose);
+    }
+
+    // Convenience for hooking directly from Button OnClick with a string param
+    public void ShowAdRandomThenLoadScene(string sceneName)
+    {
+        onCloseOneShot = () => SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        showFailOnClose = false;
+        if (adImage && adSprites.Count > 0)
+            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+        ShowAd();
+    }
+
+    public void ShowAdForDeath()
+    {
+        onCloseOneShot = null;
+        showFailOnClose = true;
+        AssignRandomSpriteIfNeeded();       // ensures no blank white panel
+        ShowAd();
+    }
+    
+    private void AssignRandomSpriteIfNeeded()
+    {
+        if (adImage && adImage.sprite == null && adSprites != null && adSprites.Count > 0)
+            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+    }
+
 }
