@@ -8,18 +8,11 @@ public class CameraController : MonoBehaviour
     
     void Start()
     {
-        cameraJump = 0.5f;
+        cameraJump = 1f;
         //Debug.Log(cameraJump);
         StartCoroutine(CameraDelay(3));
        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void MoveCamera()
     {
         transform.Translate(0, cameraJump, 0);

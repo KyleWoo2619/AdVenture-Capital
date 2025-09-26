@@ -45,12 +45,35 @@ public class PlatformSpawner : MonoBehaviour
         
         transform.position = new Vector3(spawnerPosX, spawnerPosY, player.transform.position.z); //sets initial position of spawner
 
-        
+
 
         if (!GameManager.instance.isDead)
         {
+            /* 
+             InvokeRepeating("MoveSpawner", 2, platformSpawnRate);
+
+             if(spawnerPosX > 0)
+              {
+                //  Debug.Log("spawned L platform");
+                  InvokeRepeating("SpawnLeftMovingPlatform", 0, platformSpawnRate);
+
+              }
+              else
+              {
+                  //Debug.Log("spawned R platform");
+                  InvokeRepeating("SpawnRightMovingPlatform", 0, platformSpawnRate);
+
+              }
+              */
+            StartCoroutine(StartPlatformSpawner(3));
            
-           InvokeRepeating("MoveSpawner", 2, platformSpawnRate);
+        }
+    }
+
+    IEnumerator StartPlatformSpawner(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        InvokeRepeating("MoveSpawner", 2, platformSpawnRate);
 
            if(spawnerPosX > 0)
             {
@@ -64,20 +87,6 @@ public class PlatformSpawner : MonoBehaviour
                 InvokeRepeating("SpawnRightMovingPlatform", 0, platformSpawnRate);
                 
             }
-
-           
-        }
-    }
-
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        
-
-
     }
 
     void MoveSpawner()

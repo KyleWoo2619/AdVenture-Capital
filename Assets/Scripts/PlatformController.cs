@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class PlatformController : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class PlatformController : MonoBehaviour
     private LayerMask ground;
     RaycastHit hit;
     Transform hitTransform;
-    
+
+    IObjectPool<PlatformController> _pool;
+
+
+    public void SetPool(IObjectPool<PlatformController> pool) => _pool = pool;
     void Start()
     {
         ground = LayerMask.GetMask("Ground");
