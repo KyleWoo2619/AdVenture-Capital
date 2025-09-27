@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3930722237988494664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -324,13 +324,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f54a8b4d09545ad77aa967e873fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  adCanvas: {fileID: 0}
   adImage: {fileID: 1911488036789565552}
   closeButton: {fileID: 2701061668598120600}
   adSprites:
-  - {fileID: 2934030791825772558, guid: 6b4a18ed2880bc945b3dcea5d200500d, type: 3}
+  - {fileID: 4932494577534204410, guid: 37ff25c0f2fd7af44a3e16cadcfcb71e, type: 3}
   minInterval: 30
   maxInterval: 45
   minCloseDelay: 1
   maxCloseDelay: 3
   startOnEnable: 1
   runDuringPause: 1
+  pauseGameOnShow: 1
+  onTopSortingOrder: 5000
+  FailMenuInstance: {fileID: 0}
