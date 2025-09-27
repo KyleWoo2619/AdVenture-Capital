@@ -27,7 +27,7 @@ public class NewPlatformSpawner : MonoBehaviour
     public GameObject backUpPlatform;
     private GameObject backUpPlatformInst;
 
-    
+    [SerializeField] float platformDisableTime;
     
 
     void Start()
@@ -51,8 +51,10 @@ public class NewPlatformSpawner : MonoBehaviour
     {
         for (int i = 0; i < platformArray.Length; i++)
         {
+            
             platformInst = Instantiate(platformArray[i]);
-
+            
+            
             platformInst.gameObject.SetActive(false);
 
             platformInstList.Add(platformInst);
@@ -93,7 +95,7 @@ public class NewPlatformSpawner : MonoBehaviour
 
         tempPlatform.gameObject.SetActive(true);
 
-        StartCoroutine(DisableTempPlatform(tempPlatform)); //after a certain amount of time, return that platform into the pool to be reused
+        StartCoroutine(DisableTempPlatform(tempPlatform, platformDisableTime)); //after a certain amount of time, return that platform into the pool to be reused
     }
 
     IEnumerator StartPlatformSpawner(float seconds)
@@ -105,9 +107,9 @@ public class NewPlatformSpawner : MonoBehaviour
 
     }
 
-    IEnumerator DisableTempPlatform(GameObject tempPlatform)
+    IEnumerator DisableTempPlatform(GameObject tempPlatform, float disableTime)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(disableTime); //increase the time if there are more platforms in platformArray
         tempPlatform.SetActive(false);
     }
 

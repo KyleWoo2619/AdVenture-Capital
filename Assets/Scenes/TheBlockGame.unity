@@ -1719,7 +1719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2259367545638696069, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2701061668598120600, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2017,6 +2017,8 @@ MonoBehaviour:
   - {fileID: 517099291539172519, guid: f59d07059623bd8438134ea4e42c8118, type: 3}
   - {fileID: 517099291539172519, guid: 95191c7c1c7140945aa8e96cac289129, type: 3}
   - {fileID: 517099291539172519, guid: 27c3ddc0a66e5cc4990aad21e9a98b2d, type: 3}
+  - {fileID: 517099291539172519, guid: eb3aaa1aef3c17a4f8d17c66bf8d9d1b, type: 3}
+  - {fileID: 517099291539172519, guid: 976f549dbbb25d84ea0f550d3b566efb, type: 3}
   platformInstList: []
   backUpPlatform: {fileID: 517099291539172519, guid: d99e256c8570c454ebc6507871bd6130, type: 3}
 --- !u!4 &1470084988
