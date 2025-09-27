@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
         for(;;)
         {
             MoveCamera();
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSecondsRealtime(2);      
         }
     }
 }

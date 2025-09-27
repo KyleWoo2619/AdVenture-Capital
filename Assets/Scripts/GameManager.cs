@@ -67,14 +67,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     public IEnumerator IncreasePlatformSpeed()
     {
         for (; ; )
         {
-            yield return new WaitForSeconds(platformSpeedTime);
             platformSpeed += platformSpeedScalar;
+            yield return new WaitForSeconds(platformSpeedTime);
+            
         }
     }
 

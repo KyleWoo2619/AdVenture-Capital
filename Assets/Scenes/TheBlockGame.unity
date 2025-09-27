@@ -2021,6 +2021,7 @@ MonoBehaviour:
   - {fileID: 517099291539172519, guid: 976f549dbbb25d84ea0f550d3b566efb, type: 3}
   platformInstList: []
   backUpPlatform: {fileID: 517099291539172519, guid: d99e256c8570c454ebc6507871bd6130, type: 3}
+  platformDisableTime: 20
 --- !u!4 &1470084988
 Transform:
   m_ObjectHideFlags: 0
