@@ -4,11 +4,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private float cameraJump;
-
+    //need a way for the camera to move with the player
     
     void Start()
     {
-        cameraJump = 1f;
+        cameraJump = 0.5f;
         //Debug.Log(cameraJump);
         StartCoroutine(CameraDelay(3));
        
