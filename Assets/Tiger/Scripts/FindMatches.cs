@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 public class FindMatches : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class FindMatches : MonoBehaviour
 
     public int score = 0; //
 
-    public Text scoreText;
+    public TMP_Text scoreText;
 
     public int Score
     {
@@ -87,7 +88,8 @@ public class FindMatches : MonoBehaviour
         AddToListAndMatch(dot3);
 
         score += 1;
-        Debug.Log("Score is : {score}");
+        Debug.Log($"Score is : {score}");
+        UpdateScoreUI(); // <-- Add this line
     }
 
     private IEnumerator FindAllMatchesCo()
@@ -98,51 +100,40 @@ public class FindMatches : MonoBehaviour
             for (int j = 0; j < board.height; j++)
             {
                 GameObject currentDot = board.allDots[i, j];
+                if (currentDot == null) continue; // Null guard
+
                 Dot currentDotDot = currentDot.GetComponent<Dot>();
-                if (currentDot != null)
+
+                // Horizontal match check
+                if (i > 0 && i < board.width - 1)
                 {
-                    if (i > 0 && i < board.width - 1)
+                    GameObject left = board.allDots[i - 1, j];
+                    GameObject right = board.allDots[i + 1, j];
+                    if (left != null && right != null)
                     {
-                        GameObject leftDot = board.allDots[i - 1, j];
-                        Dot leftDotDot = leftDot.GetComponent<Dot>();
-                        GameObject rightDot = board.allDots[i + 1, j];
-                        Dot rightDotDot = rightDot.GetComponent<Dot>();
-                        if (leftDot != null && rightDot != null)
+                        Dot l = left.GetComponent<Dot>();
+                        Dot r = right.GetComponent<Dot>();
+                        if (left.tag == currentDot.tag && right.tag == currentDot.tag)
                         {
-                            if (leftDot.tag == currentDot.tag && rightDot.tag == currentDot.tag)
-                            {
-
-                                currentMatches.Union(IsRowBomb(leftDotDot, currentDotDot, rightDotDot));
-
-                                currentMatches.Union(IsColumnBomb(leftDotDot, currentDotDot, rightDotDot));
-
-                                GetNearbyPieces(leftDot, currentDot, rightDot);
-
-                            }
+                            GetNearbyPieces(left, currentDot, right);
                         }
                     }
+                }
 
-                    if (j > 0 && j < board.height - 1)
+                // Vertical match check
+                if (j > 0 && j < board.height - 1)
+                {
+                    GameObject up = board.allDots[i, j + 1];
+                    GameObject down = board.allDots[i, j - 1];
+                    if (up != null && down != null)
                     {
-                        GameObject upDot = board.allDots[i, j + 1];
-                        Dot upDotDot = upDot.GetComponent<Dot>();
-                        GameObject downDot = board.allDots[i, j - 1];
-                        Dot downDotDot = downDot.GetComponent<Dot>();
-                        if (upDot != null && downDot != null)
+                        Dot u = up.GetComponent<Dot>();
+                        Dot d = down.GetComponent<Dot>();
+                        if (up.tag == currentDot.tag && down.tag == currentDot.tag)
                         {
-                            if (upDot.tag == currentDot.tag && downDot.tag == currentDot.tag)
-                            {
-
-                                currentMatches.Union(IsColumnBomb(upDotDot, currentDotDot, downDotDot));
-
-                                currentMatches.Union(IsRowBomb(upDotDot, currentDotDot, downDotDot));
-
-                                GetNearbyPieces(upDot, currentDot, downDot);
-
-                            }
+                            GetNearbyPieces(up, currentDot, down);
                         }
                     }
-
                 }
             }
         }

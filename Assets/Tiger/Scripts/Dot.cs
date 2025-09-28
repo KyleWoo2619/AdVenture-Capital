@@ -85,44 +85,38 @@ public class Dot : MonoBehaviour
         */
         targetX = column;
         targetY = row;
-        if (Mathf.Abs(targetX - transform.position.x) > .1)
+        if (Mathf.Abs(targetX - transform.localPosition.x) > .1f)
         {
-            //Move Towards the target
-            tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            // Move Towards the target (local space)
+            tempPosition = new Vector2(targetX, transform.localPosition.y);
+            transform.localPosition = Vector2.Lerp(transform.localPosition, tempPosition, .6f);
             if (board.allDots[column, row] != this.gameObject)
             {
                 board.allDots[column, row] = this.gameObject;
             }
             findMatches.FindAllMatches();
-
-
         }
         else
         {
-            //Directly set the position
-            tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = tempPosition;
-
+            // Directly set the local position
+            tempPosition = new Vector2(targetX, transform.localPosition.y);
+            transform.localPosition = tempPosition;
         }
-        if (Mathf.Abs(targetY - transform.position.y) > .1)
+
+        if (Mathf.Abs(targetY - transform.localPosition.y) > .1f)
         {
-            //Move Towards the target
-            tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            tempPosition = new Vector2(transform.localPosition.x, targetY);
+            transform.localPosition = Vector2.Lerp(transform.localPosition, tempPosition, .6f);
             if (board.allDots[column, row] != this.gameObject)
             {
                 board.allDots[column, row] = this.gameObject;
             }
             findMatches.FindAllMatches();
-
         }
         else
         {
-            //Directly set the position
-            tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = tempPosition;
-
+            tempPosition = new Vector2(transform.localPosition.x, targetY);
+            transform.localPosition = tempPosition;
         }
     }
 

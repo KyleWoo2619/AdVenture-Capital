@@ -23,7 +23,7 @@ public class Board : MonoBehaviour
     public Dot currentDot;
     private FindMatches findMatches;
 
-
+    public Vector2 localOrigin = Vector2.zero;   // lets you nudge the whole grid
 
     // Use this for initialization
     void Start()
@@ -40,31 +40,27 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform;
-                backgroundTile.name = "( " + i + ", " + j + " )";
+                // Spawn background tile as child and set local position
+                var bg = Instantiate(tilePrefab, transform);
+                bg.transform.localPosition = new Vector2(i, j + offSet) + localOrigin;
+                bg.name = $"( {i}, {j} )";
 
                 int dotToUse = Random.Range(0, dots.Length);
-
                 int maxIterations = 0;
-
                 while (MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100)
                 {
                     dotToUse = Random.Range(0, dots.Length);
                     maxIterations++;
-                    Debug.Log(maxIterations);
                 }
-                maxIterations = 0;
 
-                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                dot.GetComponent<Dot>().row = j;
-                dot.GetComponent<Dot>().column = i;
-                dot.transform.parent = this.transform;
-                dot.name = "( " + i + ", " + j + " )";
+                // Spawn dot as child and set local position
+                var dot = Instantiate(dots[dotToUse], transform);
+                dot.transform.localPosition = new Vector2(i, j + offSet) + localOrigin;
+                var d = dot.GetComponent<Dot>();
+                d.row = j; d.column = i;
+                dot.name = $"( {i}, {j} )";
                 allDots[i, j] = dot;
             }
-
         }
     }
 
@@ -170,13 +166,13 @@ public class Board : MonoBehaviour
             {
                 if (allDots[i, j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
-                    GameObject piece = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                    allDots[i, j] = piece;
+                    var piece = Instantiate(dots[dotToUse], transform);
+                    piece.transform.localPosition = new Vector2(i, j + offSet) + localOrigin;
                     piece.GetComponent<Dot>().row = j;
                     piece.GetComponent<Dot>().column = i;
-
+                    piece.name = $"( {i}, {j} )";
+                    allDots[i, j] = piece;
                 }
             }
         }
