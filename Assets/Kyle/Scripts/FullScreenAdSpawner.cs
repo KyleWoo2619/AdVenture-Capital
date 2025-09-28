@@ -40,6 +40,9 @@ public class FullscreenAdSpawner : MonoBehaviour
 
     // --- External References ---
     [Header("External")]
+    [SerializeField] private Canvas failMenuCanvas;   // Assign the Canvas component of your fail/death menu
+    [SerializeField] private Canvas pauseMenuCanvas;  // (Optional) assign the Canvas of your pause menu
+
     public FailMenuManager FailMenuInstance; // Reference to fail menu for death flow
 
     // --- Internal State ---
@@ -202,7 +205,11 @@ public class FullscreenAdSpawner : MonoBehaviour
         if (adImage) adImage.raycastTarget = false;
 
         // Resume time ONLY for non-death flows
-        if (pauseGameOnShow && !showFailOnClose)
+        // Only unpause if no menu Canvas is enabled
+        bool noMenusEnabled = (failMenuCanvas == null || !failMenuCanvas.enabled) &&
+                              (pauseMenuCanvas == null || !pauseMenuCanvas.enabled);
+
+        if (pauseGameOnShow && !showFailOnClose && noMenusEnabled)
             Time.timeScale = 1f;
 
         // Death flow: show fail menu (time stays paused unless fail menu resumes)

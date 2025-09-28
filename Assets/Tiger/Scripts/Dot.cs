@@ -17,7 +17,7 @@ public class Dot : MonoBehaviour
 
     private FindMatches findMatches;
     private Board board;
-    public GameObject otherDot;
+    [HideInInspector] public GameObject otherDot;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
@@ -232,7 +232,14 @@ public class Dot : MonoBehaviour
             row -= 1;
         }
 
-        StartCoroutine(CheckMoveCo());
+        // Only set otherDot if the move is valid
+        if (otherDot != null)
+        {
+            if (findMatches != null)
+                findMatches.playerHasMoved = true;
+
+            StartCoroutine(CheckMoveCo());
+        }
     }
 
     void FindMatches()

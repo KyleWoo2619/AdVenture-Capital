@@ -8,11 +8,15 @@ public class AdAfterMinuteTMP : MonoBehaviour
     [SerializeField] private FullscreenAdSpawner spawner;   // Drag your FullscreenAdSpawner here
     [SerializeField] private TMP_Text countdownLabel;       // TMP text for the countdown
     [SerializeField] private GameObject failMenuRoot;      // Reference to the fail menu GameObject
+    [SerializeField] private AudioSource mainBGM;         // Assign your main background music AudioSource
+    [SerializeField] private AudioSource deathOneShot;    // Assign your one-shot death AudioSource
 
     [Header("Settings")]
     [SerializeField, Min(1f)] private float seconds = 60f;   // How long to wait before showing ad
     [SerializeField] private bool startOnEnable = true;      // Auto start when object enables
     [SerializeField] private bool repeatEveryMinute = false; // Trigger again every minute
+    [SerializeField, Range(0f, 1f)] private float duckVolume = 0.2f; // Volume to duck to
+    [SerializeField] private float duckDuration = 2f;     // How long to duck (seconds)
 
     private Coroutine routine;
 
@@ -64,6 +68,7 @@ public class AdAfterMinuteTMP : MonoBehaviour
             if (failMenuRoot != null)
             {
                 failMenuRoot.SetActive(true);
+                PlayDeathSoundWithDuck();
 
                 // force-enable Canvas if something else disabled it
                 var canvas = failMenuRoot.GetComponent<Canvas>();
@@ -110,5 +115,23 @@ public class AdAfterMinuteTMP : MonoBehaviour
     {
         int sec = Mathf.Max(0, Mathf.CeilToInt(t));
         return $"{sec/60:00}:{sec%60:00}";
+    }
+
+    public void PlayDeathSoundWithDuck()
+    {
+        if (mainBGM != null && deathOneShot != null)
+            StartCoroutine(DuckAndPlay());
+    }
+
+    private IEnumerator DuckAndPlay()
+    {
+        float originalVolume = mainBGM.volume;
+        mainBGM.volume = duckVolume;
+
+        deathOneShot.Play();
+
+        yield return new WaitForSeconds(duckDuration);
+
+        mainBGM.volume = originalVolume;
     }
 }

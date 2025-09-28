@@ -9,7 +9,7 @@ public class FindMatches : MonoBehaviour
 {
 
     private Board board;
-    public List<GameObject> currentMatches = new List<GameObject>();
+    [HideInInspector] public List<GameObject> currentMatches = new List<GameObject>();
 
     public int score = 0; //
 
@@ -20,11 +20,14 @@ public class FindMatches : MonoBehaviour
         get { return score; }
         set { score = value; }
     }
+    [HideInInspector] public bool playerHasMoved = false;
 
     // Use this for initialization
     void Start()
     {
         board = FindFirstObjectByType<Board>();
+        score = 0;           // Reset score
+        UpdateScoreUI();     // Update UI to show 0
     }
 
     public void FindAllMatches()
@@ -81,20 +84,24 @@ public class FindMatches : MonoBehaviour
         dot.GetComponent<Dot>().isMatched = true;
     }
 
+    public void OnPlayerMove()
+    {
+        playerHasMoved = true;
+    }
+
     private void GetNearbyPieces(GameObject dot1, GameObject dot2, GameObject dot3)
     {
+        // Add matched dots to the list and mark them
         AddToListAndMatch(dot1);
         AddToListAndMatch(dot2);
         AddToListAndMatch(dot3);
-
-        score += 1;
-        Debug.Log($"Score is : {score}");
-        UpdateScoreUI(); // <-- Add this line
     }
 
     private IEnumerator FindAllMatchesCo()
     {
+        currentMatches.Clear();
         yield return new WaitForSeconds(.2f);
+
         for (int i = 0; i < board.width; i++)
         {
             for (int j = 0; j < board.height; j++)
@@ -138,6 +145,23 @@ public class FindMatches : MonoBehaviour
             }
         }
 
+        // SCORING LOGIC
+        int matchedCount = currentMatches.Count;
+        if (matchedCount >= 3 && playerHasMoved)
+        {
+            // Award points for all matches found in this chain
+            score += matchedCount;
+
+            // Combo bonus: +2 for 4-match, +5 for 5-match, etc.
+            if (matchedCount > 3)
+                score += (matchedCount - 3) * 2;
+
+            Debug.Log($"Score is : {score}");
+            UpdateScoreUI();
+
+            // Reset after scoring so only matches after player moves count
+            //playerHasMoved = false;
+        }
     }
 
     public void MatchPiecesOfColor(string color)
@@ -264,4 +288,26 @@ public class FindMatches : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //     // Check for special case: horizontal or vertical match of 4
+        //     if (currentMatches.Count == 4)
+        //     {
+        //         // Pick a random dot from the match to become a bomb
+        //         Dot bombDot = currentMatches[Random.Range(0, currentMatches.Count)].GetComponent<Dot>();
+        //         if (bombDot != null)
+        //         {
+        //             // Decide based on the swipe angle
+        //             if ((bombDot.swipeAngle > -45 && bombDot.swipeAngle <= 45)
+        //                || (bombDot.swipeAngle < -135 || bombDot.swipeAngle >= 135))
+        //             {
+        //                 bombDot.MakeRowBomb();
+        //             }
+        //             else
+        //             {
+        //                 bombDot.MakeColumnBomb();
+        //             }
+        //         }
+        //     }
+    }
 }
