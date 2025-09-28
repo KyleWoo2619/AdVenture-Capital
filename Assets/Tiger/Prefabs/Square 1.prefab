@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1221225863781413570}
   m_Layer: 0
   m_Name: Square 1
-  m_TagString: white
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,9 +165,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dot
   column: 0
   row: 0
-  targetX: 0
-  targetY: 0
   previousColumn: 0
   previousRow: 0
+  targetX: 0
+  targetY: 0
   isMatched: 0
+  otherDot: {fileID: 0}
   swipeAngle: 0
+  swipeResist: 1
+  isColorBomb: 0
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 0}
+  columnArrow: {fileID: 0}
+  colorBomb: {fileID: 0}
