@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 1, b: 0.049598217, a: 1}
   m_FlipX: 0
@@ -165,9 +165,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dot
   column: 0
   row: 0
-  targetX: 0
-  targetY: 0
   previousColumn: 0
   previousRow: 0
+  targetX: 0
+  targetY: 0
   isMatched: 0
+  otherDot: {fileID: 0}
   swipeAngle: 0
+  swipeResist: 1
+  isColorBomb: 0
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 351732721193788346, guid: d2263e0e2646d2e4a993c5182014727a, type: 3}
+  columnArrow: {fileID: 2087016595307649765, guid: d89855985079e394aa3460832de56ac4, type: 3}
+  colorBomb: {fileID: 4268274642333744475, guid: fb2e5b149708dd94a810195b01fa382a, type: 3}
