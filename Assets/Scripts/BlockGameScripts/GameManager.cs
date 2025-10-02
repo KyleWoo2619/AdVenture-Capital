@@ -19,10 +19,15 @@ public class GameManager : MonoBehaviour
     public float platformSpeed { get; private set; }
     [SerializeField] float platformSpeedScalar;
     [SerializeField] float platformSpeedTime;
+    [SerializeField] private AudioSource mainBGM;
+    [SerializeField] private AudioSource deathOneShot;
+    [SerializeField, Range(0f, 1f)] private float duckVolume = 0.2f;
+    [SerializeField] private float duckDuration = 2f;
 
     public UnityEvent onPlayerDeath;
     private void Awake()
     {
+        Time.timeScale = 1f;
         forgivenessValue = 0.3f;
         platformSpeedScalar = 0.4f;
         platformSpeedTime = 60f;
@@ -79,13 +84,22 @@ public class GameManager : MonoBehaviour
 
     public void TriggerPlayerDeath()
     {
-       
         onPlayerDeath.Invoke(); 
-       
-        if (isDead) return;          // <-- gate
+        if (isDead) return;
         isDead = true;
         Time.timeScale = 0f;
-             // <-- fires once
-        //Time.timeScale = 0f;         // or let the ad spawner pause, your choice
+        StartCoroutine(DuckAndPlayDeathSound()); // <-- play death sound and duck BGM
+    }
+
+    private IEnumerator DuckAndPlayDeathSound()
+    {
+        if (mainBGM != null && deathOneShot != null)
+        {
+            float originalVolume = mainBGM.volume;
+            mainBGM.volume = duckVolume;
+            deathOneShot.Play();
+            yield return new WaitForSecondsRealtime(duckDuration);
+            mainBGM.volume = originalVolume;
+        }
     }
 }
