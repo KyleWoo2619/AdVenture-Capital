@@ -272,6 +272,64 @@ MonoBehaviour:
   runDuringPause: 1
   crossfade: 1
   fadeDuration: 0.25
+--- !u!1 &289203354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 289203356}
+  - component: {fileID: 289203355}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &289203355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289203354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab9d787e601aab45b5e762286a28535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewPlatformSpawner
+  groundPlatform: {fileID: 1188695252}
+  hValue: 0
+  vValue: 0
+  distanceBetweenPlatforms: 0.95
+  platformArray:
+  - {fileID: 517099291539172519, guid: acc256fa9299d5649821400574f8a63b, type: 3}
+  - {fileID: 517099291539172519, guid: f59d07059623bd8438134ea4e42c8118, type: 3}
+  - {fileID: 517099291539172519, guid: 95191c7c1c7140945aa8e96cac289129, type: 3}
+  - {fileID: 517099291539172519, guid: 27c3ddc0a66e5cc4990aad21e9a98b2d, type: 3}
+  - {fileID: 517099291539172519, guid: d99e256c8570c454ebc6507871bd6130, type: 3}
+  - {fileID: 517099291539172519, guid: 976f549dbbb25d84ea0f550d3b566efb, type: 3}
+  platformInstList: []
+  backUpPlatform: {fileID: 517099291539172519, guid: eb3aaa1aef3c17a4f8d17c66bf8d9d1b, type: 3}
+  platformDisableTime: 10
+--- !u!4 &289203356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289203354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 39.57618, y: 368.13266, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &294413997
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +506,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 315511177}
+  - {fileID: 820720230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &303412928
@@ -1436,12 +1495,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820720226}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.41, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.2819998, z: -6.483}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 303412927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &820720231
 MonoBehaviour:
@@ -1450,7 +1509,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820720226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91acdddf368c9d543b3e57dba247f9c4, type: 3}
   m_Name: 
@@ -1739,7 +1798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1395395993
 Transform:
   m_ObjectHideFlags: 0
@@ -1762,7 +1821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395395991}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c803ade066ec9f040bf8d8bc0b7e17c2, type: 3}
   m_Name: 
@@ -4005,7 +4064,6 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 820720230}
   - {fileID: 1188695252}
   - {fileID: 303412927}
   - {fileID: 1019907977}
@@ -4017,3 +4075,4 @@ SceneRoots:
   - {fileID: 762960296}
   - {fileID: 3237802072690132537}
   - {fileID: 1411840762}
+  - {fileID: 289203356}

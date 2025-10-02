@@ -94,6 +94,7 @@ public class NewPlatformSpawner : MonoBehaviour
         tempPlatform.transform.position = transform.position;
 
         tempPlatform.gameObject.SetActive(true);
+        Debug.Log("platform is active");
 
         StartCoroutine(DisableTempPlatform(tempPlatform, platformDisableTime)); //after a certain amount of time, return that platform into the pool to be reused
     }
