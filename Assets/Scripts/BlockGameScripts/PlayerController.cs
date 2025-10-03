@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     InputAction jump;
     Rigidbody player_RB;
     [SerializeField] private float jumpValue;
+    [SerializeField] private float playerGravity;
     LayerMask groundLayer;
 
     [Header("Audio")]
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
         jump = InputSystem.actions.FindAction("Jump");
         player_RB = GetComponent<Rigidbody>();
         jumpValue = 9.5f;
+
+        Physics.gravity = new Vector3(0, playerGravity, 0); //affects all rigid bodies in scene
     }
 
     void Update()

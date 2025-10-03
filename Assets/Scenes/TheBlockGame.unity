@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   jumpValue: 10
+  playerGravity: -10
   jumpOneShot: {fileID: 514680449}
 --- !u!1 &315511176
 GameObject:

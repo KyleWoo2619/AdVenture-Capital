@@ -29,8 +29,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         forgivenessValue = 0.3f;
-        platformSpeedScalar = 0.4f;
-        platformSpeedTime = 60f;
+        
         if (instance != null && instance != this)
         {
             Destroy(this);
