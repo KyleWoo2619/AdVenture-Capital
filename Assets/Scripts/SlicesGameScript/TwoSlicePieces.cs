@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SlicePiece : MonoBehaviour
+public class TwoSlicePieces : MonoBehaviour
 {
     private bool isDragging, isPlaced;
 
@@ -9,6 +9,7 @@ public class SlicePiece : MonoBehaviour
     Vector2 originalPos;
 
     [SerializeField] private SliceSlot slot;
+    [SerializeField] private SliceSlot slot2;
 
 
     /*
@@ -32,7 +33,7 @@ public class SlicePiece : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (Vector2.Distance(transform.position, slot.transform.position) < 3)
+        if (Vector2.Distance(transform.position, slot.transform.position) < 3 || Vector2.Distance(transform.position, slot2.transform.position) < 3)
         {
             transform.position = slot.transform.position;
             isPlaced = true;
