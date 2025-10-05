@@ -5,21 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/StartMenu.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Core Scenes/MainMenu.unity
     guid: 5b655da6dfad1c54892caffcdb05b301
   - enabled: 1
-    path: Assets/Scenes/TheBlockGame.unity
+    path: Assets/Scenes/Core Scenes/TheBlockGame.unity
     guid: b88b842e82c67af43a35905ed36d69df
-  - enabled: 0
-    path: Assets/Scenes/BonBonCrushAP.unity
-    guid: 2a5504766ba66dc468283a5e1e09fb2a
   - enabled: 1
-    path: Assets/Scenes/Match3.unity
+    path: Assets/Scenes/Core Scenes/Match3.unity
     guid: d49e833072aa951478e634b0af1ecefa
+  - enabled: 1
+    path: Assets/Scenes/Minesweep.unity
+    guid: c8d484cd00d14124abf6c636653b920d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
