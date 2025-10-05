@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3822727810967202933, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.4173036
       objectReference: {fileID: 0}
     - target: {fileID: 3822727810967202933, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.47283506
       objectReference: {fileID: 0}
     - target: {fileID: 3822727810967202933, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -52,8 +52,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: PizzeSlice180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4334521397531164898, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4761998189887451104, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2908600689857837689}
   m_SourcePrefab: {fileID: 100100000, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
+--- !u!1 &3083432104875684474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4761998189887451104, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
+  m_PrefabInstance: {fileID: 7556065139933126042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2908600689857837689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3083432104875684474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29a133151a493846bf53a8c935733e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlicePiece180

@@ -58,6 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7501734501259025914, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
+    - {fileID: 4334521397531164898, guid: d8a1b7d2749c50b4c8b94d863698396e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -82,5 +83,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279a82e95e5fe004db33c6e0af8115d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlicePiece60
-  slot: {fileID: 0}
-  sliceSlotList: []
