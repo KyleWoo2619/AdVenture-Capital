@@ -7,13 +7,13 @@ public class SlicePiece : MonoBehaviour
 {
     private bool isDragging, isPlaced;
 
-    Vector2 offset;
-    Vector2 originalPos;
+    Vector2 offset; //offsets how much the slice's position is the mouse's position
+    Vector2 originalPos; //used to set the slice back to its original selection if its not dropped in
 
-     [SerializeField] private SliceSlot slot;
+    protected SliceSlot slot; //will hold the reference one a slot from the list is found
 
-    [SerializeField] private List<SliceSlot> sliceSlotList = new List<SliceSlot>();
-
+    protected List<SliceSlot> sliceSlotList = new List<SliceSlot>(); //will contain a list that reference each slot from each whole pizza
+    //for example, for a pizza slice at 60 degrees, all slots that are 60 degrees are in this list. 
 
     void Awake()
     {
