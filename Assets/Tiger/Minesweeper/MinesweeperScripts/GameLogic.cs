@@ -1,11 +1,19 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+Written by Tiger Britt
+Edited by Kyle Woo
+This script manages the overall game logic for a Minesweeper game, including board generation, cell interactions, and win/loss conditions.
+Kyle edited touch controls to differentiate between short tap (flag) and long press (reveal).
+*/
+
 public class GameLogic : MonoBehaviour
 {
-    
+
     InputAction touchPress;  // New input action for touch events
     public int width = 10;
     public int height = 10;
@@ -13,27 +21,27 @@ public class GameLogic : MonoBehaviour
     private MineBoard Board;
     private Cell[,] state;
 
+    private void Awake()
+    {
+        Board = GetComponentInChildren<MineBoard>();
+        touchPress = InputSystem.actions.FindAction("TouchPress"); // Move here
+    }
+
     private void OnEnable()
     {
-       
-        touchPress.Enable();  // Enable the new touch action
+        if (touchPress != null) // Add null check
+            touchPress.Enable();
     }
 
     private void OnDisable()
     {
-    
-        touchPress.Disable();  // Disable the new touch action
-    }
-
-    private void Awake()
-    {
-        Board = GetComponentInChildren<MineBoard>();
+        if (touchPress != null) // Add null check
+            touchPress.Disable();
     }
 
     private void Start()
     {
-       
-        touchPress = InputSystem.actions.FindAction("TouchPress");  // Initialize the touch action
+        // Remove touchPress initialization from here
         NewGame();
     }
 
@@ -114,23 +122,48 @@ public class GameLogic : MonoBehaviour
 
     private void Update()
     {
-        
-        if ( Input.GetMouseButtonDown(1)) { Flag(); }
+        // Desktop input
+        if (Input.GetMouseButtonDown(1)) { Flag(); }
         if (Input.GetMouseButtonDown(0)) { Reveal(); }
 
-        // Handling the TouchPress input action for both tap and tap-and-hold
-        if (touchPress.triggered)
+        // Mobile touch input
+        if (Input.touchCount > 0)
         {
-            if (touchPress.phase == InputActionPhase.Started)
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == UnityEngine.TouchPhase.Began)
             {
-                // Detect tap (short press)
-                Reveal();
+                // Start timing for long press
+                StartCoroutine(HandleTouch(touch.position));
             }
-            else if (touchPress.phase == InputActionPhase.Performed)
+        }
+    }
+
+    private IEnumerator HandleTouch(Vector2 touchPosition)
+    {
+        float holdTime = 0f;
+        float longPressThreshold = 0.6f; // 0.6 seconds for long press
+        bool actionExecuted = false;
+
+        while (Input.touchCount > 0 && Input.GetTouch(0).phase != UnityEngine.TouchPhase.Ended)
+        {
+            holdTime += Time.deltaTime;
+
+            // If long press threshold reached, execute reveal immediately
+            if (holdTime >= longPressThreshold && !actionExecuted)
             {
-                // Detect tap-and-hold (long press)
-                Flag();
+                RevealTouch(touchPosition); // Long press = reveal with touch position
+                actionExecuted = true;
+                yield break; // Exit the coroutine immediately
             }
+
+            yield return null;
+        }
+
+        // If touch ended without long press, flag the cell
+        if (!actionExecuted)
+        {
+            FlagTouch(touchPosition); // Short tap = flag with touch position
         }
     }
 
@@ -147,9 +180,53 @@ public class GameLogic : MonoBehaviour
         Board.Draw(state);
     }
 
+    private void FlagTouch(Vector2 screenPosition)
+    {
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
+        worldPosition.z = 0; // Convert to 2D space
+        Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
+        Cell cell = GetCell(cellPosition.x, cellPosition.y);
+
+        if (cell.type == Cell.Type.Invalid || cell.isRevealed) { return; }
+        cell.isFlagged = !cell.isFlagged;  // Toggle flagged state
+        state[cellPosition.x, cellPosition.y] = cell;
+        Board.Draw(state);
+    }
+
     private void Reveal()
     {
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        worldPosition.z = 0;
+        Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
+        Cell cell = GetCell(cellPosition.x, cellPosition.y);
+
+        if (cell.type == Cell.Type.Invalid || cell.isRevealed || cell.isFlagged) { return; }
+
+        switch (cell.type)
+        {
+            case Cell.Type.Mine:
+                Debug.Log("Game Over!");
+                Explode(cell);
+                break;
+            case Cell.Type.Empty:
+                Flood(cell);
+                CheckWinCondition();
+                break;
+            default:
+                cell.isRevealed = true;
+                state[cellPosition.x, cellPosition.y] = cell;
+                CheckWinCondition();
+                break;
+        }
+
+        cell.isRevealed = true;
+        state[cellPosition.x, cellPosition.y] = cell;
+        Board.Draw(state);
+    }
+
+    private void RevealTouch(Vector2 screenPosition)
+    {
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
         worldPosition.z = 0;
         Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
         Cell cell = GetCell(cellPosition.x, cellPosition.y);
