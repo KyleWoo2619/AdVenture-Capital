@@ -302,7 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameLogic
   width: 6
   height: 13
-  mineCount: 10
+  mineCount: 5
 --- !u!156049354 &298000102
 Grid:
   m_ObjectHideFlags: 0
