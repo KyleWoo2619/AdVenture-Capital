@@ -30,7 +30,7 @@ public class SlicePiece : MonoBehaviour
     void OnMouseUp()
     {
         
-        if (Vector2.Distance(transform.position, slot.transform.position) < 3 && slot != null)
+        if (slot != null && Vector2.Distance(transform.position, slot.transform.position) < 0.5)
         {
             transform.position = slot.transform.position;
             isPlaced = true;
