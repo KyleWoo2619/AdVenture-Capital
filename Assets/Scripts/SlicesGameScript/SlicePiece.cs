@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class SlicePiece : MonoBehaviour
 {
-    private bool isDragging, isPlaced;
+    private bool isDragging;
+    public bool isPlaced { get; private set; }
 
     Vector2 offset; //offsets how much the slice's position is the mouse's position
     Vector2 originalPos; //used to set the slice back to its original selection if its not dropped in
 
-    protected SliceSlot slot; //will hold the reference one a slot from the list is found
+    protected SliceSlot slot; //will hold the reference of one slot when a slot from the list is found
 
     protected List<SliceSlot> sliceSlotList = new List<SliceSlot>(); //will contain a list that reference each slot from each whole pizza
     //for example, for a pizza slice at 60 degrees, all slots that are 60 degrees are in this list. 
@@ -29,11 +30,13 @@ public class SlicePiece : MonoBehaviour
 
     void OnMouseUp()
     {
-        
-        if (slot != null && Vector2.Distance(transform.position, slot.transform.position) < 0.5)
+
+        if (slot != null && !slot.GetIsFilledState(slot) && Vector2.Distance(transform.position, slot.transform.position) < 0.5)
         {
             transform.position = slot.transform.position;
             isPlaced = true;
+
+            slot.SetIsFilledtoTrue(slot);
         }
         else
         {
