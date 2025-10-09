@@ -12,8 +12,8 @@ public class DualSlices : MonoBehaviour
 
     protected SliceSlot slot1;
     protected SliceSlot slot2;
-    protected List<SliceSlot> DualSlotList1 = new List<SliceSlot>(); 
-    protected List<SliceSlot> DualSlotList2 = new List<SliceSlot>();
+    protected List<SliceSlot> DualSlotList1 = new List<SliceSlot>(); //mainly contain 0, 180
+    protected List<SliceSlot> DualSlotList2 = new List<SliceSlot>(); //mainly contain 60,120,240,300
     void Awake()
     {
         originalPos = transform.position;
@@ -30,21 +30,24 @@ public class DualSlices : MonoBehaviour
     {
         if (slot1 != null && slot2 != null)
         {
-            if (!slot1.GetIsFilledState(slot1) && !slot2.GetIsFilledState(slot2))
+            if (!slot1.GetIsFilledState(slot1) && !slot2.GetIsFilledState(slot2) && UnityEngine.Vector2.Distance(transform.position, slot1.transform.position) < 1)
             {
-                transform.position = slot2.transform.position;
+                transform.position = slot1.transform.position;
+                
                 isPlaced = true;
 
                 slot1.SetIsFilledtoTrue(slot1);
                 slot2.SetIsFilledtoTrue(slot2);
             }
+            
+            else
+            {
+                transform.position = originalPos;
+                isDragging = false;
+            }   
 
         }
-        else
-        {
-            transform.position = originalPos;
-            isDragging = false;
-        }
+        
     }
 
     void Update()
