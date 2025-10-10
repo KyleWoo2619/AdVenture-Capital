@@ -32,7 +32,7 @@ public class SliceSpawner : MonoBehaviour
 
     void SpawnSlice(int randomListNum, int randomNum)
     {
-         sliceInst = null;
+        sliceInst = null;
         dualSliceInst = null;
         tripleSliceInst = null;
         
@@ -65,7 +65,7 @@ public class SliceSpawner : MonoBehaviour
         {
             yield return new WaitUntil(() => GetIsPlacedStatus() == true); //wait until a slice is placed 
 
-            random_list_num = Random.Range(1, 4); //set new random list index
+            random_list_num = 2; //set new random list index
             random_num= Random.Range(0, 6); //set new random slice
             SpawnSlice(random_list_num, random_num); //spawn a new slice 
         }

@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 public class SlicePiece : MonoBehaviour
@@ -15,6 +16,8 @@ public class SlicePiece : MonoBehaviour
 
     protected List<SliceSlot> sliceSlotList = new List<SliceSlot>(); //will contain a list that reference each slot from each whole pizza
     //for example, for a pizza slice at 60 degrees, all slots that are 60 degrees are in this list. 
+
+    bool allfilled;
 
     void Awake()
     {
@@ -58,12 +61,12 @@ public class SlicePiece : MonoBehaviour
 
         transform.position = mousePosition - offset;
 
-        
+
         foreach (SliceSlot _slot in sliceSlotList)
         {
             if (Vector2.Distance(transform.position, _slot.transform.position) < 0.5)
             {
-                Debug.Log(_slot);
+                //Debug.Log(_slot);
                 slot = _slot;
                 if (slot == _slot)
                 {
@@ -71,6 +74,8 @@ public class SlicePiece : MonoBehaviour
                 }
             }
         }
+        allfilled = sliceSlotList.All(_slot => _slot.GetIsFilledState(_slot));
+        //if (allfilled) Debug.Log("all slots are filled");
         
     }
     Vector2 GetMousePos()
