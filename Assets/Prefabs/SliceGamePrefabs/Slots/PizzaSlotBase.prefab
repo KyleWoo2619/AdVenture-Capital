@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506ad4b96c1097d4faf62c42cc9d138a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliceSlot
+  isFilled: 0
 --- !u!60 &4273844348520650041
 PolygonCollider2D:
   m_ObjectHideFlags: 0
