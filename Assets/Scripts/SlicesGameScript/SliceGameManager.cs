@@ -29,11 +29,18 @@ public class SliceGameManager : MonoBehaviour
         // Debug.Log(sliceSlotList60[0]);
 
     }
-    
+
     public void addToScore(int numDestroyedSlices)
     {
         score += numDestroyedSlices;
         Debug.Log(score);
+    }
+    
+    public void EndGame()
+    {
+        Time.timeScale = 0;
+        Debug.Log("your lose");
+        //display fail menu
     }
 
     

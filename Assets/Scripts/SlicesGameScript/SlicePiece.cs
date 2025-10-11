@@ -121,7 +121,7 @@ public class SlicePiece : MonoBehaviour
         if (!CanPlaceSliceAnywhere())
         {
             Debug.Log("This slice can't be placed anywhere");
-            // Optionally destroy the piece, disable it, or trigger endgame
+            SliceGameManager.instance1.EndGame();
         }
     }
 
