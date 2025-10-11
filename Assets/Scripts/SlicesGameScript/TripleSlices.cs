@@ -44,6 +44,10 @@ public class TripleSlices : MonoBehaviour
                 slot1.SetIsFilledtoTrue(slot1);
                 slot2.SetIsFilledtoTrue(slot2);
                 slot3.SetIsFilledtoTrue(slot3);
+
+                slot1.ObjectOnSlot = this.gameObject;
+                slot3.ObjectOnSlot = this.gameObject;
+                slot2.ObjectOnSlot = this.gameObject;
             }
 
             else
@@ -98,8 +102,7 @@ public class TripleSlices : MonoBehaviour
             }
         }
 
-      allFilled = TripleSlotList1.All(_slot1 => _slot1.GetIsFilledState(_slot1));
-      //if (allFilled) Debug.Log("all slots are filled");  
+       
     }
     
     Vector2 GetMousePos()

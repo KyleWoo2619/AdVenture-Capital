@@ -42,6 +42,9 @@ public class DualSlices : MonoBehaviour
 
                 slot1.SetIsFilledtoTrue(slot1);
                 slot2.SetIsFilledtoTrue(slot2);
+
+                slot1.ObjectOnSlot = this.gameObject;
+                slot2.ObjectOnSlot = this.gameObject;
             }
             
             else
@@ -85,9 +88,7 @@ public class DualSlices : MonoBehaviour
             }
         }
 
-        allFilled = DualSlotList1.All(_slot1 => _slot1.GetIsFilledState(_slot1));
-        allFilled2 = DualSlotList2.All(_slot2 => _slot2.GetIsFilledState(_slot2));
-        if(allFilled || allFilled2) Debug.Log("the slots are filled");
+       
     }
     
     UnityEngine.Vector2 GetMousePos()

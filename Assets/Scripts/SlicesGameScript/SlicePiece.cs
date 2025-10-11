@@ -39,6 +39,7 @@ public class SlicePiece : MonoBehaviour
             transform.position = slot.transform.position;
             isPlaced = true;
 
+            slot.ObjectOnSlot = this.gameObject;
             slot.SetIsFilledtoTrue(slot);
         }
         else
@@ -74,8 +75,7 @@ public class SlicePiece : MonoBehaviour
                 }
             }
         }
-        allfilled = sliceSlotList.All(_slot => _slot.GetIsFilledState(_slot));
-        //if (allfilled) Debug.Log("all slots are filled");
+        
         
     }
     Vector2 GetMousePos()

@@ -10,13 +10,16 @@ public class SliceSpawner : MonoBehaviour
     SlicePiece sliceInst;
     DualSlices dualSliceInst;
     TripleSlices tripleSliceInst;
-    
+
+    int[] weightList = { 1, 1, 1, 1, 1, 1, 1, 2, 1 };
+    int randomIndex;
     int random_list_num; //pick a random number between 1 and 3, 1,2,3 represent the reference lists
     int random_num; //represents an element in a list 
 
     void Awake()
     {
-        random_list_num = Random.Range(1, 4);
+        randomIndex = Random.Range(0, weightList.Length);
+        random_list_num = weightList[randomIndex];
         random_num = Random.Range(0, 6);
     }
     void Start()
@@ -65,8 +68,9 @@ public class SliceSpawner : MonoBehaviour
         {
             yield return new WaitUntil(() => GetIsPlacedStatus() == true); //wait until a slice is placed 
 
-            random_list_num = 2; //set new random list index
-            random_num= Random.Range(0, 6); //set new random slice
+            randomIndex = Random.Range(0, weightList.Length);
+            random_list_num = weightList[randomIndex];
+            random_num = Random.Range(0, 6);
             SpawnSlice(random_list_num, random_num); //spawn a new slice 
         }
         
