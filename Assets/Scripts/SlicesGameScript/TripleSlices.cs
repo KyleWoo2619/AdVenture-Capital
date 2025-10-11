@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using System.Collections;
 
 
 public class TripleSlices : MonoBehaviour
@@ -22,6 +24,11 @@ public class TripleSlices : MonoBehaviour
     void Awake()
     {
         originalPos = transform.position;
+    }
+
+    void Start()
+    {
+        StartCoroutine(CallEndGame());
     }
 
     void OnMouseDown()
@@ -104,10 +111,52 @@ public class TripleSlices : MonoBehaviour
 
        
     }
-    
+
     Vector2 GetMousePos()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+    }
+
+    public bool CanPlaceTripleSliceAnywhere() //handles checking if each pie has a valid spot for the slice
+    {
+        foreach (var pie in SliceGameManager.instance1.wholePieList)
+        {
+            if (pie == null) continue;
+
+            var slots = pie.GetComponentsInChildren<SliceSlot>();
+
+            var slotGroup1 = slots.Where(s => TripleSlotList1.Contains(s)).ToList();
+            var slotGroup2 = slots.Where(s => TripleSlotList2.Contains(s)).ToList();
+            var slotGroup3 = slots.Where(s => TripleSlotList3.Contains(s)).ToList();
+
+            foreach (var s1 in slotGroup1)
+            {
+                foreach (var s2 in slotGroup2)
+                {
+                    foreach (var s3 in slotGroup3)
+                    {
+                        if (!s1.GetIsFilledState(s1) && !s2.GetIsFilledState(s2) && !s3.GetIsFilledState(s3))
+                        {
+                            return true; // A valid pair exists
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return false; // No valid dual-slot pairs found
+    }
+    
+    IEnumerator CallEndGame()
+    {
+        yield return new WaitForSeconds(0.3f); // Small delay to allow setup (if needed)
+
+        if (!CanPlaceTripleSliceAnywhere())
+        {
+            Debug.Log("This slice can't be placed anywhere");
+            // Optionally destroy the piece, disable it, or trigger endgame
+        }
     }
 }

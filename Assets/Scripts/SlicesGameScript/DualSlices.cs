@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
+using System.Collections;
 
 public class DualSlices : MonoBehaviour
 {
@@ -22,6 +23,14 @@ public class DualSlices : MonoBehaviour
     {
         originalPos = transform.position;
     }
+
+    void Start()
+    {
+        StartCoroutine(CallEndGame());
+    }
+
+
+    
 
     void OnMouseDown()
     {
@@ -64,11 +73,6 @@ public class DualSlices : MonoBehaviour
         if (!isDragging)
             return;
 
-
-        var mousePosition = (UnityEngine.Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = mousePosition - offset;
-
         foreach (SliceSlot _slot1 in DualSlotList1)
         {
             if (UnityEngine.Vector2.Distance(transform.position, _slot1.transform.position) < 1)
@@ -87,14 +91,58 @@ public class DualSlices : MonoBehaviour
                 slot2 = _slot2;
             }
         }
+        
+        var mousePosition = (UnityEngine.Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        transform.position = mousePosition - offset;
+        
 
        
     }
-    
+
     UnityEngine.Vector2 GetMousePos()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
     }
+
+    public bool CanPlaceDualSliceAnywhere()
+    {
+        foreach (var pie in SliceGameManager.instance1.wholePieList)
+        {
+            if (pie == null) continue;
+
+            var slots = pie.GetComponentsInChildren<SliceSlot>();
+
+            var slotGroup1 = slots.Where(s => DualSlotList1.Contains(s)).ToList();
+            var slotGroup2 = slots.Where(s => DualSlotList2.Contains(s)).ToList();
+
+            foreach (var s1 in slotGroup1)
+            {
+                foreach (var s2 in slotGroup2)
+                {
+                    if (!s1.GetIsFilledState(s1) && !s2.GetIsFilledState(s2))
+                    {
+                        return true; // A valid pair exists
+                    }
+                }
+            }
+        }
+
+        return false; // No valid dual-slot pairs found
+    }
+    
+    IEnumerator CallEndGame()
+    {
+        yield return new WaitForSeconds(0.1f); // Small delay to allow setup (if needed)
+
+        if (!CanPlaceDualSliceAnywhere())
+        {
+            Debug.Log("This slice can't be placed anywhere");
+            // Optionally destroy the piece, disable it, or trigger endgame
+        }
+    }
+
+
     
 }

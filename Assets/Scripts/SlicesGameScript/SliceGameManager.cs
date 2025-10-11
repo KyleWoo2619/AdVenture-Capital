@@ -4,6 +4,8 @@ using UnityEngine;
 public class SliceGameManager : MonoBehaviour
 {
     public static SliceGameManager instance1;
+
+    public List<WholePie> wholePieList = new List<WholePie>();
     public List<SliceSlot> sliceSlotList60 = new List<SliceSlot>();
     public List<SliceSlot> sliceSlotList0 = new List<SliceSlot>();
     public List<SliceSlot> sliceSlotList180 = new List<SliceSlot>();

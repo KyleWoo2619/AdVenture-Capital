@@ -11,7 +11,7 @@ public class SliceSpawner : MonoBehaviour
     DualSlices dualSliceInst;
     TripleSlices tripleSliceInst;
 
-    int[] weightList = { 1, 1, 1, 1, 1, 1, 1, 2, 1 };
+    int[] weightList = {1,1,1,1,1,1,1,2, 3 };
     int randomIndex;
     int random_list_num; //pick a random number between 1 and 3, 1,2,3 represent the reference lists
     int random_num; //represents an element in a list 
@@ -22,6 +22,8 @@ public class SliceSpawner : MonoBehaviour
         random_list_num = weightList[randomIndex];
         random_num = Random.Range(0, 6);
     }
+
+    
     void Start()
     {
         SpawnSlice(random_list_num, random_num);

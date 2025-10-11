@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 
 public class SlicePiece : MonoBehaviour
@@ -22,6 +23,11 @@ public class SlicePiece : MonoBehaviour
     void Awake()
     {
         originalPos = transform.position;
+    }
+
+    void Start()
+    {
+        StartCoroutine(CallEndGame());
     }
 
     void OnMouseDown()
@@ -82,6 +88,41 @@ public class SlicePiece : MonoBehaviour
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+    }
+
+    public bool CanPlaceSliceAnywhere()
+    {
+        foreach (var pie in SliceGameManager.instance1.wholePieList)
+        {
+            if (pie == null) continue;
+
+            var slots = pie.GetComponentsInChildren<SliceSlot>();
+
+            var slotGroup1 = slots.Where(s => sliceSlotList.Contains(s)).ToList();
+
+
+            foreach (var s1 in slotGroup1)
+            {
+                if (!s1.GetIsFilledState(s1))
+                {
+                    return true; // A valid pair exists
+                }
+
+            }
+        }
+
+        return false; // No valid slots found
+    }
+    
+    IEnumerator CallEndGame()
+    {
+        yield return new WaitForSeconds(0.2f); // Small delay to allow setup (if needed)
+
+        if (!CanPlaceSliceAnywhere())
+        {
+            Debug.Log("This slice can't be placed anywhere");
+            // Optionally destroy the piece, disable it, or trigger endgame
+        }
     }
 
 }

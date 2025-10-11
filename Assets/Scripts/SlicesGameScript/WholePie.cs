@@ -31,7 +31,7 @@ public class WholePie : MonoBehaviour
 
     }
 
-    public void ClearAllSlices()
+    public void ClearAllSlices() //clears slices off pie
     {
         int slotsDestroyedCounter = 0; 
         var childSlots = gameObject.transform.Cast<Transform>()

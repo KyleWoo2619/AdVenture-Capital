@@ -2622,6 +2622,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbbc050f4107554b8d17be5c6c9be68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliceGameManager
+  wholePieList:
+  - {fileID: 1283949311}
+  - {fileID: 1369050545}
+  - {fileID: 316684106}
+  - {fileID: 1040908626}
+  - {fileID: 1760598243}
+  - {fileID: 1706348988}
   sliceSlotList60:
   - {fileID: 1402245409}
   - {fileID: 1919452825}
@@ -2664,6 +2671,7 @@ MonoBehaviour:
   - {fileID: 1685900828}
   - {fileID: 514293407}
   - {fileID: 1245277051}
+  score: 0
 --- !u!4 &1529231254
 Transform:
   m_ObjectHideFlags: 0
@@ -4562,12 +4570,7 @@ SceneRoots:
   - {fileID: 961739753}
   - {fileID: 203844589}
   - {fileID: 1529231254}
-  - {fileID: 4623626371476914423}
-  - {fileID: 3745911823990302688}
-  - {fileID: 8325030912254477375}
-  - {fileID: 4607111299475211619}
-  - {fileID: 4137186194365698223}
-  - {fileID: 2222876957309999327}
+  - {fileID: 229329058}
   - {fileID: 1283949310}
   - {fileID: 1369050544}
   - {fileID: 316684105}
@@ -4584,4 +4587,9 @@ SceneRoots:
   - {fileID: 5634926799233492183}
   - {fileID: 781911166808189843}
   - {fileID: 5039405795718320342}
-  - {fileID: 229329058}
+  - {fileID: 4623626371476914423}
+  - {fileID: 3745911823990302688}
+  - {fileID: 8325030912254477375}
+  - {fileID: 4607111299475211619}
+  - {fileID: 4137186194365698223}
+  - {fileID: 2222876957309999327}
