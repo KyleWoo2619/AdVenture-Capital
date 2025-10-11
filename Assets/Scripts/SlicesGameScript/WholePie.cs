@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Linq;
-using UnityEditor.Animations;
-using UnityEngine.UIElements.Experimental;
-using UnityEngine.InputSystem.Interactions;
+using System.Collections.Generic;
 
 public class WholePie : MonoBehaviour
 {
     bool allSlotsFilled;
-
+    [SerializeField] List<WholePie> adjecentPies = new List<WholePie>();
 
     private int slotsDestroyedCounter;
 
@@ -17,11 +15,13 @@ public class WholePie : MonoBehaviour
         if (allSlotsFilled)
         {
             Invoke(nameof(ClearAllSlices), 0.05f); // slight delay
+            adjecentPies[0].ClearAllSlices();
+            adjecentPies[1].ClearAllSlices();
         }
  
     }
 
-    void CheckIfAllSlotsFilled() //checks if all slots are filled in a whole pie
+    protected void CheckIfAllSlotsFilled() //checks if all slots are filled in a whole pie
     {
         allSlotsFilled = gameObject.transform
             .Cast<Transform>()
@@ -31,7 +31,7 @@ public class WholePie : MonoBehaviour
 
     }
 
-    void ClearAllSlices()
+    public void ClearAllSlices()
     {
         int slotsDestroyedCounter = 0; 
         var childSlots = gameObject.transform.Cast<Transform>()

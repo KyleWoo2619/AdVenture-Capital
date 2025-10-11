@@ -11,7 +11,7 @@ public class SliceGameManager : MonoBehaviour
     public List<SliceSlot> sliceSlotListMinus60 = new List<SliceSlot>();
     public List<SliceSlot> sliceSlotListMinus120 = new List<SliceSlot>();
 
-    int score = 0;
+    [SerializeField] int score = 0;
 
     void Awake()
     {
