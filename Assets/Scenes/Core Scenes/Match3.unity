@@ -354,6 +354,8 @@ MonoBehaviour:
   - {fileID: -3612473473856642037, guid: 08e0a92ddc0bc8245a093863a356d44a, type: 3}
   - {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
   - {fileID: -1792890282266326374, guid: 46c597b46e4ca71419266264f16359d0, type: 3}
+  - {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
+  - {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
   minInterval: 10
   maxInterval: 15
   playOnEnable: 1
@@ -2380,6 +2382,8 @@ MonoBehaviour:
   - {fileID: -3612473473856642037, guid: 08e0a92ddc0bc8245a093863a356d44a, type: 3}
   - {fileID: -1792890282266326374, guid: 46c597b46e4ca71419266264f16359d0, type: 3}
   - {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
+  - {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
+  - {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
   minInterval: 10
   maxInterval: 15
   playOnEnable: 1
@@ -3261,20 +3265,36 @@ PrefabInstance:
       objectReference: {fileID: 1465620206}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: adSprites.Array.size
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: 'adSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 2738941379ad722429a6467a83dcd07e, type: 3}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: 'adSprites.Array.data[1]'
       value: 
-      objectReference: {fileID: -6266510560447118008, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
+      objectReference: {fileID: 21300000, guid: 3e3af152dd41a54448a1eaee6c31200f, type: 3}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: 'adSprites.Array.data[2]'
       value: 
-      objectReference: {fileID: 8005303594217664748, guid: 3e3af152dd41a54448a1eaee6c31200f, type: 3}
+      objectReference: {fileID: 21300000, guid: dd792d0779b22274a83b8425c4b895b6, type: 3}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: 'adSprites.Array.data[3]'
       value: 
-      objectReference: {fileID: -6924786900347875689, guid: dd792d0779b22274a83b8425c4b895b6, type: 3}
+      objectReference: {fileID: 21300000, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: 'adSprites.Array.data[4]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 37ff25c0f2fd7af44a3e16cadcfcb71e, type: 3}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: 'adSprites.Array.data[5]'
+      value: 
+      objectReference: {fileID: -2595620974469701525, guid: 5b5ace301b72f7c4c8096f420b12115c, type: 3}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: 'adSprites.Array.data[6]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 7b92df05a189cf74da878d7d20f356be, type: 3}
     - target: {fileID: 3702902945639724787, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -3587,7 +3607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 438608394423599830, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: banners.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 438608394423599830, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: 'banners.Array.data[3]'
@@ -3597,6 +3617,14 @@ PrefabInstance:
       propertyPath: 'banners.Array.data[4]'
       value: 
       objectReference: {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
+    - target: {fileID: 438608394423599830, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: 'banners.Array.data[5]'
+      value: 
+      objectReference: {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
+    - target: {fileID: 438608394423599830, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: 'banners.Array.data[6]'
+      value: 
+      objectReference: {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
     - target: {fileID: 1249258300842645222, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -3787,7 +3815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8174894562412597184, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: banners.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8174894562412597184, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: 'banners.Array.data[3]'
@@ -3797,6 +3825,14 @@ PrefabInstance:
       propertyPath: 'banners.Array.data[4]'
       value: 
       objectReference: {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
+    - target: {fileID: 8174894562412597184, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: 'banners.Array.data[5]'
+      value: 
+      objectReference: {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
+    - target: {fileID: 8174894562412597184, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: 'banners.Array.data[6]'
+      value: 
+      objectReference: {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
     - target: {fileID: 8623456510690538177, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0.5
@@ -4278,7 +4314,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82213046012553252, guid: a674e78e93d425549be285edb6e2568c, type: 3}
       propertyPath: banners.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 82213046012553252, guid: a674e78e93d425549be285edb6e2568c, type: 3}
       propertyPath: 'banners.Array.data[3]'
@@ -4288,6 +4324,14 @@ PrefabInstance:
       propertyPath: 'banners.Array.data[4]'
       value: 
       objectReference: {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
+    - target: {fileID: 82213046012553252, guid: a674e78e93d425549be285edb6e2568c, type: 3}
+      propertyPath: 'banners.Array.data[5]'
+      value: 
+      objectReference: {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
+    - target: {fileID: 82213046012553252, guid: a674e78e93d425549be285edb6e2568c, type: 3}
+      propertyPath: 'banners.Array.data[6]'
+      value: 
+      objectReference: {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
     - target: {fileID: 1908986181600148590, guid: a674e78e93d425549be285edb6e2568c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
