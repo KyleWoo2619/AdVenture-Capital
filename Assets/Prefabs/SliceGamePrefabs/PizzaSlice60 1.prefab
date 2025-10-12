@@ -129,16 +129,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 6481864413510501981}
     m_Modifications:
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.19999999
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.104
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.157
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalPosition.z
@@ -146,19 +154,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8660254
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -170,8 +178,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 895375250889688855, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8543395131443533875, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e24c2c5072af5fa469362c145ba45254, type: 3}
     - target: {fileID: 8896308717739000962, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_Name
       value: PizzaSlice60
