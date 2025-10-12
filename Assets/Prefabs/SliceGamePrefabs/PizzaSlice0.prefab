@@ -120,6 +120,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66e4552cb464844da1f5e132140c327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlicePiece0
+  TouchPressedAction:
+    m_Name: Touch Pressed
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f6f807f5-d010-42b8-9436-134ed1325a5a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1e017fb6-2931-4e81-b950-84b2450b49cd
+      m_Path: 
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Touch Pressed
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1001 &2821251321720736439
 PrefabInstance:
   m_ObjectHideFlags: 0

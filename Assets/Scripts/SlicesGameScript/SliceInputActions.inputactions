@@ -1,0 +1,77 @@
+{
+    "version": 1,
+    "name": "SliceInputActions",
+    "maps": [
+        {
+            "name": "Touch",
+            "id": "eed0734e-ca6c-4cd5-89b3-85a94b9ae490",
+            "actions": [
+                {
+                    "name": "TouchPos",
+                    "type": "Value",
+                    "id": "6d60d126-2ebf-4804-970d-45e7ec20423d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TouchPressed",
+                    "type": "Button",
+                    "id": "950308a9-d4ab-4534-85c0-134cb3f0c316",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "92b5aaae-ccfc-4bcd-8195-0a8078ef8e52",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a37d0f2-7e86-4df0-9e3d-4166fd7436d9",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "606eb326-ea26-409a-a914-1f235a4d71bd",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5fc400f7-745b-40b8-8815-ceb0205e71ee",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

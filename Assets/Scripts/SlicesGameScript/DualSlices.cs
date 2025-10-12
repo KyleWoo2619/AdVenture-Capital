@@ -17,8 +17,7 @@ public class DualSlices : MonoBehaviour
     protected List<SliceSlot> DualSlotList1 = new List<SliceSlot>(); //mainly contain 0, 180
     protected List<SliceSlot> DualSlotList2 = new List<SliceSlot>(); //mainly contain 60,120,240,300
 
-    bool allFilled;
-    bool allFilled2;
+   
     void Awake()
     {
         originalPos = transform.position;
@@ -32,14 +31,45 @@ public class DualSlices : MonoBehaviour
 
     
 
-    void OnMouseDown()
+    /*void OnMouseDown()
     {
         isDragging = true;
 
         offset = GetMousePos() - (UnityEngine.Vector2)transform.position;
     }
+    */
 
-    void OnMouseUp()
+
+    void Update()
+    {
+        if (isPlaced) return;
+
+
+        foreach (SliceSlot _slot1 in DualSlotList1)
+        {
+            if (UnityEngine.Vector2.Distance(transform.position, _slot1.transform.position) < 1)
+            {
+                //Debug.Log(_slot1);
+                slot1 = _slot1;
+
+            }
+        }
+
+        foreach (SliceSlot _slot2 in DualSlotList2)
+        {
+            if (UnityEngine.Vector2.Distance(transform.position, _slot2.transform.position) < 1)
+            {
+                //Debug.Log(_slot2);
+                slot2 = _slot2;
+            }
+        }
+
+        //var mousePosition = (UnityEngine.Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //transform.position = mousePosition - offset;
+    }
+    
+    public void SetDualSlice()
     {
         if (slot1 != null && slot2 != null)
         {
@@ -63,48 +93,9 @@ public class DualSlices : MonoBehaviour
             }   
 
         }
-        
     }
 
-    void Update()
-    {
-        if (isPlaced) return;
-
-        if (!isDragging)
-            return;
-
-        foreach (SliceSlot _slot1 in DualSlotList1)
-        {
-            if (UnityEngine.Vector2.Distance(transform.position, _slot1.transform.position) < 1)
-            {
-                //Debug.Log(_slot1);
-                slot1 = _slot1;
-
-            }
-        }
-
-        foreach (SliceSlot _slot2 in DualSlotList2)
-        {
-            if (UnityEngine.Vector2.Distance(transform.position, _slot2.transform.position) < 1)
-            {
-                //Debug.Log(_slot2);
-                slot2 = _slot2;
-            }
-        }
-        
-        var mousePosition = (UnityEngine.Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = mousePosition - offset;
-        
-
-       
-    }
-
-    UnityEngine.Vector2 GetMousePos()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-    }
+    
 
     public bool CanPlaceDualSliceAnywhere()
     {

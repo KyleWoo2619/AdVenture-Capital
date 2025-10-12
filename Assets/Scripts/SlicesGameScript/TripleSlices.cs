@@ -20,7 +20,7 @@ public class TripleSlices : MonoBehaviour
     protected List<SliceSlot> TripleSlotList2 = new List<SliceSlot>();
     protected List<SliceSlot> TripleSlotList3 = new List<SliceSlot>();
 
-    bool allFilled;
+   
     void Awake()
     {
         originalPos = transform.position;
@@ -31,14 +31,59 @@ public class TripleSlices : MonoBehaviour
         StartCoroutine(CallEndGame());
     }
 
-    void OnMouseDown()
+    /*void OnMouseDown()
     {
         isDragging = true;
 
         offset = GetMousePos() - (Vector2)transform.position;
     }
+    */
 
-    void OnMouseUp()
+    
+
+    void Update()
+    {
+        if (isPlaced) return;
+
+
+        //var mousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //transform.position = mousePosition - offset;
+
+        foreach (SliceSlot _slot1 in TripleSlotList1)
+        {
+
+
+            if (Vector2.Distance(transform.position, _slot1.transform.position) < 1.25f)
+            {
+                //Debug.Log(_slot1);
+                slot1 = _slot1;
+
+            }
+        }
+
+        foreach (SliceSlot _slot2 in TripleSlotList2)
+        {
+            if (Vector2.Distance(transform.position, _slot2.transform.position) < 1.25f)
+            {
+                //Debug.Log(_slot2);
+                slot2 = _slot2;
+            }
+        }
+
+        foreach (SliceSlot _slot3 in TripleSlotList3)
+        {
+            if (Vector2.Distance(transform.position, _slot3.transform.position) < 1.25f)
+            {
+                //Debug.Log(_slot3);
+                slot3 = _slot3;
+            }
+        }
+
+
+    }
+    
+    public void SetTripleSlice()
     {
         if (slot1 != null && slot2 != null && slot3 != null)
         {
@@ -60,63 +105,12 @@ public class TripleSlices : MonoBehaviour
             else
             {
                 transform.position = originalPos;
-                isDragging = false;
-            }   
-
-        }
-        
-    }
-
-    void Update()
-    {
-        if (isPlaced) return;
-
-        if (!isDragging)
-            return;
-
-
-        var mousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = mousePosition - offset;
-        
-        foreach (SliceSlot _slot1 in TripleSlotList1)
-        {
-            
-            
-            if (Vector2.Distance(transform.position, _slot1.transform.position) < 1.25f)
-            {
-                //Debug.Log(_slot1);
-                slot1 = _slot1;
-
+                //isDragging = false;
             }
         }
-
-        foreach (SliceSlot _slot2 in TripleSlotList2)
-        {
-            if (Vector2.Distance(transform.position, _slot2.transform.position) < 1.25f)
-            {
-               //Debug.Log(_slot2);
-                slot2 = _slot2;
-            }
-        }
-
-        foreach (SliceSlot _slot3 in TripleSlotList3)
-        {
-            if (Vector2.Distance(transform.position, _slot3.transform.position) < 1.25f)
-            {
-                //Debug.Log(_slot3);
-                slot3 = _slot3;
-            }
-        }
-
-       
     }
 
-    Vector2 GetMousePos()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-    }
+   
 
     public bool CanPlaceTripleSliceAnywhere() //handles checking if each pie has a valid spot for the slice
     {

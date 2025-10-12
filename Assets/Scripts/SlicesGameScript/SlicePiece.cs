@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 
 public class SlicePiece : MonoBehaviour
@@ -18,11 +19,14 @@ public class SlicePiece : MonoBehaviour
     protected List<SliceSlot> sliceSlotList = new List<SliceSlot>(); //will contain a list that reference each slot from each whole pizza
     //for example, for a pizza slice at 60 degrees, all slots that are 60 degrees are in this list. 
 
-    bool allfilled;
+    protected PlayerInput playerInput;
+    protected InputAction TouchPressedAction;
+    protected InputAction TouchPosAction;
 
     void Awake()
     {
         originalPos = transform.position;
+        
     }
 
     void Start()
@@ -30,43 +34,18 @@ public class SlicePiece : MonoBehaviour
         StartCoroutine(CallEndGame());
     }
 
-    void OnMouseDown()
+    /*void OnMouseDown()
     {
         isDragging = true;
 
         offset = GetMousePos() - (Vector2)transform.position;
     }
-
-    void OnMouseUp()
-    {
-
-        if (slot != null && !slot.GetIsFilledState(slot) && Vector2.Distance(transform.position, slot.transform.position) < 0.5)
-        {
-            transform.position = slot.transform.position;
-            isPlaced = true;
-
-            slot.ObjectOnSlot = this.gameObject;
-            slot.SetIsFilledtoTrue(slot);
-        }
-        else
-        {
-            transform.position = originalPos;
-            isDragging = false;
-        }
-        
-    }
+    */
+    
 
     void Update()
     {
         if (isPlaced) return;
-
-        if (!isDragging)
-            return;
-        
-
-        var mousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = mousePosition - offset;
 
 
         foreach (SliceSlot _slot in sliceSlotList)
@@ -84,10 +63,24 @@ public class SlicePiece : MonoBehaviour
         
         
     }
-    Vector2 GetMousePos()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+   
 
+    public void SetSlice()
+    {
+        
+         if (slot != null && !slot.GetIsFilledState(slot) && Vector2.Distance(transform.position, slot.transform.position) < 0.5)
+        {
+            transform.position = slot.transform.position;
+            isPlaced = true;
+
+            slot.ObjectOnSlot = this.gameObject;
+            slot.SetIsFilledtoTrue(slot);
+        }
+        else
+        {
+            transform.position = originalPos;
+            //isDragging = false;
+        }
     }
 
     public bool CanPlaceSliceAnywhere()
