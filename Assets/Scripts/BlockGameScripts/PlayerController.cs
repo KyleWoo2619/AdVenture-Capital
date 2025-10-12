@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour
     InputAction jump;
     Rigidbody player_RB;
     [SerializeField] private float jumpValue;
-    [SerializeField] private float playerGravity;
     LayerMask groundLayer;
 
     [Header("Audio")]
     [SerializeField] private AudioSource jumpOneShot; // Assign in Inspector
+
+    [Header("Sprite Changing")]
+    [SerializeField] private SpriteRenderer playerSpriteRenderer; // Assign the sprite renderer component
+    [SerializeField] private Sprite groundedSprite; // Sprite when on ground
+    [SerializeField] private Sprite jumpingSprite;  // Sprite when in air
 
     private bool hasJumped = false;
 
@@ -22,8 +26,6 @@ public class PlayerController : MonoBehaviour
         jump = InputSystem.actions.FindAction("Jump");
         player_RB = GetComponent<Rigidbody>();
         jumpValue = 9.5f;
-
-        Physics.gravity = new Vector3(0, playerGravity, 0); //affects all rigid bodies in scene
     }
 
     void Update()
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour
             // Reset jump flag when grounded
             hasJumped = false;
 
+            // Change to grounded sprite
+            if (playerSpriteRenderer != null && groundedSprite != null)
+                playerSpriteRenderer.sprite = groundedSprite;
+
             if (jump.WasPressedThisFrame() && !hasJumped)
             {
                 player_RB.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
@@ -54,11 +60,19 @@ public class PlayerController : MonoBehaviour
                     jumpOneShot.Play();
 
                 hasJumped = true;
+
+                // Change to jumping sprite immediately when jump starts
+                if (playerSpriteRenderer != null && jumpingSprite != null)
+                    playerSpriteRenderer.sprite = jumpingSprite;
             }
         }
         else
         {
             Debug.DrawRay(transform.position, Vector3.down, Color.red);
+
+            // Change to jumping sprite when in air
+            if (playerSpriteRenderer != null && jumpingSprite != null)
+                playerSpriteRenderer.sprite = jumpingSprite;
         }
     }
 }

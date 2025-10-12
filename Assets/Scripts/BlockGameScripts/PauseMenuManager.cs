@@ -14,8 +14,6 @@ public class PauseMenuManager : MonoBehaviour
         canvas.enabled = false;
     }
 
-    
-
     void OnEnable()
     {
         //Time.timeScale = 0;
@@ -26,7 +24,6 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    
     public void LoadBackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
@@ -45,5 +42,32 @@ public class PauseMenuManager : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
+    // In your pause menu script (wherever you handle pause button clicks)
+    public void OnPauseButtonClick()
+    {
+        // Pause the game
+        Time.timeScale = 0f;
 
+        // Disable tile input
+        GameLogic gameLogic = FindObjectOfType<GameLogic>();
+        if (gameLogic != null)
+            gameLogic.SetPauseState(true);
+
+        // Show pause menu
+        canvas.enabled = true;
+    }
+
+    public void OnResumeButtonClick()
+    {
+        // Resume the game
+        Time.timeScale = 1f;
+
+        // Enable tile input
+        GameLogic gameLogic = FindObjectOfType<GameLogic>();
+        if (gameLogic != null)
+            gameLogic.SetPauseState(false);
+
+        // Hide pause menu
+        canvas.enabled = false;
+    }
 }

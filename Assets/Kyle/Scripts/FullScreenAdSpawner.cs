@@ -41,6 +41,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     // --- External References ---
     [Header("External")]
     [SerializeField] private Canvas failMenuCanvas;   // Assign the Canvas component of your fail/death menu
+    [SerializeField] private Canvas winMenuCanvas;    // Assign the Canvas component of your win menu
     [SerializeField] private Canvas pauseMenuCanvas;  // (Optional) assign the Canvas of your pause menu
 
     public FailMenuManager FailMenuInstance; // Reference to fail menu for death flow
@@ -54,6 +55,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     private bool IsPlayerDeadSafe =>         // Helper: safely check if player is dead
         GameManager.instance != null && GameManager.instance.isDead;
     private bool showFailOnClose = false;    // Should fail menu show after ad closes?
+    private bool showWinOnClose = false;     // Should win menu show after ad closes?
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -204,28 +206,34 @@ public class FullscreenAdSpawner : MonoBehaviour
         // Prevent ad image from blocking raycasts
         if (adImage) adImage.raycastTarget = false;
 
-        // Resume time ONLY for non-death flows
+        // Resume time ONLY for non-death/non-win flows
         // Only unpause if no menu Canvas is enabled
         bool noMenusEnabled = (failMenuCanvas == null || !failMenuCanvas.enabled) &&
+                              (winMenuCanvas == null || !winMenuCanvas.enabled) &&
                               (pauseMenuCanvas == null || !pauseMenuCanvas.enabled);
 
-        if (pauseGameOnShow && !showFailOnClose && noMenusEnabled)
+        if (pauseGameOnShow && !showFailOnClose && !showWinOnClose && noMenusEnabled)
             Time.timeScale = 1f;
 
         // Death flow: show fail menu (time stays paused unless fail menu resumes)
         if (showFailOnClose && FailMenuInstance != null)
             FailMenuInstance.DisplayFailMenu();
 
-        // Non-death flow: run queued callback (e.g., load scene)
-        if (!showFailOnClose)
+        // Win flow: show win menu (time stays paused unless win menu resumes)  
+        if (showWinOnClose && winMenuCanvas != null)
+            winMenuCanvas.enabled = true;
+
+        // Non-death/non-win flow: run queued callback (e.g., load scene)
+        if (!showFailOnClose && !showWinOnClose)
         {
             var cb = onCloseOneShot;
             onCloseOneShot = null;
             cb?.Invoke();
         }
 
-        // Reset flag for next ad
+        // Reset flags for next ad
         showFailOnClose = false;
+        showWinOnClose = false;
     }
 
     // --- UI Helpers ---
@@ -294,6 +302,17 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         onCloseOneShot = null;
         showFailOnClose = true;
+        showWinOnClose = false;
+        AssignRandomSpriteIfNeeded();       // Ensure ad image is set
+        ShowAd();
+    }
+
+    // Show ad for player win flow (shows win menu after close)
+    public void ShowAdForWin()
+    {
+        onCloseOneShot = null;
+        showFailOnClose = false;
+        showWinOnClose = true;
         AssignRandomSpriteIfNeeded();       // Ensure ad image is set
         ShowAd();
     }
