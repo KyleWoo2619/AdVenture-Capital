@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Core Scenes/Match3.unity
     guid: d49e833072aa951478e634b0af1ecefa
   - enabled: 1
-    path: Assets/Scenes/Minesweep.unity
+    path: Assets/Scenes/Core Scenes/Minesweep.unity
     guid: c8d484cd00d14124abf6c636653b920d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
