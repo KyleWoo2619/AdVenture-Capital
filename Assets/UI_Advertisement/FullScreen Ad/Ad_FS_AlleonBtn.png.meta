@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3e3af152dd41a54448a1eaee6c31200f
+guid: 34f4a303b72040a45867aa8aa2241afd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8005303594217664748
-    second: Ad_FS_HO1_0
+      213: 3036233579814160515
+    second: Ad_FS_AlleonBtn_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ad_FS_HO1_0
+      name: Ad_FS_AlleonBtn_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1080
-        height: 1920
+        x: 263
+        y: 234
+        width: 538
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce0708c743d881f60800000000000000
-      internalID: 8005303594217664748
+      spriteID: 3888febaa5ed22a20800000000000000
+      internalID: 3036233579814160515
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ad_FS_HO1_0: 8005303594217664748
+      Ad_FS_AlleonBtn_0: 3036233579814160515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
