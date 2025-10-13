@@ -21,6 +21,7 @@ public class SliceGameManager : MonoBehaviour
 
     [Header("Ad System")]
     [SerializeField] private FullscreenAdSpawner adSpawner; // Reference to ad spawner
+    [SerializeField] private VideoAdSpawner videoAdSpawner; // Reference to video ad spawner for death videos
 
     void Awake()
     {
@@ -67,9 +68,14 @@ public class SliceGameManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay); // Use real time since game is paused
 
-        // Use the death-specific ad method that shows fail menu after
-        if (adSpawner != null)
+        // Prefer VideoAdSpawner when available for death videos
+        if (videoAdSpawner != null)
         {
+            videoAdSpawner.ShowVideoAdForDeath();
+        }
+        else if (adSpawner != null)
+        {
+            // Fallback to fullscreen ad spawner
             adSpawner.ShowAdForDeath();
         }
     }

@@ -43,6 +43,12 @@ public class TouchDraggableObject2D : MonoBehaviour
 
     void OnTouchPressed(InputAction.CallbackContext context)
     {
+        // Don't process input if game is paused (during video ads)
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         Vector2 screenPos = touchPos.ReadValue<Vector2>();
         Vector2 worldPoint = camera.ScreenToWorldPoint(screenPos);
 
@@ -62,6 +68,12 @@ public class TouchDraggableObject2D : MonoBehaviour
 
     void OnTouchReleased(InputAction.CallbackContext context)
     {
+        // Don't process input if game is paused (during video ads)
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         if (selectedObject != null)
         {
             // Play drop sound when object is placed down
@@ -88,6 +100,14 @@ public class TouchDraggableObject2D : MonoBehaviour
 
     void Update()
     {
+        // Stop dragging if game gets paused during drag
+        if (Time.timeScale <= 0f && isDragging)
+        {
+            isDragging = false;
+            selectedObject = null;
+            return;
+        }
+
         if (isDragging && selectedObject != null)
         {
             Vector2 screenPos = touchPos.ReadValue<Vector2>();

@@ -41,6 +41,7 @@ public class VideoAdSpawner : MonoBehaviour
     // --- External References ---
     [Header("External")]
     [SerializeField] private Canvas failMenuCanvas;   // Assign the Canvas component of your fail menu
+    [SerializeField] private GameLogic gameLogic;     // Reference to GameLogic for proper pause/resume
 
     public FailMenuManager FailMenuInstance; // Reference to fail menu for death flow
 
@@ -53,6 +54,7 @@ public class VideoAdSpawner : MonoBehaviour
     private bool showFailOnSkip = false;     // Should fail menu show after skip?
     private bool restartOnSkip = false;      // Should restart scene after skip?
     private string targetSceneName = "";     // Scene name to load when restarting
+    private RenderTexture videoRenderTexture; // temporary render texture for video playback
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -120,6 +122,13 @@ public class VideoAdSpawner : MonoBehaviour
         {
             Debug.Log("Video ad already showing, returning");
             return; // Prevent double-show
+        }
+
+        // Properly pause the game using GameLogic's pause system to disable all input
+        if (gameLogic != null)
+        {
+            gameLogic.PauseGame();
+            Debug.Log("Called GameLogic.PauseGame() to disable input during death video");
         }
 
         onSkipCallback = null;
@@ -192,36 +201,27 @@ public class VideoAdSpawner : MonoBehaviour
         if (progressSlider != null)
             progressSlider.value = 0f;
 
-        // Start video FIRST
+        // Prepare and play the video. The coroutine will handle pausing the game
+        // after playback starts and will begin the progress/skip/completion coroutines.
         if (videoPlayer != null && videoPlayer.clip != null)
         {
-            Debug.Log($"Starting video playback: {videoPlayer.clip.name}");
-            videoPlayer.Play();
-            Debug.Log($"Video player state: isPlaying={videoPlayer.isPlaying}");
+            // Ensure any previous coroutines are cleared
+            if (progressCoroutine != null) { StopCoroutine(progressCoroutine); progressCoroutine = null; }
+            if (skipButtonCoroutine != null) { StopCoroutine(skipButtonCoroutine); skipButtonCoroutine = null; }
+            if (videoCompletionCoroutine != null) { StopCoroutine(videoCompletionCoroutine); videoCompletionCoroutine = null; }
+
+            StartCoroutine(PrepareAndPlay());
         }
         else
         {
             Debug.LogWarning($"Cannot start video: videoPlayer={videoPlayer}, clip={videoPlayer?.clip}");
+            // Cleanup / restore state so the game isn't left in a partial state
+            SetBGMAudioMuted(false);
+            SetAdCanvasActive(true);
+            SetVideoAdVisible(false);
+            SetVideoImageVisible(false);
+            isShowing = false;
         }
-
-        // Pause game AFTER video starts (if configured)
-        if (pauseGameOnShow) 
-        {
-            Debug.Log("Pausing game after video setup");
-            Time.timeScale = 0f;
-        }
-
-        // Start progress coroutine
-        if (progressCoroutine != null) StopCoroutine(progressCoroutine);
-        progressCoroutine = StartCoroutine(UpdateProgressSlider());
-
-        // Start skip button delay coroutine
-        if (skipButtonCoroutine != null) StopCoroutine(skipButtonCoroutine);
-        skipButtonCoroutine = StartCoroutine(EnableSkipAfterDelay(skipButtonDelay));
-        
-        // Start video completion watcher coroutine
-        if (videoCompletionCoroutine != null) StopCoroutine(videoCompletionCoroutine);
-        videoCompletionCoroutine = StartCoroutine(WatchForVideoCompletion());
     }
 
     // --- Update Progress Slider ---
@@ -246,6 +246,96 @@ public class VideoAdSpawner : MonoBehaviour
             progressSlider.value = 1f;
     }
 
+    // --- Prepare and Play Video ---
+    IEnumerator PrepareAndPlay()
+    {
+        if (videoPlayer == null)
+        {
+            Debug.LogWarning("PrepareAndPlay: videoPlayer is null");
+            yield break;
+        }
+
+        // Start preparing the clip
+        try
+        {
+            videoPlayer.Prepare();
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"VideoPlayer.Prepare threw: {e.Message}");
+        }
+
+        // Wait until prepared or timeout
+        float timeout = 5f;
+        float waited = 0f;
+        while (!videoPlayer.isPrepared && waited < timeout)
+        {
+            waited += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (!videoPlayer.isPrepared)
+        {
+            Debug.LogWarning("PrepareAndPlay: video did not prepare within timeout, attempting to play anyway");
+        }
+
+        // Ensure a render target is available for the player (use RawImage on videoImageCanvas)
+        try
+        {
+            var raw = videoImageCanvas != null ? videoImageCanvas.GetComponentInChildren<UnityEngine.UI.RawImage>() : null;
+            if (raw != null)
+            {
+                // Create a temporary render texture matching screen size (or clip size)
+                if (videoRenderTexture != null)
+                {
+                    if (videoPlayer.targetTexture != videoRenderTexture)
+                        videoPlayer.targetTexture = videoRenderTexture;
+                }
+                else
+                {
+                    int w = Math.Max(256, Screen.width);
+                    int h = Math.Max(256, Screen.height);
+                    videoRenderTexture = new RenderTexture(w, h, 0, RenderTextureFormat.Default);
+                    videoRenderTexture.Create();
+                    videoPlayer.targetTexture = videoRenderTexture;
+                    raw.texture = videoRenderTexture;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("PrepareAndPlay: No RawImage found under videoImageCanvas; video may not be visible without target texture.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"PrepareAndPlay render target setup failed: {ex.Message}");
+        }
+
+        // Start playback
+        Debug.Log($"PrepareAndPlay: Playing video {videoPlayer.clip?.name} (isPrepared={videoPlayer.isPrepared})");
+        videoPlayer.Play();
+
+        // Give one frame for the player/texture/UI to initialize
+        yield return null;
+
+        // Pause game AFTER playback has started (preserve real-time coroutines)
+        if (pauseGameOnShow)
+        {
+            Debug.Log("PrepareAndPlay: Pausing game after playback started");
+            Time.timeScale = 0f;
+        }
+
+        // Start progress/skip/completion coroutines
+        if (progressCoroutine != null) { StopCoroutine(progressCoroutine); progressCoroutine = null; }
+        progressCoroutine = StartCoroutine(UpdateProgressSlider());
+
+        if (skipButtonCoroutine != null) { StopCoroutine(skipButtonCoroutine); skipButtonCoroutine = null; }
+        skipButtonCoroutine = StartCoroutine(EnableSkipAfterDelay(skipButtonDelay));
+
+        if (videoCompletionCoroutine != null) { StopCoroutine(videoCompletionCoroutine); videoCompletionCoroutine = null; }
+        videoCompletionCoroutine = StartCoroutine(WatchForVideoCompletion());
+    }
+
     // --- Enable Skip Button After Delay ---
     IEnumerator EnableSkipAfterDelay(float delay)
     {
@@ -261,15 +351,29 @@ public class VideoAdSpawner : MonoBehaviour
     // --- Watch For Video Completion ---
     IEnumerator WatchForVideoCompletion()
     {
+        // Wait while the video is playing. If it's not playing yet, wait for it to start
+        float waitForStartTimeout = 5f;
+        float waited = 0f;
+
+        // If video hasn't started, wait a short time for it to start playing
+        while (isShowing && videoPlayer != null && !videoPlayer.isPlaying && waited < waitForStartTimeout)
+        {
+            waited += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        Debug.Log($"WatchForVideoCompletion: waitedForStart={waited}, isPlaying={videoPlayer?.isPlaying}, isPrepared={videoPlayer?.isPrepared}");
+
+        // Now wait until the video stops playing naturally
         while (isShowing && videoPlayer != null && videoPlayer.isPlaying)
         {
-            yield return null; // Wait one frame
+            yield return null;
         }
 
         // If we're still showing and the video stopped naturally (not manually stopped)
         if (isShowing && videoPlayer != null && !videoPlayer.isPlaying)
         {
-            // Video ended naturally, execute the appropriate action automatically
+            Debug.Log("WatchForVideoCompletion: video ended naturally, calling SkipVideoAd()");
             SkipVideoAd();
         }
     }
@@ -301,6 +405,19 @@ public class VideoAdSpawner : MonoBehaviour
         if (videoPlayer != null && videoPlayer.isPlaying)
             videoPlayer.Stop();
 
+        // Release temporary render texture
+        if (videoRenderTexture != null)
+        {
+            try
+            {
+                if (videoPlayer != null && videoPlayer.targetTexture == videoRenderTexture)
+                    videoPlayer.targetTexture = null;
+                UnityEngine.Object.Destroy(videoRenderTexture);
+            }
+            catch (Exception) { }
+            videoRenderTexture = null;
+        }
+
         // Hide video ad and skip button
         SetSkipButtonVisible(false);
         SetVideoAdVisible(false);
@@ -310,9 +427,18 @@ public class VideoAdSpawner : MonoBehaviour
         SetBGMAudioMuted(false);
         SetAdCanvasActive(true);
 
-        // Resume time only if no fail menu will be shown
-        if (pauseGameOnShow && !showFailOnSkip)
+        // For death videos (showFailOnSkip = true), keep the game paused - let the fail menu handle unpausing
+        // Only unpause for non-death videos like restart ads
+        if (pauseGameOnShow && showFailOnSkip)
+        {
+            // Keep paused for death videos - don't unpause
+            Debug.Log("SkipVideoAd: Keeping game paused for death video");
+        }
+        else if (pauseGameOnShow)
+        {
+            // Unpause for non-death videos
             Time.timeScale = 1f;
+        }
 
         // Execute appropriate action
         if (showFailOnSkip && FailMenuInstance != null)
@@ -359,39 +485,64 @@ public class VideoAdSpawner : MonoBehaviour
     // --- UI Helpers ---
     void SetVideoAdVisible(bool visible)
     {
-        if (videoAdCanvas != null)
-        {
-            Debug.Log($"SetVideoAdVisible({visible}): Before - active={videoAdCanvas.gameObject.activeInHierarchy}");
-            videoAdCanvas.gameObject.SetActive(visible);
-            Debug.Log($"SetVideoAdVisible({visible}): After - active={videoAdCanvas.gameObject.activeInHierarchy}");
-        }
-        else
+        if (videoAdCanvas == null)
         {
             Debug.LogWarning("videoAdCanvas is null!");
+            return;
         }
+
+        // Run at end of frame to avoid modifying UI collections during UI processing
+        StartCoroutine(ApplyCanvasVisibilityAtEndOfFrame(videoAdCanvas, visible));
     }
 
     void SetVideoImageVisible(bool visible)
     {
-        if (videoImageCanvas != null)
-        {
-            Debug.Log($"SetVideoImageVisible({visible}): Before - active={videoImageCanvas.gameObject.activeInHierarchy}");
-            videoImageCanvas.gameObject.SetActive(visible);
-            Debug.Log($"SetVideoImageVisible({visible}): After - active={videoImageCanvas.gameObject.activeInHierarchy}");
-        }
-        else
+        if (videoImageCanvas == null)
         {
             Debug.LogWarning("videoImageCanvas is null!");
+            return;
+        }
+
+        StartCoroutine(ApplyCanvasVisibilityAtEndOfFrame(videoImageCanvas, visible));
+    }
+
+    IEnumerator ApplyCanvasVisibilityAtEndOfFrame(Canvas canvas, bool visible)
+    {
+        // Wait until end of frame to avoid UI collection modification during paint/layout
+        yield return new WaitForEndOfFrame();
+
+        if (canvas == null) yield break;
+
+        try
+        {
+            // Only toggle the Canvas.enabled flag. Do NOT add/remove components or toggle
+            // GameObject.active state here — changing serialized objects at runtime from
+            // inspector/UI callbacks can cause the InvalidOperation/SerializedObject errors.
+            canvas.enabled = visible;
+            var cg = canvas.GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = visible ? 1f : 0f;
+                cg.interactable = visible;
+                cg.blocksRaycasts = visible;
+            }
+            // If there's no CanvasGroup we simply leave the GameObject active but
+            // rely on Canvas.enabled to hide the UI. This avoids modifying the
+            // GameObject active state which can trigger editor serialization errors.
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"ApplyCanvasVisibilityAtEndOfFrame exception: {ex.Message}");
         }
     }
 
     void SetSkipButtonVisible(bool visible)
     {
-        if (skipButton != null)
-        {
-            skipButton.gameObject.SetActive(visible);
-            skipButton.interactable = visible;
-        }
+        if (skipButton == null) return;
+
+        // Defer toggling active state to end of frame to avoid UI collection modification errors
+        StartCoroutine(ApplyGameObjectActiveAtEndOfFrame(skipButton.gameObject, visible));
+        skipButton.interactable = visible;
     }
 
     void SetBGMAudioMuted(bool muted)
@@ -404,9 +555,23 @@ public class VideoAdSpawner : MonoBehaviour
 
     void SetAdCanvasActive(bool active)
     {
-        if (adCanvas != null)
+        if (adCanvas == null) return;
+
+        // Use same deferred method as other canvases to avoid modifying serialized UI state mid-frame
+        StartCoroutine(ApplyCanvasVisibilityAtEndOfFrame(adCanvas, active));
+    }
+
+    IEnumerator ApplyGameObjectActiveAtEndOfFrame(GameObject go, bool active)
+    {
+        yield return new WaitForEndOfFrame();
+        if (go == null) yield break;
+        try
         {
-            adCanvas.gameObject.SetActive(active);
+            go.SetActive(active);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"ApplyGameObjectActiveAtEndOfFrame exception: {ex.Message}");
         }
     }
 
