@@ -7,13 +7,23 @@ public class WholePie : MonoBehaviour
     bool allSlotsFilled;
     [SerializeField] List<WholePie> adjecentPies = new List<WholePie>();
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource matchingSound; // Sound when plate is successfully filled
+
     private int slotsDestroyedCounter;
+    private bool hasPlayedMatchSound = false; // Prevent multiple sound plays
 
     void Update()
     {
         CheckIfAllSlotsFilled();
-        if (allSlotsFilled)
+        if (allSlotsFilled && !hasPlayedMatchSound)
         {
+            // Play matching sound when plate is successfully filled (only once)
+            if (matchingSound != null && matchingSound.clip != null)
+                matchingSound.PlayOneShot(matchingSound.clip);
+
+            hasPlayedMatchSound = true; // Prevent multiple plays
+
             Invoke(nameof(ClearAllSlices), 0.05f); // slight delay
             adjecentPies[0].ClearAllSlices();
             adjecentPies[1].ClearAllSlices();
@@ -50,6 +60,9 @@ public class WholePie : MonoBehaviour
         }
 
         SliceGameManager.instance1.addToScore(slotsDestroyedCounter);
+        
+        // Reset the sound flag so it can play again next time
+        hasPlayedMatchSound = false;
     }
 
     

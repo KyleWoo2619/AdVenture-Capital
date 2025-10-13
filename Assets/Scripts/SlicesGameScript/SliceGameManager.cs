@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,12 @@ public class SliceGameManager : MonoBehaviour
     public List<SliceSlot> sliceSlotListMinus120 = new List<SliceSlot>();
 
     [SerializeField] int score = 0;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource loseSound; // Sound when player loses
+
+    [Header("Ad System")]
+    [SerializeField] private FullscreenAdSpawner adSpawner; // Reference to ad spawner
 
     void Awake()
     {
@@ -35,12 +42,36 @@ public class SliceGameManager : MonoBehaviour
         score += numDestroyedSlices;
         Debug.Log(score);
     }
+
+    // Public method to get current score (for UI display)
+    public int GetScore()
+    {
+        return score;
+    }
     
     public void EndGame()
     {
+        // Pause the game
         Time.timeScale = 0;
-        Debug.Log("your lose");
-        //display fail menu
+        Debug.Log("Game Over - Player Lost");
+
+        // Play lose sound
+        if (loseSound != null && loseSound.clip != null)
+            loseSound.PlayOneShot(loseSound.clip);
+
+        // Show ad for death/lose, then fail menu after delay
+        StartCoroutine(ShowLoseAdAfterDelay(1.5f));
+    }
+
+    private IEnumerator ShowLoseAdAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay); // Use real time since game is paused
+
+        // Use the death-specific ad method that shows fail menu after
+        if (adSpawner != null)
+        {
+            adSpawner.ShowAdForDeath();
+        }
     }
 
     

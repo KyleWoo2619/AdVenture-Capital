@@ -12,6 +12,10 @@ public class TouchDraggableObject2D : MonoBehaviour
     private Transform selectedObject;
     private bool isDragging = false;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource pickupSound; // Sound when touching/picking up object
+    [SerializeField] private AudioSource dropSound;   // Sound when placing object down
+
     void Awake()
     {
         camera = Camera.main;
@@ -49,6 +53,10 @@ public class TouchDraggableObject2D : MonoBehaviour
         {
             selectedObject = hitCollider.transform;
             isDragging = true;
+
+            // Play pickup sound when object is touched/selected
+            if (pickupSound != null && pickupSound.clip != null)
+                pickupSound.PlayOneShot(pickupSound.clip);
         }
     }
 
@@ -56,6 +64,10 @@ public class TouchDraggableObject2D : MonoBehaviour
     {
         if (selectedObject != null)
         {
+            // Play drop sound when object is placed down
+            if (dropSound != null && dropSound.clip != null)
+                dropSound.PlayOneShot(dropSound.clip);
+
             if (selectedObject.TryGetComponent<SlicePiece>(out var slice))
             {
                 slice.SetSlice();
@@ -64,7 +76,7 @@ public class TouchDraggableObject2D : MonoBehaviour
             {
                 tripleSlice.SetTripleSlice();
             }
-            else if(selectedObject.TryGetComponent<DualSlices>(out var dualSlice))
+            else if (selectedObject.TryGetComponent<DualSlices>(out var dualSlice))
             {
                 dualSlice.SetDualSlice();
             }
