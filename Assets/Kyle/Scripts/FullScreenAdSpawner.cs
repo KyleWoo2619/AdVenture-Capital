@@ -363,6 +363,8 @@ public class FullscreenAdSpawner : MonoBehaviour
             isShowing = false;
             if (pauseGameOnShow)
                 Time.timeScale = 1f;
+
+            ShowAd();
         });
 
         if (pauseGameOnShow)
