@@ -687,9 +687,22 @@ public class VideoAdSpawner : MonoBehaviour
         Debug.Log($"[VideoAdSpawner] restartOnSkip: {restartOnSkip}");
         Debug.Log($"[VideoAdSpawner] FailMenuInstance: {(FailMenuInstance != null ? "assigned" : "NULL")}");
         
-        // Hide fullscreen ad UI components
-        SetFullscreenAdVisible(false);
+        // Mark state first so any pending coroutines won't re-enable UI
         showingFullscreenAd = false;
+
+        // Immediately disable the fullscreen ad Canvas component (no deferred toggles)
+        if (fullscreenAdCanvas != null)
+        {
+            fullscreenAdCanvas.enabled = false;
+            var cg = fullscreenAdCanvas.GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = 0f;
+                cg.interactable = false;
+                cg.blocksRaycasts = false;
+            }
+            Debug.Log("[VideoAdSpawner] Disabled fullscreenAdCanvas component directly");
+        }
 
         // Disable raycast blocking on the fullscreen ad image (like FullscreenAdSpawner)
         if (fullscreenAdImage != null)
@@ -698,24 +711,7 @@ public class VideoAdSpawner : MonoBehaviour
             Debug.Log("[VideoAdSpawner] Disabled raycast blocking on fullscreen ad image");
         }
 
-        // Explicitly disable fullscreen ad GameObjects
-        if (fullscreenAdCanvas != null)
-        {
-            StartCoroutine(ApplyGameObjectActiveAtEndOfFrame(fullscreenAdCanvas.gameObject, false));
-            Debug.Log("[VideoAdSpawner] Disabled fullscreenAdCanvas GameObject");
-        }
-
-        if (fullscreenAdImage != null)
-        {
-            StartCoroutine(ApplyGameObjectActiveAtEndOfFrame(fullscreenAdImage.gameObject, false));
-            Debug.Log("[VideoAdSpawner] Disabled fullscreenAdImage GameObject");
-        }
-
-        if (fullscreenCloseButton != null)
-        {
-            StartCoroutine(ApplyGameObjectActiveAtEndOfFrame(fullscreenCloseButton.gameObject, false));
-            Debug.Log("[VideoAdSpawner] Disabled fullscreen close button GameObject");
-        }
+        // Do NOT deactivate GameObjects; only toggle Canvas components to avoid race conditions
 
         // Turn off adCanvas (like FullscreenAdSpawner does)
         if (adCanvas != null)
@@ -744,6 +740,13 @@ public class VideoAdSpawner : MonoBehaviour
             if (failMenuCanvas != null)
             {
                 failMenuCanvas.enabled = true;
+                var failCg = failMenuCanvas.GetComponent<CanvasGroup>();
+                if (failCg != null)
+                {
+                    failCg.alpha = 1f;
+                    failCg.interactable = true;
+                    failCg.blocksRaycasts = true;
+                }
                 Debug.Log("[VideoAdSpawner] Enabled failMenuCanvas component directly");
             }
             else
