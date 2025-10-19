@@ -565,7 +565,7 @@ RectTransform:
   m_GameObject: {fileID: 475320123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.2875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1034816392}
@@ -573,7 +573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000076288, y: -821}
+  m_AnchoredPosition: {x: 0.0000076288, y: -816}
   m_SizeDelta: {x: 914.48, y: 171.4644}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &475320125
@@ -852,7 +852,7 @@ RectTransform:
   m_GameObject: {fileID: 766845035}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.4375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1231014789}
@@ -860,7 +860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.00049591, y: 360}
+  m_AnchoredPosition: {x: 0.00049591, y: -395}
   m_SizeDelta: {x: 919.604, y: 172.4258}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &766845037
@@ -2302,7 +2302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520288341
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2312,7 +2312,7 @@ RectTransform:
   m_GameObject: {fileID: 1520288340}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.19119564, y: 0.18430126, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1619719274}
@@ -2323,7 +2323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.00039672852, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1520288342
@@ -2345,48 +2345,54 @@ MonoBehaviour:
   choiceALabel: {fileID: 1231014790}
   choiceBLabel: {fileID: 1034816393}
   adSteps:
-  - stepName: ChoiceA
-    image: {fileID: -2595620974469701525, guid: 5b5ace301b72f7c4c8096f420b12115c, type: 3}
-    choiceAText: Chose A
-    choiceBText: Choose A
-    nextStepA: 0
-    nextStepB: 1
-  - stepName: ChoiceB
-    image: {fileID: 2136858258392011190, guid: c0fca4444d3c9e8499614558ec335857, type: 3}
-    choiceAText: Chose B
-    choiceBText: Choose B
-    nextStepA: 2
-    nextStepB: 3
   - stepName: 0
     image: {fileID: -2595620974469701525, guid: 5b5ace301b72f7c4c8096f420b12115c, type: 3}
-    choiceAText: Chose B
+    choiceAText: Chose A
     choiceBText: Choose B
-    nextStepA: 2
-    nextStepB: 3
+    nextStepA: 1
+    nextStepB: 2
   - stepName: 1
+    image: {fileID: 2136858258392011190, guid: c0fca4444d3c9e8499614558ec335857, type: 3}
+    choiceAText: Chose C
+    choiceBText: Choose D
+    nextStepA: 3
+    nextStepB: 4
+  - stepName: 2
+    image: {fileID: -2595620974469701525, guid: 5b5ace301b72f7c4c8096f420b12115c, type: 3}
+    choiceAText: Chose E
+    choiceBText: Choose F
+    nextStepA: 5
+    nextStepB: 6
+  - stepName: 3
+    image: {fileID: 21300000, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
+    choiceAText: Chose G
+    choiceBText: Choose H
+    nextStepA: 7
+    nextStepB: 8
+  - stepName: 4
+    image: {fileID: 21300000, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
+    choiceAText: Chose I
+    choiceBText: Choose J
+    nextStepA: 9
+    nextStepB: 10
+  - stepName: 4
     image: {fileID: 21300000, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
     choiceAText: Chose B
     choiceBText: Choose B
     nextStepA: 2
     nextStepB: 3
+  - stepName: 6
+    image: {fileID: 21300000, guid: 45d17262a8bf05f4c8477db6934d6ed2, type: 3}
+    choiceAText: Chose B
+    choiceBText: Choose B
+    nextStepA: 13
+    nextStepB: 14
   hotkeysEnabled: 1
   hotkeyChoiceA: 104
   hotkeyChoiceB: 106
   onChoiceA:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 766845035}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onChoiceB:
     m_PersistentCalls:
       m_Calls: []
@@ -3579,12 +3585,20 @@ PrefabInstance:
       objectReference: {fileID: 4471441984204527846}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: maxInterval
-      value: 1000
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: minInterval
-      value: 1000
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: interactiveAdCanvas
+      value: 
+      objectReference: {fileID: 1520288340}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: interactiveAdScript
+      value: 
+      objectReference: {fileID: 1520288342}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: adSprites.Array.size
       value: 7
