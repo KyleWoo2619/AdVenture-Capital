@@ -1639,9 +1639,9 @@ MonoBehaviour:
   onPlayerDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1322963878}
-        m_TargetAssemblyTypeName: FullscreenAdSpawner, Assembly-CSharp
-        m_MethodName: ShowAdForDeath
+      - m_Target: {fileID: 9222748641393873395}
+        m_TargetAssemblyTypeName: VideoAdSpawner, Assembly-CSharp
+        m_MethodName: ShowVideoAdForDeath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3224,6 +3224,87 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &2883402202425474755
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 439971597753345645, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_Name
+      value: ---VideoAd---
+      objectReference: {fileID: 0}
+    - target: {fileID: 2054146376684322471, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2054146376684322471, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: adCanvas
+      value: 
+      objectReference: {fileID: 1411840763}
+    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: bgmAudioSource
+      value: 
+      objectReference: {fileID: 80206740}
+    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: failMenuCanvas
+      value: 
+      objectReference: {fileID: 4744667199870888278}
+    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: FailMenuInstance
+      value: 
+      objectReference: {fileID: 9091871636444515165}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 540
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f85a67108422d9341ba47fa61db56337, type: 3}
 --- !u!114 &2907264450925835505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4170,6 +4251,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9222748641393873395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+  m_PrefabInstance: {fileID: 2883402202425474755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f9fcea172cbf914993bab126fb3bcb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VideoAdSpawner
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4186,3 +4278,4 @@ SceneRoots:
   - {fileID: 3237802072690132537}
   - {fileID: 1411840762}
   - {fileID: 289203356}
+  - {fileID: 2883402202425474755}

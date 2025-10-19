@@ -27,6 +27,7 @@ public class GameLogic : MonoBehaviour
 
     [Header("Ad System")]
     public FullscreenAdSpawner adSpawner;
+    [SerializeField] private VideoAdSpawner videoAdSpawner; // drag VideoAdSpawner here for direct calling
 
     [Header("Game State")]
     private bool isGamePaused = false; // Add pause state tracking
@@ -328,10 +329,10 @@ public class GameLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        // Use the death-specific ad method that shows fail menu after
-        if (adSpawner != null)
+        // Direct call to video ad spawner for death
+        if (videoAdSpawner != null)
         {
-            adSpawner.ShowAdForDeath();
+            videoAdSpawner.ShowVideoAdForDeath();
         }
     }
 

@@ -57,14 +57,6 @@ public class FullscreenAdSpawner : MonoBehaviour
     private bool showFailOnClose = false;    // Should fail menu show after ad closes?
     private bool showWinOnClose = false;     // Should win menu show after ad closes?
 
-    //--- Interactive Ads -----
-
-    [Header("Interactive Ad")]
-    [SerializeField] private GameObject interactiveAdCanvas;    // might swap to an array of it?
-    [SerializeField] private InteractiveAds interactiveAdScript;
-
-
-
     // --- Unity Lifecycle ---
     void Awake()
     {
@@ -113,33 +105,22 @@ public class FullscreenAdSpawner : MonoBehaviour
 
     // --- Ad Spawn Loop ---
     IEnumerator SpawnLoop()
-    {  // Continuously spawns ads at random intervals
+    {
+        // Continuously spawns ads at random intervals
         while (true)
         {
             float wait = Mathf.Max(0f, UnityEngine.Random.Range(minInterval, maxInterval));
             yield return WaitRealtime(wait);
 
-
-            bool showInteractive = (interactiveAdCanvas != null && interactiveAdScript != null) && (UnityEngine.Random.value < 0.5f);
-
-            if (showInteractive)
+            // Pick a random ad sprite and show ad
+            if (adSprites != null && adSprites.Count > 0 && adImage != null)
             {
-                ShowInteractiveAd();
+                adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+                ShowAd();
             }
-            else
-            {
-                if (adSprites != null && adSprites.Count > 0 && adImage != null)
-                {
-                    adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
-                    ShowAd();
-                }
-            }
-
-
 
             // Wait until ad is closed before spawning next
-            yield return new WaitUntil(() => !isShowing && !IsInteractiveAdShowing());
-            Debug.Log(showInteractive ? "Interactive ad selected" : "Normal fullscreen ad selected");
+            yield return new WaitUntil(() => !isShowing);
         }
     }
 
@@ -341,38 +322,5 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         if (adImage && adImage.sprite == null && adSprites != null && adSprites.Count > 0)
             adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
-    }
-
-    public void ShowInteractiveAd()
-    {
-        if (interactiveAdCanvas == null || interactiveAdScript == null)
-        {
-            Debug.LogWarning("Interactive ad components missing!");
-            return;
-        }
-
-        SetAdVisible(false);
-        SetCloseButtonVisible(false);
-
-        interactiveAdCanvas.SetActive(true);
-        isShowing = true;
-
-        interactiveAdScript.StartInteractiveAd(() =>
-        {
-            interactiveAdCanvas.SetActive(false);
-            isShowing = false;
-            if (pauseGameOnShow)
-                Time.timeScale = 1f;
-
-            ShowAd();
-        });
-
-        if (pauseGameOnShow)
-            Time.timeScale = 0f;
-    }
-
-    private bool IsInteractiveAdShowing()
-    {
-        return interactiveAdCanvas != null && interactiveAdCanvas.activeSelf;
     }
 }
