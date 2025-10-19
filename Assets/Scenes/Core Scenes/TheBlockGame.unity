@@ -3070,7 +3070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0025024414, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0.0025024414, y: 0}
   m_SizeDelta: {x: 0.0050049, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2123069040271955020
@@ -3244,6 +3244,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6739026564034414826, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1865451286}
     - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: adCanvas
       value: 
@@ -3260,6 +3264,10 @@ PrefabInstance:
       propertyPath: FailMenuInstance
       value: 
       objectReference: {fileID: 9091871636444515165}
+    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      propertyPath: fullscreenAdSpawner
+      value: 
+      objectReference: {fileID: 1322963878}
     - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 540
@@ -4106,7 +4114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &8844391005805753169

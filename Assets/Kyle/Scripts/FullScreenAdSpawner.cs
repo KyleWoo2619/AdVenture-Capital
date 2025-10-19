@@ -50,6 +50,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     private Coroutine loop;                  // Coroutine for ad spawn loop
     private Coroutine closeButtonCoroutine;  // Coroutine for enabling close button
     private bool isShowing = false;          // Is an ad currently being shown?
+    private bool isPaused = false;           // Is the ad spawning loop paused?
     private int showToken = 0;               // Token to track current ad instance
     private Action onCloseOneShot;           // Callback to run after ad closes (non-death flow)
     private bool IsPlayerDeadSafe =>         // Helper: safely check if player is dead
@@ -109,8 +110,22 @@ public class FullscreenAdSpawner : MonoBehaviour
         // Continuously spawns ads at random intervals
         while (true)
         {
+            // Wait while paused (e.g., during video ads)
+            yield return new WaitUntil(() => !isPaused);
+
             float wait = Mathf.Max(0f, UnityEngine.Random.Range(minInterval, maxInterval));
-            yield return WaitRealtime(wait);
+            
+            // Wait for the interval, but also check if we get paused during the wait
+            float elapsed = 0f;
+            while (elapsed < wait && !isPaused)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            
+            // If we were paused during the wait, restart the loop (new timer)
+            if (isPaused)
+                continue;
 
             // Pick a random ad sprite and show ad
             if (adSprites != null && adSprites.Count > 0 && adImage != null)
@@ -322,5 +337,32 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         if (adImage && adImage.sprite == null && adSprites != null && adSprites.Count > 0)
             adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+    }
+
+    // --- Interval Control Methods ---
+    /// <summary>
+    /// Pause the ad spawning interval (e.g., during video ads)
+    /// </summary>
+    public void PauseInterval()
+    {
+        isPaused = true;
+        Debug.Log("FullscreenAdSpawner: Interval paused");
+    }
+
+    /// <summary>
+    /// Resume the ad spawning interval with a fresh timer (starts from 0)
+    /// </summary>
+    public void ResumeInterval()
+    {
+        isPaused = false;
+        Debug.Log("FullscreenAdSpawner: Interval resumed with fresh timer");
+    }
+
+    /// <summary>
+    /// Check if the interval is currently paused
+    /// </summary>
+    public bool IsIntervalPaused()
+    {
+        return isPaused;
     }
 }

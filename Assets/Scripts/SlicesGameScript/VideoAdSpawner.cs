@@ -13,13 +13,26 @@ using UnityEngine.SceneManagement;
 [DisallowMultipleComponent]
 public class VideoAdSpawner : MonoBehaviour
 {
+    // --- Paired Video + Image Ad Data ---
+    [System.Serializable]
+    public class VideoAdPair
+    {
+        public string adName;           // Name for identification
+        public VideoClip videoClip;     // The video to play
+        public Sprite fullscreenImage;  // The fullscreen ad image to show after video
+    }
+
     // --- UI References ---
     [Header("Hook up your UI")]
     [SerializeField] private Canvas videoAdCanvas;      // The canvas that displays the video ad
     [SerializeField] private Canvas videoImageCanvas;   // The canvas that displays the video render texture/raw image
+    [SerializeField] private Image backgroundBlockerImage; // Black image to block game background during video
+    [SerializeField] private Canvas fullscreenAdCanvas; // The canvas that displays the fullscreen image ad
+    [SerializeField] private Image fullscreenAdImage;   // The Image component for the fullscreen ad
     [SerializeField] private VideoPlayer videoPlayer;   // The video player component
     [SerializeField] private Slider progressSlider;     // The progress slider (0 to 1)
     [SerializeField] private Button skipButton;         // The skip button
+    [SerializeField] private Button fullscreenCloseButton; // Close button for the fullscreen ad
     
     // --- Audio References ---
     [Header("Audio Management")]
@@ -31,17 +44,21 @@ public class VideoAdSpawner : MonoBehaviour
 
     // --- Video Content ---
     [Header("Video Content")]
-    [SerializeField] private List<VideoClip> videoClips = new(); // List of video ads
+    [SerializeField] private List<VideoAdPair> videoAdPairs = new(); // List of paired video + image ads
 
     // --- Timing Configuration ---
     [Header("Video Settings")]
     [SerializeField] private float skipButtonDelay = 5f;        // Time for slider to fill and skip button to appear
     [SerializeField] private bool pauseGameOnShow = true;       // If true, game pauses when ad is shown
 
+    [Header("Fullscreen Ad Settings")]
+    [SerializeField] private float fullscreenCloseButtonDelay = 2.5f; // Time before fullscreen close button appears (2-3 seconds)
+
     // --- External References ---
     [Header("External")]
     [SerializeField] private Canvas failMenuCanvas;   // Assign the Canvas component of your fail menu
     [SerializeField] private GameLogic gameLogic;     // Reference to GameLogic for proper pause/resume
+    [SerializeField] private FullscreenAdSpawner fullscreenAdSpawner; // Reference to pause/resume fullscreen ad intervals
 
     public FailMenuManager FailMenuInstance; // Reference to fail menu for death flow
 
@@ -50,11 +67,14 @@ public class VideoAdSpawner : MonoBehaviour
     private Coroutine progressCoroutine;     // Coroutine for slider progress
     private Coroutine skipButtonCoroutine;   // Coroutine for enabling skip button
     private Coroutine videoCompletionCoroutine; // Coroutine for watching video completion
+    private Coroutine fullscreenCloseButtonCoroutine; // Coroutine for enabling fullscreen close button
     private Action onSkipCallback;           // Callback to run after skip is pressed
     private bool showFailOnSkip = false;     // Should fail menu show after skip?
     private bool restartOnSkip = false;      // Should restart scene after skip?
     private string targetSceneName = "";     // Scene name to load when restarting
     private RenderTexture videoRenderTexture; // temporary render texture for video playback
+    private VideoAdPair currentAdPair;       // Currently selected ad pair
+    private bool showingFullscreenAd = false; // Is the fullscreen ad currently showing?
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -70,10 +90,19 @@ public class VideoAdSpawner : MonoBehaviour
             skipButton.onClick.AddListener(SkipVideoAd);
         }
 
+        // Setup fullscreen close button listener
+        if (fullscreenCloseButton != null)
+        {
+            fullscreenCloseButton.onClick.RemoveAllListeners();
+            fullscreenCloseButton.onClick.AddListener(CloseFullscreenAd);
+        }
+
         // Hide video ad and skip button at start
         SetVideoAdVisible(false);
         SetVideoImageVisible(false);
+        SetBackgroundBlockerVisible(false);
         SetSkipButtonVisible(false);
+        SetFullscreenAdVisible(false);
         
         // Ensure BGM is not muted and AdCanvas is active at start
         SetBGMAudioMuted(false);
@@ -102,12 +131,20 @@ public class VideoAdSpawner : MonoBehaviour
         StopAllCoroutines();
         SetVideoAdVisible(false);
         SetVideoImageVisible(false);
+        SetBackgroundBlockerVisible(false);
         SetSkipButtonVisible(false);
+        SetFullscreenAdVisible(false);
         
         // Restore BGM and AdCanvas
         SetBGMAudioMuted(false);
         SetAdCanvasActive(true);
         isShowing = false;
+        
+        // Resume fullscreen ad interval in case we were disabled during video
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.ResumeInterval();
+        }
 
         // Stop video if playing
         if (videoPlayer != null && videoPlayer.isPlaying)
@@ -191,11 +228,18 @@ public class VideoAdSpawner : MonoBehaviour
         SetVideoAdVisible(true);
         Debug.Log($"Setting video image visible: videoImageCanvas={videoImageCanvas}");
         SetVideoImageVisible(true);
+        SetBackgroundBlockerVisible(true);
         SetSkipButtonVisible(false);
         
         // Mute BGM and disable fullscreen ads during video
         SetBGMAudioMuted(true);
         SetAdCanvasActive(false);
+        
+        // Pause fullscreen ad spawning interval during video
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.PauseInterval();
+        }
 
         // Reset and show slider
         if (progressSlider != null)
@@ -422,10 +466,17 @@ public class VideoAdSpawner : MonoBehaviour
         SetSkipButtonVisible(false);
         SetVideoAdVisible(false);
         SetVideoImageVisible(false);
+        SetBackgroundBlockerVisible(false);
         
         // Restore BGM and AdCanvas after video ends
         SetBGMAudioMuted(false);
         SetAdCanvasActive(true);
+        
+        // Resume fullscreen ad spawning interval with fresh timer
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.ResumeInterval();
+        }
 
         // For death videos (showFailOnSkip = true), keep the game paused - let the fail menu handle unpausing
         // Only unpause for non-death videos like restart ads
@@ -441,10 +492,10 @@ public class VideoAdSpawner : MonoBehaviour
         }
 
         // Execute appropriate action
-        if (showFailOnSkip && FailMenuInstance != null)
+        if (showFailOnSkip)
         {
-            // Show fail menu (time stays paused unless fail menu resumes)
-            FailMenuInstance.DisplayFailMenu();
+            // Show paired fullscreen ad first, then fail menu after close
+            ShowFullscreenAd();
         }
         else if (restartOnSkip)
         {
@@ -561,6 +612,134 @@ public class VideoAdSpawner : MonoBehaviour
         StartCoroutine(ApplyCanvasVisibilityAtEndOfFrame(adCanvas, active));
     }
 
+    void SetBackgroundBlockerVisible(bool visible)
+    {
+        if (backgroundBlockerImage == null) return;
+
+        // Defer toggling active state to end of frame to avoid UI collection modification errors
+        StartCoroutine(ApplyGameObjectActiveAtEndOfFrame(backgroundBlockerImage.gameObject, visible));
+    }
+
+    void SetFullscreenAdVisible(bool visible)
+    {
+        if (fullscreenAdCanvas == null)
+        {
+            Debug.LogWarning("fullscreenAdCanvas is null!");
+            return;
+        }
+
+        StartCoroutine(ApplyCanvasVisibilityAtEndOfFrame(fullscreenAdCanvas, visible));
+    }
+
+    void ShowFullscreenAd()
+    {
+        Debug.Log("ShowFullscreenAd: Starting to display paired fullscreen ad");
+        
+        if (currentAdPair == null || currentAdPair.fullscreenImage == null)
+        {
+            Debug.LogWarning("ShowFullscreenAd: No current ad pair or fullscreen image available");
+            return;
+        }
+
+        if (fullscreenAdImage == null)
+        {
+            Debug.LogWarning("ShowFullscreenAd: fullscreenAdImage is null");
+            return;
+        }
+
+        showingFullscreenAd = true;
+        
+        // Set up the fullscreen ad canvas with high priority overlay
+        if (fullscreenAdCanvas != null)
+        {
+            fullscreenAdCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            fullscreenAdCanvas.overrideSorting = true;
+            fullscreenAdCanvas.sortingOrder = 5000; // High priority to be on top
+        }
+
+        // Set the paired image sprite
+        fullscreenAdImage.sprite = currentAdPair.fullscreenImage;
+        Debug.Log($"ShowFullscreenAd: Set sprite to {currentAdPair.fullscreenImage.name}");
+
+        // Show the fullscreen ad
+        SetFullscreenAdVisible(true);
+
+        // Hide the close button initially
+        if (fullscreenCloseButton != null)
+        {
+            fullscreenCloseButton.gameObject.SetActive(false);
+            fullscreenCloseButton.interactable = false;
+        }
+
+        // Start coroutine to enable close button after delay
+        if (fullscreenCloseButtonCoroutine != null)
+            StopCoroutine(fullscreenCloseButtonCoroutine);
+        fullscreenCloseButtonCoroutine = StartCoroutine(EnableFullscreenCloseButtonAfterDelay(fullscreenCloseButtonDelay));
+        
+        Debug.Log($"ShowFullscreenAd: Fullscreen ad visible, close button will appear in {fullscreenCloseButtonDelay}s");
+    }
+
+    // --- Enable Fullscreen Close Button After Delay ---
+    IEnumerator EnableFullscreenCloseButtonAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay); // Use real time since game might be paused
+
+        // Only enable if fullscreen ad is still showing
+        if (showingFullscreenAd && fullscreenCloseButton != null)
+        {
+            fullscreenCloseButton.gameObject.SetActive(true);
+            fullscreenCloseButton.interactable = true;
+            
+            // Ensure it's on top and can receive clicks
+            if (fullscreenCloseButton.targetGraphic != null)
+            {
+                fullscreenCloseButton.targetGraphic.raycastTarget = true;
+            }
+            fullscreenCloseButton.transform.SetAsLastSibling();
+            
+            Debug.Log("EnableFullscreenCloseButtonAfterDelay: Close button is now active and interactable");
+        }
+    }
+
+    void CloseFullscreenAd()
+    {
+        Debug.Log("CloseFullscreenAd: Closing fullscreen ad and showing fail menu");
+        showingFullscreenAd = false;
+
+        // Stop close button coroutine
+        if (fullscreenCloseButtonCoroutine != null)
+        {
+            StopCoroutine(fullscreenCloseButtonCoroutine);
+            fullscreenCloseButtonCoroutine = null;
+        }
+
+        // Hide fullscreen ad
+        SetFullscreenAdVisible(false);
+        
+        // Hide close button
+        if (fullscreenCloseButton != null)
+        {
+            fullscreenCloseButton.gameObject.SetActive(false);
+            fullscreenCloseButton.interactable = false;
+        }
+
+        // Show fail menu (time should stay paused)
+        if (FailMenuInstance != null)
+        {
+            FailMenuInstance.DisplayFailMenu();
+            Debug.Log("CloseFullscreenAd: Displayed fail menu");
+        }
+        else
+        {
+            Debug.LogWarning("CloseFullscreenAd: FailMenuInstance is null!");
+        }
+        
+        // Reset state for next ad
+        currentAdPair = null;
+        
+        Debug.Log("CloseFullscreenAd: Fullscreen ad closed successfully");
+    }
+
     IEnumerator ApplyGameObjectActiveAtEndOfFrame(GameObject go, bool active)
     {
         yield return new WaitForEndOfFrame();
@@ -578,16 +757,16 @@ public class VideoAdSpawner : MonoBehaviour
     // --- Video Selection ---
     private void AssignRandomVideoIfNeeded()
     {
-        Debug.Log($"AssignRandomVideoIfNeeded: videoPlayer={videoPlayer}, videoClips={videoClips}, count={videoClips?.Count}");
-        if (videoPlayer != null && videoClips != null && videoClips.Count > 0)
+        Debug.Log($"AssignRandomVideoIfNeeded: videoPlayer={videoPlayer}, videoAdPairs={videoAdPairs}, count={videoAdPairs?.Count}");
+        if (videoPlayer != null && videoAdPairs != null && videoAdPairs.Count > 0)
         {
-            VideoClip randomClip = videoClips[UnityEngine.Random.Range(0, videoClips.Count)];
-            videoPlayer.clip = randomClip;
-            Debug.Log($"Assigned random video: {randomClip.name}");
+            currentAdPair = videoAdPairs[UnityEngine.Random.Range(0, videoAdPairs.Count)];
+            videoPlayer.clip = currentAdPair.videoClip;
+            Debug.Log($"Assigned random video ad pair: {currentAdPair.adName} (video: {currentAdPair.videoClip?.name}, image: {currentAdPair.fullscreenImage?.name})");
         }
         else
         {
-            Debug.LogWarning("Cannot assign video: Missing videoPlayer or videoClips");
+            Debug.LogWarning("Cannot assign video: Missing videoPlayer or videoAdPairs");
         }
     }
 
