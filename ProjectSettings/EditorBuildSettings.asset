@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Core Scenes/MainMenu.unity
-    guid: 5b655da6dfad1c54892caffcdb05b301
+    guid: 003a1b593b0459f4b8225eeb9f9d024a
   - enabled: 1
     path: Assets/Scenes/Core Scenes/TheBlockGame.unity
     guid: b88b842e82c67af43a35905ed36d69df
