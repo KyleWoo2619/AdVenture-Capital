@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // Written by Kyle
 // This script manages multiple interactive ads in a reusable, editor-friendly way.
@@ -34,6 +36,20 @@ public class InteractiveAdManager : MonoBehaviour
     [Header("Behavior")]
     [SerializeField] private bool pauseGameOnShow = true;   // If true, game pauses when interactive ad is shown
     [SerializeField] private int onTopSortingOrder = 6000;  // Canvas sorting order (higher than fullscreen ads)
+    
+    // --- Background Settings ---
+    [Header("Background UI")]
+    [SerializeField] private Image backgroundBlockerImage; // Black background image to cover exposed areas on long phones
+    
+    // --- Win Condition Settings ---
+    [Header("Win Condition UI")]
+    [SerializeField] private Image winImage; // Win condition image to show
+    [SerializeField] private Button winCloseButton; // Close button for win condition
+    
+    [Header("Win Condition Settings")]
+    [SerializeField] private float minWinDelay = 2f; // Minimum delay before showing close button
+    [SerializeField] private float maxWinDelay = 3f; // Maximum delay before showing close button
+    [SerializeField] private string sceneToLoad = ""; // Scene name to load when win close button is pressed
 
     // --- Debug Settings ---
     [Header("Debug")]
@@ -44,12 +60,23 @@ public class InteractiveAdManager : MonoBehaviour
     private bool isShowingInteractiveAd = false;           // Is an interactive ad currently being shown?
     private InteractiveAdEntry currentAd = null;           // Currently active ad
     private Action onCompleteCallback = null;              // Callback when ad completes
+    private bool isShowingWinCondition = false;            // Is win condition currently active?
+    private Coroutine winCloseButtonCoroutine = null;      // Coroutine for enabling win close button
 
     // --- Unity Lifecycle ---
     void Awake()
     {
-        // Hide all interactive ads at start
+        // Setup win close button listener
+        if (winCloseButton != null)
+        {
+            winCloseButton.onClick.RemoveAllListeners();
+            winCloseButton.onClick.AddListener(OnWinCloseButtonPressed);
+        }
+
+        // Hide all interactive ads, background blocker, and win UI at start
         HideAllInteractiveAds();
+        SetBackgroundBlockerVisible(false);
+        SetWinUIVisible(false);
     }
 
     void Update()
@@ -170,6 +197,43 @@ public class InteractiveAdManager : MonoBehaviour
         return names;
     }
 
+    /// <summary>
+    /// Trigger win condition (called by InteractiveAds scripts)
+    /// </summary>
+    public void TriggerWinCondition()
+    {
+        if (isShowingWinCondition)
+        {
+            Debug.LogWarning("[InteractiveAdManager] Win condition already showing");
+            return;
+        }
+
+        Debug.Log("[InteractiveAdManager] Win condition triggered!");
+        isShowingWinCondition = true;
+
+        // Hide the current interactive ad content (but keep canvas active)
+        if (currentAd != null)
+        {
+            var adScript = currentAd.adScript;
+            if (adScript != null)
+            {
+                // Call a method on the ad script to hide its UI elements
+                adScript.HideAdUI();
+            }
+        }
+
+        // Hide background blocker when win condition is triggered
+        SetBackgroundBlockerVisible(false);
+
+        // Show win UI
+        SetWinUIVisible(true);
+
+        // Start coroutine to show close button after delay
+        float delay = UnityEngine.Random.Range(minWinDelay, maxWinDelay);
+        if (winCloseButtonCoroutine != null) StopCoroutine(winCloseButtonCoroutine);
+        winCloseButtonCoroutine = StartCoroutine(EnableWinCloseButtonAfterDelay(delay));
+    }
+
     // --- Private Methods ---
 
     private void ShowInteractiveAd(InteractiveAdEntry ad, Action onComplete)
@@ -192,6 +256,9 @@ public class InteractiveAdManager : MonoBehaviour
         if (pauseGameOnShow)
             Time.timeScale = 0f;
 
+        // Show the background blocker to cover exposed areas
+        SetBackgroundBlockerVisible(true);
+
         // Show the ad canvas
         ad.adCanvas.SetActive(true);
 
@@ -213,6 +280,9 @@ public class InteractiveAdManager : MonoBehaviour
 
         // Hide the ad canvas
         currentAd.adCanvas.SetActive(false);
+
+        // Hide the background blocker
+        SetBackgroundBlockerVisible(false);
 
         // Resume game if we paused it
         if (pauseGameOnShow)
@@ -297,7 +367,76 @@ public class InteractiveAdManager : MonoBehaviour
     private void EditorListValidAds()
     {
         var validAds = GetValidInteractiveAds();
-        Debug.Log($"[InteractiveAdManager] Valid ads ({validAds.Count}): " + 
+        Debug.Log($"[InteractiveAdManager] Valid ads ({validAds.Count}): " +
                   string.Join(", ", validAds.ConvertAll(ad => ad.adName)));
+    }
+
+    // --- Win Condition Methods ---
+
+    private IEnumerator EnableWinCloseButtonAfterDelay(float seconds)
+    {
+        // Wait for the specified delay (unscaled time for paused games)
+        yield return new WaitForSecondsRealtime(seconds);
+
+        // Show and enable the close button
+        if (winCloseButton != null)
+        {
+            winCloseButton.gameObject.SetActive(true);
+            winCloseButton.interactable = true;
+            if (winCloseButton.targetGraphic)
+                winCloseButton.targetGraphic.raycastTarget = true;
+            winCloseButton.transform.SetAsLastSibling();
+        }
+
+        Debug.Log("[InteractiveAdManager] Win close button enabled after delay");
+    }
+
+    private void OnWinCloseButtonPressed()
+    {
+        Debug.Log("[InteractiveAdManager] Win close button pressed, loading scene: " + sceneToLoad);
+
+        // Stop the close button coroutine if running
+        if (winCloseButtonCoroutine != null)
+        {
+            StopCoroutine(winCloseButtonCoroutine);
+            winCloseButtonCoroutine = null;
+        }
+
+        // Hide win UI
+        SetWinUIVisible(false);
+
+        // Reset win condition state
+        isShowingWinCondition = false;
+
+        // Load the specified scene
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
+        }
+        else
+        {
+            // If no scene specified, reload current scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    private void SetWinUIVisible(bool visible)
+    {
+        if (winImage) winImage.gameObject.SetActive(visible);
+        if (winCloseButton)
+        {
+            winCloseButton.gameObject.SetActive(visible);
+            winCloseButton.interactable = visible;
+            if (winCloseButton.targetGraphic)
+                winCloseButton.targetGraphic.raycastTarget = visible;
+        }
+    }
+
+    private void SetBackgroundBlockerVisible(bool visible)
+    {
+        if (backgroundBlockerImage != null)
+        {
+            backgroundBlockerImage.gameObject.SetActive(visible);
+        }
     }
 }
