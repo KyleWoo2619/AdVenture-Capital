@@ -13,13 +13,24 @@ Kyle edited touch controls to differentiate between short tap (flag) and long pr
 
 public class GameLogic : MonoBehaviour
 {
-
-    InputAction touchPress;  // New input action for touch events
+    InputAction touchPress;
     public int width = 10;
     public int height = 10;
     public int mineCount = 10;
     private MineBoard Board;
     private Cell[,] state;
+
+    [Header("Audio")]
+    public AudioSource deathSound;
+    public AudioSource winSound;
+    public AudioSource touchSound;
+
+    [Header("Ad System")]
+    public FullscreenAdSpawner adSpawner;
+    [SerializeField] private VideoAdSpawner videoAdSpawner; // drag VideoAdSpawner here for direct calling
+
+    [Header("Game State")]
+    private bool isGamePaused = false; // Add pause state tracking
 
     private void Awake()
     {
@@ -122,18 +133,20 @@ public class GameLogic : MonoBehaviour
 
     private void Update()
     {
+        // Don't process ANY input if game is paused
+        if (isGamePaused) return;
+
         // Desktop input
         if (Input.GetMouseButtonDown(1)) { Flag(); }
         if (Input.GetMouseButtonDown(0)) { Reveal(); }
 
-        // Mobile touch input
+        // Mobile touch input - only process if not paused
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == UnityEngine.TouchPhase.Began)
             {
-                // Start timing for long press
                 StartCoroutine(HandleTouch(touch.position));
             }
         }
@@ -142,59 +155,80 @@ public class GameLogic : MonoBehaviour
     private IEnumerator HandleTouch(Vector2 touchPosition)
     {
         float holdTime = 0f;
-        float longPressThreshold = 0.6f; // 0.6 seconds for long press
+        float longPressThreshold = 0.6f;
         bool actionExecuted = false;
 
         while (Input.touchCount > 0 && Input.GetTouch(0).phase != UnityEngine.TouchPhase.Ended)
         {
+            // Check if game gets paused during touch
+            if (isGamePaused)
+            {
+                yield break; // Exit if paused during touch
+            }
+
             holdTime += Time.deltaTime;
 
-            // If long press threshold reached, execute reveal immediately
             if (holdTime >= longPressThreshold && !actionExecuted)
             {
-                RevealTouch(touchPosition); // Long press = reveal with touch position
+                RevealTouch(touchPosition);
                 actionExecuted = true;
-                yield break; // Exit the coroutine immediately
+                yield break;
             }
 
             yield return null;
         }
 
-        // If touch ended without long press, flag the cell
-        if (!actionExecuted)
+        // Only execute flag if game is still not paused
+        if (!actionExecuted && !isGamePaused)
         {
-            FlagTouch(touchPosition); // Short tap = flag with touch position
+            FlagTouch(touchPosition);
         }
     }
 
     private void Flag()
     {
+        if (isGamePaused) return; // Block input if paused
+
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        worldPosition.z = 0; // Convert to 2D space
+        worldPosition.z = 0;
         Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
         Cell cell = GetCell(cellPosition.x, cellPosition.y);
 
         if (cell.type == Cell.Type.Invalid || cell.isRevealed) { return; }
-        cell.isFlagged = !cell.isFlagged;  // Toggle flagged state
+        
+        // Play touch sound
+        if (touchSound != null)
+            touchSound.Play();
+            
+        cell.isFlagged = !cell.isFlagged;
         state[cellPosition.x, cellPosition.y] = cell;
         Board.Draw(state);
     }
 
     private void FlagTouch(Vector2 screenPosition)
     {
+        if (isGamePaused) return; // Block input if paused
+
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
-        worldPosition.z = 0; // Convert to 2D space
+        worldPosition.z = 0;
         Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
         Cell cell = GetCell(cellPosition.x, cellPosition.y);
 
         if (cell.type == Cell.Type.Invalid || cell.isRevealed) { return; }
-        cell.isFlagged = !cell.isFlagged;  // Toggle flagged state
+        
+        // Play touch sound
+        if (touchSound != null)
+            touchSound.Play();
+            
+        cell.isFlagged = !cell.isFlagged;
         state[cellPosition.x, cellPosition.y] = cell;
         Board.Draw(state);
     }
 
     private void Reveal()
     {
+        if (isGamePaused) return; // Block input if paused
+
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         worldPosition.z = 0;
         Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
@@ -202,11 +236,15 @@ public class GameLogic : MonoBehaviour
 
         if (cell.type == Cell.Type.Invalid || cell.isRevealed || cell.isFlagged) { return; }
 
+        // Play touch sound
+        if (touchSound != null)
+            touchSound.Play();
+
         switch (cell.type)
         {
             case Cell.Type.Mine:
                 Debug.Log("Game Over!");
-                Explode(cell);
+                GameOver();
                 break;
             case Cell.Type.Empty:
                 Flood(cell);
@@ -226,6 +264,8 @@ public class GameLogic : MonoBehaviour
 
     private void RevealTouch(Vector2 screenPosition)
     {
+        if (isGamePaused) return; // Block input if paused
+
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
         worldPosition.z = 0;
         Vector3Int cellPosition = Board.tilemap.WorldToCell(new Vector3Int((int)worldPosition.x, (int)worldPosition.y, 0));
@@ -233,11 +273,15 @@ public class GameLogic : MonoBehaviour
 
         if (cell.type == Cell.Type.Invalid || cell.isRevealed || cell.isFlagged) { return; }
 
+        // Play touch sound
+        if (touchSound != null)
+            touchSound.Play();
+
         switch (cell.type)
         {
             case Cell.Type.Mine:
                 Debug.Log("Game Over!");
-                Explode(cell);
+                GameOver();
                 break;
             case Cell.Type.Empty:
                 Flood(cell);
@@ -255,52 +299,13 @@ public class GameLogic : MonoBehaviour
         Board.Draw(state);
     }
 
-    private void CheckWinCondition()
+    private void GameOver()
     {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                Cell cell = state[x, y];
-                if (cell.type != Cell.Type.Mine && !cell.isRevealed) { return; }
-            }
-        }
-        Debug.Log("You Win!");
-    }
+        // Play death sound
+        if (deathSound != null)
+            deathSound.Play();
 
-    private void Flood(Cell cell)
-    {
-        cell.isRevealed = true;
-        state[(int)cell.position.x, (int)cell.position.y] = cell;
-
-        for (int adjacentX = -1; adjacentX <= 1; adjacentX++)
-        {
-            for (int adjacentY = -1; adjacentY <= 1; adjacentY++)
-            {
-                if (adjacentX == 0 && adjacentY == 0) { continue; }
-                int x = (int)cell.position.x + adjacentX;
-                int y = (int)cell.position.y + adjacentY;
-                Cell adjacentCell = GetCell(x, y);
-
-                if (adjacentCell.type == Cell.Type.Invalid || adjacentCell.isRevealed || adjacentCell.isFlagged) { continue; }
-                if (adjacentCell.type == Cell.Type.Empty)
-                {
-                    Flood(adjacentCell);
-                }
-                else
-                {
-                    adjacentCell.isRevealed = true;
-                    state[x, y] = adjacentCell;
-                }
-            }
-        }
-    }
-
-    private void Explode(Cell cell)
-    {
-        cell.isRevealed = true;
-        state[(int)cell.position.x, (int)cell.position.y] = cell;
-
+        // Reveal all mines
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -310,6 +315,110 @@ public class GameLogic : MonoBehaviour
                 {
                     c.isRevealed = true;
                     state[x, y] = c;
+                }
+            }
+        }
+
+        Board.Draw(state);
+
+        // Show ad for death - this will show fail menu after ad closes
+        StartCoroutine(ShowAdForDeathAfterDelay(1.5f));
+    }
+
+    private IEnumerator ShowAdForDeathAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Direct call to video ad spawner for death
+        if (videoAdSpawner != null)
+        {
+            videoAdSpawner.ShowVideoAdForDeath();
+        }
+    }
+
+    private void CheckWinCondition()
+    {
+        // Check if all non-mine cells are revealed (standard minesweeper win condition)
+        int revealedCount = 0;
+        int totalNonMineCells = (width * height) - mineCount;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Cell cell = state[x, y];
+                
+                // Count revealed non-mine cells
+                if (cell.type != Cell.Type.Mine && cell.isRevealed)
+                {
+                    revealedCount++;
+                }
+            }
+        }
+
+        // Win condition: All non-mine cells revealed
+        if (revealedCount == totalNonMineCells)
+        {
+            Debug.Log("You Win!");
+            GameWon();
+        }
+    }
+
+    private void GameWon()
+    {
+        // Play win sound
+        if (winSound != null)
+            winSound.Play();
+
+        // Show ad after a brief delay - for win screen
+        StartCoroutine(ShowAdForWinAfterDelay(2f));
+    }
+
+    private IEnumerator ShowAdForWinAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Use the win-specific ad method that shows win menu after
+        if (adSpawner != null)
+        {
+            adSpawner.ShowAdForWin();
+        }
+    }
+
+    private IEnumerator ShowAdAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Show ad if available
+        if (adSpawner != null)
+        {
+            adSpawner.ShowAd();
+        }
+    }
+
+    // Remove the old Explode method since GameOver handles it now
+
+    private void Flood(Cell cell)
+    {
+        if (cell.isRevealed || cell.type == Cell.Type.Mine || cell.type == Cell.Type.Invalid)
+            return;
+
+        cell.isRevealed = true;
+        state[(int)cell.position.x, (int)cell.position.y] = cell;
+
+        if (cell.type == Cell.Type.Empty)
+        {
+            for (int adjacentX = -1; adjacentX <= 1; adjacentX++)
+            {
+                for (int adjacentY = -1; adjacentY <= 1; adjacentY++)
+                {
+                    if (adjacentX == 0 && adjacentY == 0) continue;
+
+                    int x = (int)cell.position.x + adjacentX;
+                    int y = (int)cell.position.y + adjacentY;
+
+                    if (IsValid(x, y))
+                        Flood(state[x, y]);
                 }
             }
         }
@@ -324,5 +433,38 @@ public class GameLogic : MonoBehaviour
     private bool IsValid(int x, int y)
     {
         return x >= 0 && x < width && y >= 0 && y < height;
+    }
+
+    // Call this function directly from your PAUSE BUTTON
+    public void PauseGame()
+    {
+        isGamePaused = true;
+        
+        // Disable touch input completely
+        if (touchPress != null)
+            touchPress.Disable();
+            
+        Debug.Log("Game Paused - Touch input disabled");
+    }
+    
+    // Call this function directly from your RESUME BUTTON  
+    public void ResumeGame()
+    {
+        isGamePaused = false;
+        
+        // Re-enable touch input
+        if (touchPress != null)
+            touchPress.Enable();
+            
+        Debug.Log("Game Resumed - Touch input enabled");
+    }
+    
+    // Generic method for other scripts if needed
+    public void SetPauseState(bool paused)
+    {
+        if (paused)
+            PauseGame();
+        else
+            ResumeGame();
     }
 }

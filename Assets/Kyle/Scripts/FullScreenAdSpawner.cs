@@ -41,6 +41,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     // --- External References ---
     [Header("External")]
     [SerializeField] private Canvas failMenuCanvas;   // Assign the Canvas component of your fail/death menu
+    [SerializeField] private Canvas winMenuCanvas;    // Assign the Canvas component of your win menu
     [SerializeField] private Canvas pauseMenuCanvas;  // (Optional) assign the Canvas of your pause menu
 
     public FailMenuManager FailMenuInstance; // Reference to fail menu for death flow
@@ -49,11 +50,13 @@ public class FullscreenAdSpawner : MonoBehaviour
     private Coroutine loop;                  // Coroutine for ad spawn loop
     private Coroutine closeButtonCoroutine;  // Coroutine for enabling close button
     private bool isShowing = false;          // Is an ad currently being shown?
+    private bool isPaused = false;           // Is the ad spawning loop paused?
     private int showToken = 0;               // Token to track current ad instance
     private Action onCloseOneShot;           // Callback to run after ad closes (non-death flow)
     private bool IsPlayerDeadSafe =>         // Helper: safely check if player is dead
         GameManager.instance != null && GameManager.instance.isDead;
     private bool showFailOnClose = false;    // Should fail menu show after ad closes?
+    private bool showWinOnClose = false;     // Should win menu show after ad closes?
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -107,8 +110,22 @@ public class FullscreenAdSpawner : MonoBehaviour
         // Continuously spawns ads at random intervals
         while (true)
         {
+            // Wait while paused (e.g., during video ads)
+            yield return new WaitUntil(() => !isPaused);
+
             float wait = Mathf.Max(0f, UnityEngine.Random.Range(minInterval, maxInterval));
-            yield return WaitRealtime(wait);
+            
+            // Wait for the interval, but also check if we get paused during the wait
+            float elapsed = 0f;
+            while (elapsed < wait && !isPaused)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            
+            // If we were paused during the wait, restart the loop (new timer)
+            if (isPaused)
+                continue;
 
             // Pick a random ad sprite and show ad
             if (adSprites != null && adSprites.Count > 0 && adImage != null)
@@ -204,28 +221,34 @@ public class FullscreenAdSpawner : MonoBehaviour
         // Prevent ad image from blocking raycasts
         if (adImage) adImage.raycastTarget = false;
 
-        // Resume time ONLY for non-death flows
+        // Resume time ONLY for non-death/non-win flows
         // Only unpause if no menu Canvas is enabled
         bool noMenusEnabled = (failMenuCanvas == null || !failMenuCanvas.enabled) &&
+                              (winMenuCanvas == null || !winMenuCanvas.enabled) &&
                               (pauseMenuCanvas == null || !pauseMenuCanvas.enabled);
 
-        if (pauseGameOnShow && !showFailOnClose && noMenusEnabled)
+        if (pauseGameOnShow && !showFailOnClose && !showWinOnClose && noMenusEnabled)
             Time.timeScale = 1f;
 
         // Death flow: show fail menu (time stays paused unless fail menu resumes)
         if (showFailOnClose && FailMenuInstance != null)
             FailMenuInstance.DisplayFailMenu();
 
-        // Non-death flow: run queued callback (e.g., load scene)
-        if (!showFailOnClose)
+        // Win flow: show win menu (time stays paused unless win menu resumes)  
+        if (showWinOnClose && winMenuCanvas != null)
+            winMenuCanvas.enabled = true;
+
+        // Non-death/non-win flow: run queued callback (e.g., load scene)
+        if (!showFailOnClose && !showWinOnClose)
         {
             var cb = onCloseOneShot;
             onCloseOneShot = null;
             cb?.Invoke();
         }
 
-        // Reset flag for next ad
+        // Reset flags for next ad
         showFailOnClose = false;
+        showWinOnClose = false;
     }
 
     // --- UI Helpers ---
@@ -294,6 +317,17 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         onCloseOneShot = null;
         showFailOnClose = true;
+        showWinOnClose = false;
+        AssignRandomSpriteIfNeeded();       // Ensure ad image is set
+        ShowAd();
+    }
+
+    // Show ad for player win flow (shows win menu after close)
+    public void ShowAdForWin()
+    {
+        onCloseOneShot = null;
+        showFailOnClose = false;
+        showWinOnClose = true;
         AssignRandomSpriteIfNeeded();       // Ensure ad image is set
         ShowAd();
     }
@@ -303,5 +337,32 @@ public class FullscreenAdSpawner : MonoBehaviour
     {
         if (adImage && adImage.sprite == null && adSprites != null && adSprites.Count > 0)
             adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+    }
+
+    // --- Interval Control Methods ---
+    /// <summary>
+    /// Pause the ad spawning interval (e.g., during video ads)
+    /// </summary>
+    public void PauseInterval()
+    {
+        isPaused = true;
+        Debug.Log("FullscreenAdSpawner: Interval paused");
+    }
+
+    /// <summary>
+    /// Resume the ad spawning interval with a fresh timer (starts from 0)
+    /// </summary>
+    public void ResumeInterval()
+    {
+        isPaused = false;
+        Debug.Log("FullscreenAdSpawner: Interval resumed with fresh timer");
+    }
+
+    /// <summary>
+    /// Check if the interval is currently paused
+    /// </summary>
+    public bool IsIntervalPaused()
+    {
+        return isPaused;
     }
 }

@@ -6,6 +6,7 @@ public class AdAfterMinuteTMP : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private FullscreenAdSpawner spawner;   // Drag your FullscreenAdSpawner here
+    [SerializeField] private VideoAdSpawner videoAdSpawner; // Drag your VideoAdSpawner here
     [SerializeField] private TMP_Text countdownLabel;       // TMP text for the countdown
     [SerializeField] private GameObject failMenuRoot;      // Reference to the fail menu GameObject
     [SerializeField] private AudioSource mainBGM;         // Assign your main background music AudioSource
@@ -22,7 +23,8 @@ public class AdAfterMinuteTMP : MonoBehaviour
 
     void Reset()
     {
-        if (!spawner) spawner = FindObjectOfType<FullscreenAdSpawner>();
+        if (!spawner) spawner = FindFirstObjectByType<FullscreenAdSpawner>();
+        if (!videoAdSpawner) videoAdSpawner = FindFirstObjectByType<VideoAdSpawner>();
     }
 
     void OnEnable()
@@ -63,21 +65,44 @@ public class AdAfterMinuteTMP : MonoBehaviour
             }
 
             SetLabel("00:00");
-            Time.timeScale = 0f; // pause the game
-
-            if (failMenuRoot != null)
+            
+            // Use VideoAdSpawner to show video ad which will then show fail menu
+            if (videoAdSpawner != null)
             {
-                failMenuRoot.SetActive(true);
+                videoAdSpawner.ShowVideoAdForDeath();
                 PlayDeathSoundWithDuck();
+            }
+            else
+            {
+                // Fallback to direct fail menu if no VideoAdSpawner assigned
+                Time.timeScale = 0f; // pause the game
 
-                // force-enable Canvas if something else disabled it
-                var canvas = failMenuRoot.GetComponent<Canvas>();
-                if (canvas != null && !canvas.enabled)
-                    canvas.enabled = true;
+                if (failMenuRoot != null)
+                {
+                    failMenuRoot.SetActive(true);
+                    PlayDeathSoundWithDuck();
+
+                    // force-enable Canvas if something else disabled it
+                    var canvas = failMenuRoot.GetComponent<Canvas>();
+                    if (canvas != null && !canvas.enabled)
+                        canvas.enabled = true;
+                }
             }
 
-            // Wait until fail menu is closed or handled before repeating
-            while (failMenuRoot != null && failMenuRoot.activeSelf) yield return null;
+            // Wait until video ad and fail menu flow is complete before repeating
+            if (videoAdSpawner != null)
+            {
+                // Wait for video ad to finish and fail menu to be handled
+                while ((videoAdSpawner.IsVideoAdShowing() || (failMenuRoot != null && failMenuRoot.activeSelf)) && repeatEveryMinute)
+                {
+                    yield return null;
+                }
+            }
+            else
+            {
+                // Fallback wait condition for direct fail menu
+                while (failMenuRoot != null && failMenuRoot.activeSelf) yield return null;
+            }
 
             yield return null; // small buffer
 

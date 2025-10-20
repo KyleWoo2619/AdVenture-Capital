@@ -27,7 +27,7 @@ public class PlatformController : MonoBehaviour
         speed = GameManager.instance.platformSpeed;
 
 
-        //UnityEngine.Debug.Log(speed);
+        UnityEngine.Debug.Log(speed);
     }
 
     
