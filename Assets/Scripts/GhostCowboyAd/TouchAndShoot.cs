@@ -7,13 +7,16 @@ using System.Collections.Generic;
 public class TouchAndShoot : MonoBehaviour
 {
     private PlayerInput playerInput;
-    private InputAction shoot;
-    private InputAction shootPos;
+    public InputAction shoot { get; private set; }
+    public InputAction shootPos { get; private set; }
 
-    public GameObject CanvasUI;
+    private GameObject CanvasUI;
     GraphicRaycaster ui_raycaster;
     PointerEventData touch_data;
     List<RaycastResult> touch_result;
+
+    public delegate void EnemyDeath();
+    public static event EnemyDeath OnEnemyDeath;
     
     void Awake()
     {
@@ -25,6 +28,8 @@ public class TouchAndShoot : MonoBehaviour
         ui_raycaster = CanvasUI.GetComponent<GraphicRaycaster>();
         touch_data = new PointerEventData(EventSystem.current);
         touch_result = new List<RaycastResult>();
+
+       
     }
 
     void OnEnable()
@@ -32,6 +37,7 @@ public class TouchAndShoot : MonoBehaviour
         shoot.performed += OnShootPressed;
         shoot.Enable();
         shootPos.Enable();
+        
     }
 
     void OnDisable()
@@ -43,16 +49,24 @@ public class TouchAndShoot : MonoBehaviour
     
     void OnShootPressed(InputAction.CallbackContext context)
     {
+    
         touch_data.position = shootPos.ReadValue<Vector2>();
         touch_result.Clear();
 
-        ui_raycaster.Raycast(touch_data, touch_result);
+         ui_raycaster.Raycast(touch_data, touch_result);
 
         foreach(RaycastResult result in touch_result)
         {
             GameObject ui_element = result.gameObject;
             Debug.Log(ui_element.name);
+            
+            if(ui_element.name == "Enemy" && !ShowdownCountdown.isCountingDown)
+            {
+                OnEnemyDeath?.Invoke();
+            }
         }
+        
+        
     }
     
     
