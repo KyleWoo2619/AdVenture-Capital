@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,8 +10,12 @@ public class ShowdownCountdown : MonoBehaviour
     [SerializeField] int delayTime;
     public static bool isCountingDown { get; private set; }
     Coroutine coroutineCountdown;
-   
+    public delegate void Draw();
+    public static Draw OnDraw;
     TouchAndShoot shootRef;
+
+    
+    TMP_Text countdownText;
     void Awake()
     {
         startTime = 3;
@@ -20,6 +26,10 @@ public class ShowdownCountdown : MonoBehaviour
             {
                 shootRef = child.GetComponent<TouchAndShoot>();
             }
+            if (child.GetComponent<TMP_Text>())
+            {
+                countdownText = child.GetComponent<TMP_Text>();
+            }
         }
 
     }
@@ -27,10 +37,12 @@ public class ShowdownCountdown : MonoBehaviour
     void OnEnable()
     {
         TouchAndShoot.OnEnemyDeath += DisplayWinMenu;
+        ShooterAdversary.OnPlayerDeath += DisplayFailMenu;
     }
     void OnDisable()
     {
         TouchAndShoot.OnEnemyDeath -= DisplayWinMenu;
+        ShooterAdversary.OnPlayerDeath -= DisplayFailMenu;
     }
    
     void Start()
@@ -58,20 +70,26 @@ public class ShowdownCountdown : MonoBehaviour
         while (startTime != 0)
         {
             yield return new WaitForSeconds(1);
-            Debug.Log(startTime);
+             Debug.Log(startTime); countdownText.text = startTime.ToString();
             startTime--;
         }
         if (startTime == 0)
         {
-            isCountingDown = false;
             yield return new WaitForSeconds(1);
-            Debug.Log("Draw!");
+            isCountingDown = false;
+            OnDraw?.Invoke(); Debug.Log("Draw!"); countdownText.text = "Draw!";
         }
     }
-    
+
     void DisplayWinMenu()
     {
         //pull up win menu
         Debug.Log("You Win!");
+    }
+    
+    void DisplayFailMenu()
+    {
+        //pull up fail menu
+        Debug.Log("You lose");
     }
 }

@@ -17,7 +17,8 @@ public class TouchAndShoot : MonoBehaviour
 
     public delegate void EnemyDeath();
     public static event EnemyDeath OnEnemyDeath;
-    
+
+    bool isDead;
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -29,7 +30,7 @@ public class TouchAndShoot : MonoBehaviour
         touch_data = new PointerEventData(EventSystem.current);
         touch_result = new List<RaycastResult>();
 
-       
+        isDead = false;
     }
 
     void OnEnable()
@@ -37,6 +38,8 @@ public class TouchAndShoot : MonoBehaviour
         shoot.performed += OnShootPressed;
         shoot.Enable();
         shootPos.Enable();
+
+        ShooterAdversary.OnPlayerDeath += SetPlayerDead;
         
     }
 
@@ -45,32 +48,35 @@ public class TouchAndShoot : MonoBehaviour
         shoot.performed -= OnShootPressed;
         shoot.Disable();
         shootPos.Disable();
+
+        ShooterAdversary.OnPlayerDeath -= SetPlayerDead;
     }
-    
+
     void OnShootPressed(InputAction.CallbackContext context)
     {
-    
+
         touch_data.position = shootPos.ReadValue<Vector2>();
         touch_result.Clear();
 
-         ui_raycaster.Raycast(touch_data, touch_result);
+        ui_raycaster.Raycast(touch_data, touch_result);
 
-        foreach(RaycastResult result in touch_result)
+        foreach (RaycastResult result in touch_result)
         {
             GameObject ui_element = result.gameObject;
             Debug.Log(ui_element.name);
-            
-            if(ui_element.name == "Enemy" && !ShowdownCountdown.isCountingDown)
+
+            if (ui_element.name == "Enemy" && !ShowdownCountdown.isCountingDown && !isDead)
             {
                 OnEnemyDeath?.Invoke();
             }
+
         }
-        
-        
+
     }
-    
-    
-    
-    
-    
+
+    void SetPlayerDead()
+    {
+        isDead = true;
+    }
+
 }
