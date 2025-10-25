@@ -14,11 +14,14 @@ public class ShowdownCountdown : MonoBehaviour
     public static Draw OnDraw;
     TouchAndShoot shootRef;
 
+    [SerializeField] private GameObject InstructionObject;
+
     
     TMP_Text countdownText;
     void Awake()
     {
         startTime = 3;
+        InstructionObject.SetActive(true);
 
         foreach (Transform child in transform)
         {
@@ -47,6 +50,7 @@ public class ShowdownCountdown : MonoBehaviour
    
     void Start()
     {
+        StartCoroutine(DisableInstructionMenu());
         coroutineCountdown = StartCoroutine(CountDown());
         
     }
@@ -57,7 +61,7 @@ public class ShowdownCountdown : MonoBehaviour
         {
             if (shootRef.shoot.WasPerformedThisFrame())
             {
-                Debug.Log("You can't fire until the 'Draw!' "); //Display 'misfire' menu here, retry option
+                countdownText.text = "You cheater!"; Debug.Log("You can't fire until the 'Draw!' "); //Display 'misfire' menu here, retry option
                 StopCoroutine(coroutineCountdown);
             }
         }
@@ -70,7 +74,7 @@ public class ShowdownCountdown : MonoBehaviour
         while (startTime != 0)
         {
             yield return new WaitForSeconds(1);
-             Debug.Log(startTime); countdownText.text = startTime.ToString();
+            Debug.Log(startTime); countdownText.text = startTime.ToString();
             startTime--;
         }
         if (startTime == 0)
@@ -80,16 +84,22 @@ public class ShowdownCountdown : MonoBehaviour
             OnDraw?.Invoke(); Debug.Log("Draw!"); countdownText.text = "Draw!";
         }
     }
+    
+    IEnumerator DisableInstructionMenu()
+    {
+        yield return new WaitForSeconds(delayTime);
+        InstructionObject.SetActive(false);
+    }
 
     void DisplayWinMenu()
     {
         //pull up win menu
-        Debug.Log("You Win!");
+        countdownText.text = "You Win!";  Debug.Log("You Win!");
     }
     
     void DisplayFailMenu()
     {
         //pull up fail menu
-        Debug.Log("You lose");
+        countdownText.text = "You Lose!"; Debug.Log("You lose");
     }
 }
