@@ -15,6 +15,9 @@ public class ShowdownCountdown : MonoBehaviour
     TouchAndShoot shootRef;
 
     [SerializeField] private GameObject InstructionObject;
+    
+    [Header("Interactive Ad Settings")]
+    [SerializeField] private bool useUnscaledTime = false; // Set to true when running as interactive ad
 
     
     TMP_Text countdownText;
@@ -68,27 +71,86 @@ public class ShowdownCountdown : MonoBehaviour
     }
     IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(delayTime);
+        // Use unscaled time if running as interactive ad (game paused)
+        if (useUnscaledTime)
+            yield return new WaitForSecondsRealtime(delayTime);
+        else
+            yield return new WaitForSeconds(delayTime);
+            
         isCountingDown = true;
 
         while (startTime != 0)
         {
-            yield return new WaitForSeconds(1);
-            Debug.Log(startTime); countdownText.text = startTime.ToString();
+            // Use unscaled time if running as interactive ad (game paused)
+            if (useUnscaledTime)
+                yield return new WaitForSecondsRealtime(1);
+            else
+                yield return new WaitForSeconds(1);
+                
+            Debug.Log(startTime); 
+            countdownText.text = startTime.ToString();
             startTime--;
         }
         if (startTime == 0)
         {
-            yield return new WaitForSeconds(1);
+            // Use unscaled time if running as interactive ad (game paused)
+            if (useUnscaledTime)
+                yield return new WaitForSecondsRealtime(1);
+            else
+                yield return new WaitForSeconds(1);
+                
             isCountingDown = false;
-            OnDraw?.Invoke(); Debug.Log("Draw!"); countdownText.text = "Draw!";
+            OnDraw?.Invoke(); 
+            Debug.Log("Draw!"); 
+            countdownText.text = "Draw!";
         }
     }
     
     IEnumerator DisableInstructionMenu()
     {
-        yield return new WaitForSeconds(delayTime);
+        // Use unscaled time if running as interactive ad (game paused)
+        if (useUnscaledTime)
+            yield return new WaitForSecondsRealtime(delayTime);
+        else
+            yield return new WaitForSeconds(delayTime);
+            
         InstructionObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Enable unscaled time mode for interactive ads (called by CowboyGameWrapper)
+    /// </summary>
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
+        Debug.Log($"[ShowdownCountdown] Unscaled time mode: {enabled}");
+    }
+
+    /// <summary>
+    /// Restart the countdown for interactive ads (called by CowboyGameWrapper)
+    /// </summary>
+    public void RestartCountdown()
+    {
+        Debug.Log("[ShowdownCountdown] Restarting countdown for interactive ad");
+        
+        // Stop any running coroutines
+        if (coroutineCountdown != null)
+        {
+            StopCoroutine(coroutineCountdown);
+        }
+        StopAllCoroutines();
+        
+        // Reset values
+        startTime = 3;
+        isCountingDown = false;
+        
+        // Show instruction object
+        if (InstructionObject != null)
+            InstructionObject.SetActive(true);
+        
+        // Restart the countdown
+        StartCoroutine(DisableInstructionMenu());
+        coroutineCountdown = StartCoroutine(CountDown());
     }
 
     void DisplayWinMenu()

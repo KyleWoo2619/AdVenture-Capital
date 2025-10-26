@@ -17,6 +17,7 @@ public class TouchAndShoot : MonoBehaviour
 
     [Header("Input Settings")]
     [SerializeField] private float initialDisableTime = 3f; // Time to disable input at start
+    [SerializeField] private bool useUnscaledTime = false; // Set to true when running as interactive ad
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource; // AudioSource for sound effects
@@ -48,6 +49,11 @@ public class TouchAndShoot : MonoBehaviour
         touch_data = new PointerEventData(EventSystem.current);
         touch_result = new List<RaycastResult>();
 
+        InitializeGame();
+    }
+
+    void InitializeGame()
+    {
         isDead = false;
         canShoot = false; // Start with shooting disabled
 
@@ -56,6 +62,8 @@ public class TouchAndShoot : MonoBehaviour
 
         // Start coroutine to enable shooting after delay
         StartCoroutine(EnableShootingAfterDelay());
+        
+        Debug.Log("[TouchAndShoot] Game initialized, starting disable timer");
     }
 
     void OnEnable()
@@ -79,10 +87,10 @@ public class TouchAndShoot : MonoBehaviour
 
     void OnShootPressed(InputAction.CallbackContext context)
     {
-        // Don't allow shooting if disabled or during instructions
+        // Don't allow shooting if still in initial disable period
         if (!canShoot)
         {
-            Debug.Log("Shooting disabled - instructions still showing");
+            Debug.Log("Shooting disabled - initial disable period");
             return;
         }
 
@@ -107,7 +115,7 @@ public class TouchAndShoot : MonoBehaviour
             GameObject ui_element = result.gameObject;
             Debug.Log(ui_element.name);
 
-            if (ui_element.name == "Enemy" && !ShowdownCountdown.isCountingDown && !isDead)
+            if (ui_element.name == "Enemy" && !isDead)
             {
                 OnEnemyDeath?.Invoke();
                 hitEnemy = true;
@@ -152,8 +160,37 @@ public class TouchAndShoot : MonoBehaviour
     System.Collections.IEnumerator EnableShootingAfterDelay()
     {
         Debug.Log("Shooting disabled for " + initialDisableTime + " seconds");
-        yield return new WaitForSeconds(initialDisableTime);
+        
+        // Use unscaled time if running as interactive ad (game paused)
+        if (useUnscaledTime)
+            yield return new WaitForSecondsRealtime(initialDisableTime);
+        else
+            yield return new WaitForSeconds(initialDisableTime);
+            
         canShoot = true;
         Debug.Log("Shooting enabled!");
+    }
+
+    /// <summary>
+    /// Enable unscaled time mode for interactive ads (called by CowboyGameWrapper)
+    /// </summary>
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
+        Debug.Log($"[TouchAndShoot] Unscaled time mode: {enabled}");
+    }
+
+    /// <summary>
+    /// Restart the game (called by CowboyGameWrapper when starting interactive ad)
+    /// </summary>
+    public void RestartGame()
+    {
+        Debug.Log("[TouchAndShoot] Restarting game for interactive ad");
+        
+        // Stop any running coroutines
+        StopAllCoroutines();
+        
+        // Reset and restart the game
+        InitializeGame();
     }
 }

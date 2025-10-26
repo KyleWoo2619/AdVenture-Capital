@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-public class InteractiveAds : MonoBehaviour
+public class InteractiveAds : MonoBehaviour, IInteractiveAd
 {
     [System.Serializable]
     public class AdStep

@@ -20,12 +20,14 @@ public class InteractiveAdManager : MonoBehaviour
         
         [Header("Ad Components")]
         public GameObject adCanvas;           // The canvas GameObject for this ad
-        public InteractiveAds adScript;       // The InteractiveAds script component
+        public MonoBehaviour adScript;        // The interactive ad script component (must implement IInteractiveAd)
         
         [Header("Settings")]
         public bool isEnabled = true;         // Whether this ad can be shown
         
-        public bool IsValid => adCanvas != null && adScript != null && isEnabled;
+        public bool IsValid => adCanvas != null && adScript != null && adScript is IInteractiveAd && isEnabled;
+        
+        public IInteractiveAd GetAdInterface() => adScript as IInteractiveAd;
     }
 
     // --- Interactive Ad Configuration ---
@@ -214,11 +216,11 @@ public class InteractiveAdManager : MonoBehaviour
         // Hide the current interactive ad content (but keep canvas active)
         if (currentAd != null)
         {
-            var adScript = currentAd.adScript;
-            if (adScript != null)
+            var adInterface = currentAd.GetAdInterface();
+            if (adInterface != null)
             {
                 // Call a method on the ad script to hide its UI elements
-                adScript.HideAdUI();
+                adInterface.HideAdUI();
             }
         }
 
@@ -263,7 +265,11 @@ public class InteractiveAdManager : MonoBehaviour
         ad.adCanvas.SetActive(true);
 
         // Start the interactive ad with completion callback
-        ad.adScript.StartInteractiveAd(OnInteractiveAdComplete);
+        var adInterface = ad.GetAdInterface();
+        if (adInterface != null)
+        {
+            adInterface.StartInteractiveAd(OnInteractiveAdComplete);
+        }
 
         Debug.Log($"[InteractiveAdManager] Interactive ad '{ad.adName}' started");
     }
