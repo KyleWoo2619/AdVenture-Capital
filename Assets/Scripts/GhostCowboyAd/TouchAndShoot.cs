@@ -6,6 +6,15 @@ using System.Collections.Generic;
 
 public class TouchAndShoot : MonoBehaviour
 {
+    [Header("Character Sprites")]
+    [SerializeField] private Sprite waitSprite;  // Default/waiting state
+    [SerializeField] private Sprite fireSprite;  // When player shoots
+    [SerializeField] private Sprite winSprite;   // When player wins
+    [SerializeField] private Sprite loseSprite;  // When player loses
+
+    [Header("Character Image")]
+    [SerializeField] private Image characterImage; // The Image component to change sprites
+
     private PlayerInput playerInput;
     public InputAction shoot { get; private set; }
     public InputAction shootPos { get; private set; }
@@ -31,6 +40,9 @@ public class TouchAndShoot : MonoBehaviour
         touch_result = new List<RaycastResult>();
 
         isDead = false;
+
+        // Set default wait sprite
+        SetCharacterSprite(waitSprite);
     }
 
     void OnEnable()
@@ -54,11 +66,15 @@ public class TouchAndShoot : MonoBehaviour
 
     void OnShootPressed(InputAction.CallbackContext context)
     {
+        // Change to fire sprite when player shoots
+        SetCharacterSprite(fireSprite);
 
         touch_data.position = shootPos.ReadValue<Vector2>();
         touch_result.Clear();
 
         ui_raycaster.Raycast(touch_data, touch_result);
+
+        bool hitEnemy = false;
 
         foreach (RaycastResult result in touch_result)
         {
@@ -68,15 +84,41 @@ public class TouchAndShoot : MonoBehaviour
             if (ui_element.name == "Enemy" && !ShowdownCountdown.isCountingDown && !isDead)
             {
                 OnEnemyDeath?.Invoke();
+                hitEnemy = true;
+                // Change to win sprite when player hits enemy
+                SetCharacterSprite(winSprite);
             }
-
         }
 
+        // If no enemy was hit, return to wait sprite after a brief moment
+        if (!hitEnemy && !isDead)
+        {
+            Invoke(nameof(ReturnToWaitSprite), 0.2f);
+        }
     }
 
     void SetPlayerDead()
     {
         isDead = true;
+        // Change to lose sprite when player dies
+        SetCharacterSprite(loseSprite);
     }
 
+    // Helper method to set character sprite
+    void SetCharacterSprite(Sprite sprite)
+    {
+        if (characterImage != null && sprite != null)
+        {
+            characterImage.sprite = sprite;
+        }
+    }
+
+    // Helper method to return to wait sprite
+    void ReturnToWaitSprite()
+    {
+        if (!isDead)
+        {
+            SetCharacterSprite(waitSprite);
+        }
+    }
 }
