@@ -12,7 +12,11 @@ public class ShooterAdversary : MonoBehaviour
     [Header("Face Management")]
     [SerializeField] private RandomEnemyFace enemyFaceController; // Reference to the face controller
     
+    [Header("Interactive Ad Settings")]
+    [SerializeField] private bool useUnscaledTime = false; // Set to true when running as interactive ad
+    
     Coroutine TimeToShootCoroutine;
+    private bool isDead = false; // Track if enemy is dead
     public delegate void PlayerDeath();
     public static event PlayerDeath OnPlayerDeath;
 
@@ -20,16 +24,15 @@ public class ShooterAdversary : MonoBehaviour
     {
         ShowdownCountdown.OnDraw += ShootPlayer;
         TouchAndShoot.OnEnemyDeath += NotShootPlayer;
+        shootDelay = Random.Range(1, 4);
     }
+    
     void OnDisable()
     {
         ShowdownCountdown.OnDraw -= ShootPlayer;
-        TouchAndShoot.OnEnemyDeath += NotShootPlayer;
+        TouchAndShoot.OnEnemyDeath -= NotShootPlayer;
     }
-    void Start()
-    {
-        shootDelay = Random.Range(1, 4);   
-    }
+    
     void ShootPlayer()
     {
         TimeToShootCoroutine = StartCoroutine(TimeToShootPlayer(shootDelay));
@@ -37,6 +40,8 @@ public class ShooterAdversary : MonoBehaviour
     
     void NotShootPlayer()
     {
+        isDead = true; // Mark enemy as dead
+        
         // Play death sound when enemy is killed
         if (audioSource != null && deathSound != null)
         {
@@ -49,12 +54,48 @@ public class ShooterAdversary : MonoBehaviour
             enemyFaceController.ShowDeathFace();
         }
         
-        StopCoroutine(TimeToShootCoroutine);
+        if (TimeToShootCoroutine != null)
+        {
+            StopCoroutine(TimeToShootCoroutine);
+            TimeToShootCoroutine = null;
+        }
     }
     
     IEnumerator TimeToShootPlayer(int delay)
     {
-        yield return new WaitForSeconds(delay);
-        OnPlayerDeath?.Invoke();
+        // Use unscaled time if running as interactive ad (game paused)
+        if (useUnscaledTime)
+            yield return new WaitForSecondsRealtime(delay);
+        else
+            yield return new WaitForSeconds(delay);
+            
+        // Only shoot if enemy is still alive
+        if (!isDead)
+        {
+            OnPlayerDeath?.Invoke();
+        }
+    }
+    
+    /// <summary>
+    /// Enable unscaled time mode for interactive ads (called by CowboyGameWrapper)
+    /// </summary>
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
+        Debug.Log($"[ShooterAdversary] Unscaled time mode: {enabled}");
+    }
+    
+    /// <summary>
+    /// Reset enemy state for new game (called by CowboyGameWrapper)
+    /// </summary>
+    public void ResetEnemyState()
+    {
+        isDead = false;
+        if (TimeToShootCoroutine != null)
+        {
+            StopCoroutine(TimeToShootCoroutine);
+            TimeToShootCoroutine = null;
+        }
+        Debug.Log("[ShooterAdversary] Enemy state reset for new game");
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
 {
@@ -8,6 +9,7 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
     [SerializeField] private ShowdownCountdown countdownScript; // Handles countdown and instructions
     [SerializeField] private RandomEnemyFace enemyFace; // Handles enemy face randomization
     [SerializeField] private TouchAndShoot touchAndShootScript; // Handles shooting mechanics
+    [SerializeField] private ShooterAdversary shooterAdversary; // Handles enemy shooting mechanics
     
     private Action onComplete;
     private InteractiveAdManager adManager;
@@ -20,12 +22,14 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
         // Subscribe to win/lose events
         TouchAndShoot.OnEnemyDeath += OnPlayerWins;
         ShooterAdversary.OnPlayerDeath += OnPlayerLoses;
+        ShowdownCountdown.OnCheat += OnPlayerLoses;
     }
 
     void OnDestroy()
     {
         TouchAndShoot.OnEnemyDeath -= OnPlayerWins;
         ShooterAdversary.OnPlayerDeath -= OnPlayerLoses;
+        ShowdownCountdown.OnCheat -= OnPlayerLoses;
     }
 
     public void StartInteractiveAd(Action onAdComplete)
@@ -52,6 +56,11 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
             // Restart the touch and shoot game to reset states
             touchAndShootScript.RestartGame();
         }
+        if (shooterAdversary != null)
+        {
+            shooterAdversary.SetUnscaledTimeMode(true);
+            shooterAdversary.ResetEnemyState();
+        }
             
         // Reset enemy face
         if (enemyFace != null)
@@ -69,6 +78,12 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
         Debug.Log("[CowboyGameWrapper] Player won cowboy game!");
         gameStarted = false;
         
+        // Wait 3 seconds to show win sprite and let gunfire sound play, then trigger win condition
+        Invoke(nameof(TriggerWinConditionDelayed), 3f);
+    }
+    
+    private void TriggerWinConditionDelayed()
+    {
         // Trigger win condition (same as Japanese simulator)
         if (adManager != null)
         {
@@ -107,18 +122,23 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
 
     public void HideAdUI()
     {
-        // Hide UI when win condition triggers (called by InteractiveAdManager)
         Debug.Log("[CowboyGameWrapper] Hiding cowboy game UI for win condition");
-        
-        // Hide the instruction object and countdown UI
+
         if (countdownScript != null)
         {
-            var instructionObject = countdownScript.GetComponent<ShowdownCountdown>();
-            if (instructionObject != null)
-            {
-                // The ShowdownCountdown manages UI, so we can disable its GameObject
-                countdownScript.gameObject.SetActive(false);
-            }
+            countdownScript.StopAllCoroutines();
+            countdownScript.gameObject.SetActive(false);
+        }
+        if (touchAndShootScript != null)
+        {
+            touchAndShootScript.StopAllCoroutines();
+            // Optionally: disable input so no more shoots come in
+            var pi = touchAndShootScript.GetComponent<PlayerInput>();
+            if (pi) pi.enabled = false;
+        }
+        if (enemyFace != null)
+        {
+            // purely visual; optional
         }
     }
 

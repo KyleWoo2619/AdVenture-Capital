@@ -44,8 +44,9 @@ public class TouchAndShoot : MonoBehaviour
         shoot = playerInput.actions.FindAction("Shoot");
         shootPos = playerInput.actions.FindAction("ShootPos");
 
-        CanvasUI = transform.parent.gameObject;
-        ui_raycaster = CanvasUI.GetComponent<GraphicRaycaster>();
+        var canvas = GetComponentInParent<Canvas>();
+        ui_raycaster = canvas ? canvas.GetComponent<GraphicRaycaster>() : null;
+
         touch_data = new PointerEventData(EventSystem.current);
         touch_result = new List<RaycastResult>();
 
@@ -87,24 +88,32 @@ public class TouchAndShoot : MonoBehaviour
 
     void OnShootPressed(InputAction.CallbackContext context)
     {
-        // Don't allow shooting if still in initial disable period
-        if (!canShoot)
+        // If player has cheated or is dead, disable all shooting
+        if (ShowdownCountdown.hasCheated || isDead)
         {
-            Debug.Log("Shooting disabled - initial disable period");
             return;
         }
-
-        // Change to fire sprite when screen is touched and shooting is allowed
+        
+        // Always show the fire pose briefly
         SetCharacterSprite(fireSprite);
+        if (audioSource && shootSound) audioSource.PlayOneShot(shootSound);
 
-        // Play shoot sound effect
-        if (audioSource != null && shootSound != null)
+        // If we're not allowed to shoot yet, restore sprite and let ShowdownCountdown handle cheat detection
+        if (!canShoot)
         {
-            audioSource.PlayOneShot(shootSound);
+            Invoke(nameof(ReturnToWaitSprite), 0.2f);
+            return;
         }
 
         touch_data.position = shootPos.ReadValue<Vector2>();
         touch_result.Clear();
+
+        if (ui_raycaster == null)
+        {
+            // fail-safe: treat as miss, restore wait pose
+            Invoke(nameof(ReturnToWaitSprite), 0.2f);
+            return;
+        }
 
         ui_raycaster.Raycast(touch_data, touch_result);
 

@@ -331,6 +331,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 232940367}
     m_Modifications:
+    - target: {fileID: 1581097709068838780, guid: a7ed71617c561d54b9481829caada01d, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2577230902377536134, guid: a7ed71617c561d54b9481829caada01d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7988,6 +7992,7 @@ MonoBehaviour:
   countdownScript: {fileID: 1372837100}
   enemyFace: {fileID: 1051052465}
   touchAndShootScript: {fileID: 507894302}
+  shooterAdversary: {fileID: 1909065641}
 --- !u!114 &1372837100 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7816589425562948075, guid: a7ed71617c561d54b9481829caada01d, type: 3}
@@ -12696,6 +12701,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1909065641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7011944934136855226, guid: a7ed71617c561d54b9481829caada01d, type: 3}
+  m_PrefabInstance: {fileID: 67943573}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419d0e9e376dfe543a4b17852bd12a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterAdversary
 --- !u!114 &1919452825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2591516184299690339, guid: e12d5847984a2cf4297dad4adccc7ea4, type: 3}

@@ -414,6 +414,13 @@ public class InteractiveAdManager : MonoBehaviour
         // Reset win condition state
         isShowingWinCondition = false;
 
+        // Robustness: clear time scale and disable current ad canvas before scene load
+        Time.timeScale = 1f;
+        if (currentAd != null && currentAd.adCanvas != null)
+        {
+            currentAd.adCanvas.SetActive(false);
+        }
+
         // Load the specified scene
         if (!string.IsNullOrEmpty(sceneToLoad))
         {

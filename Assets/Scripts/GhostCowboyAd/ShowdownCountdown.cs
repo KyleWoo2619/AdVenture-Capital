@@ -9,9 +9,11 @@ public class ShowdownCountdown : MonoBehaviour
     int startTime;
     [SerializeField] int delayTime;
     public static bool isCountingDown { get; private set; }
+    public static bool hasCheated { get; private set; }
     Coroutine coroutineCountdown;
     public delegate void Draw();
     public static Draw OnDraw;
+    public static event Action OnCheat; // tell others a misfire happened
     TouchAndShoot shootRef;
 
     [SerializeField] private GameObject InstructionObject;
@@ -60,14 +62,27 @@ public class ShowdownCountdown : MonoBehaviour
 
     void Update()
     {
-        if (isCountingDown)
+        if (isCountingDown && !hasCheated && shootRef.shoot.WasPerformedThisFrame())
         {
-            if (shootRef.shoot.WasPerformedThisFrame())
+            countdownText.text = "You cheater!";
+            isCountingDown = false;
+            hasCheated = true;
+
+            if (coroutineCountdown != null)
             {
-                countdownText.text = "You cheater!"; Debug.Log("You can't fire until the 'Draw!' "); //Display 'misfire' menu here, retry option
                 StopCoroutine(coroutineCountdown);
+                coroutineCountdown = null;
             }
+            StopAllCoroutines();
+            
+            // Wait 3 seconds to show cheater message, then broadcast loss
+            Invoke(nameof(TriggerCheatLoss), 3f);
         }
+    }
+    
+    void TriggerCheatLoss()
+    {
+        OnCheat?.Invoke();
     }
     IEnumerator CountDown()
     {
@@ -79,31 +94,27 @@ public class ShowdownCountdown : MonoBehaviour
             
         isCountingDown = true;
 
-        while (startTime != 0)
+        // Use a local counter to avoid modifying startTime
+        int currentCount = startTime;
+        while (currentCount > 0)
         {
+            Debug.Log(currentCount);
+            countdownText.text = currentCount.ToString();
+            
             // Use unscaled time if running as interactive ad (game paused)
             if (useUnscaledTime)
                 yield return new WaitForSecondsRealtime(1);
             else
                 yield return new WaitForSeconds(1);
                 
-            Debug.Log(startTime); 
-            countdownText.text = startTime.ToString();
-            startTime--;
+            currentCount--;
         }
-        if (startTime == 0)
-        {
-            // Use unscaled time if running as interactive ad (game paused)
-            if (useUnscaledTime)
-                yield return new WaitForSecondsRealtime(1);
-            else
-                yield return new WaitForSeconds(1);
-                
-            isCountingDown = false;
-            OnDraw?.Invoke(); 
-            Debug.Log("Draw!"); 
-            countdownText.text = "Draw!";
-        }
+        
+        // When countdown reaches 0, show "Draw!"
+        isCountingDown = false;
+        OnDraw?.Invoke();
+        Debug.Log("Draw!");
+        countdownText.text = "Draw!";
     }
     
     IEnumerator DisableInstructionMenu()
@@ -143,6 +154,7 @@ public class ShowdownCountdown : MonoBehaviour
         // Reset values
         startTime = 3;
         isCountingDown = false;
+        hasCheated = false;
         
         // Show instruction object
         if (InstructionObject != null)
