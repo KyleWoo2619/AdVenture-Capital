@@ -15,9 +15,18 @@ public class TouchAndShoot : MonoBehaviour
     [Header("Character Image")]
     [SerializeField] private Image characterImage; // The Image component to change sprites
 
+    [Header("Input Settings")]
+    [SerializeField] private float initialDisableTime = 3f; // Time to disable input at start
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource; // AudioSource for sound effects
+    [SerializeField] private AudioClip shootSound; // Sound to play when shooting
+
     private PlayerInput playerInput;
     public InputAction shoot { get; private set; }
     public InputAction shootPos { get; private set; }
+
+    private bool canShoot = false; // Controls if player can shoot
 
     private GameObject CanvasUI;
     GraphicRaycaster ui_raycaster;
@@ -40,9 +49,13 @@ public class TouchAndShoot : MonoBehaviour
         touch_result = new List<RaycastResult>();
 
         isDead = false;
+        canShoot = false; // Start with shooting disabled
 
         // Set default wait sprite
         SetCharacterSprite(waitSprite);
+
+        // Start coroutine to enable shooting after delay
+        StartCoroutine(EnableShootingAfterDelay());
     }
 
     void OnEnable()
@@ -66,8 +79,21 @@ public class TouchAndShoot : MonoBehaviour
 
     void OnShootPressed(InputAction.CallbackContext context)
     {
-        // Change to fire sprite when player shoots
+        // Don't allow shooting if disabled or during instructions
+        if (!canShoot)
+        {
+            Debug.Log("Shooting disabled - instructions still showing");
+            return;
+        }
+
+        // Change to fire sprite when screen is touched and shooting is allowed
         SetCharacterSprite(fireSprite);
+
+        // Play shoot sound effect
+        if (audioSource != null && shootSound != null)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
 
         touch_data.position = shootPos.ReadValue<Vector2>();
         touch_result.Clear();
@@ -120,5 +146,14 @@ public class TouchAndShoot : MonoBehaviour
         {
             SetCharacterSprite(waitSprite);
         }
+    }
+
+    // Coroutine to enable shooting after initial delay
+    System.Collections.IEnumerator EnableShootingAfterDelay()
+    {
+        Debug.Log("Shooting disabled for " + initialDisableTime + " seconds");
+        yield return new WaitForSeconds(initialDisableTime);
+        canShoot = true;
+        Debug.Log("Shooting enabled!");
     }
 }
