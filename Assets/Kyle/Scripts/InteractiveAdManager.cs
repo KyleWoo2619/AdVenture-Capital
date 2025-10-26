@@ -21,6 +21,7 @@ public class InteractiveAdManager : MonoBehaviour
         [Header("Ad Components")]
         public GameObject adCanvas;           // The canvas GameObject for this ad
         public MonoBehaviour adScript;        // The interactive ad script component (must implement IInteractiveAd)
+        public Sprite adImage;                // The image to show in fullscreen ad for this interactive ad
         
         [Header("Settings")]
         public bool isEnabled = true;         // Whether this ad can be shown
@@ -52,6 +53,10 @@ public class InteractiveAdManager : MonoBehaviour
     [SerializeField] private float minWinDelay = 2f; // Minimum delay before showing close button
     [SerializeField] private float maxWinDelay = 3f; // Maximum delay before showing close button
     [SerializeField] private string sceneToLoad = ""; // Scene name to load when win close button is pressed
+
+    // --- Fullscreen Ad Settings ---
+    [Header("Fullscreen Ad")]
+    [SerializeField] private Image fullscreenAdImage; // The fullscreen ad image that will be swapped based on interactive ad
 
     // --- Debug Settings ---
     [Header("Debug")]
@@ -264,6 +269,9 @@ public class InteractiveAdManager : MonoBehaviour
         // Show the ad canvas
         ad.adCanvas.SetActive(true);
 
+        // Switch fullscreen ad image to match the current interactive ad
+        SwitchFullscreenAdImage(ad);
+
         // Start the interactive ad with completion callback
         var adInterface = ad.GetAdInterface();
         if (adInterface != null)
@@ -316,6 +324,25 @@ public class InteractiveAdManager : MonoBehaviour
             canvas.overrideSorting = true;
             canvas.sortingOrder = onTopSortingOrder;
         }
+    }
+
+    private void SwitchFullscreenAdImage(InteractiveAdEntry ad)
+    {
+        if (fullscreenAdImage == null)
+        {
+            Debug.LogWarning("[InteractiveAdManager] No fullscreen ad image assigned to switch");
+            return;
+        }
+
+        if (ad?.adImage == null)
+        {
+            Debug.LogWarning($"[InteractiveAdManager] No ad image assigned for interactive ad '{ad?.adName ?? "Unknown"}'");
+            return;
+        }
+
+        // Switch the fullscreen ad image to match the current interactive ad
+        fullscreenAdImage.sprite = ad.adImage;
+        Debug.Log($"[InteractiveAdManager] Switched fullscreen ad image to '{ad.adName}' image");
     }
 
     private void HideAllInteractiveAds()

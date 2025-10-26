@@ -73,16 +73,11 @@ public class ShowdownCountdown : MonoBehaviour
                 StopCoroutine(coroutineCountdown);
                 coroutineCountdown = null;
             }
-            StopAllCoroutines();
-            
-            // Wait 3 seconds to show cheater message, then broadcast loss
-            Invoke(nameof(TriggerCheatLoss), 3f);
+            StopAllCoroutines(); // also stops DisableInstructionMenu
+
+            // Broadcast cheat immediately; CowboyGameWrapper will wait 3s and then trigger fullscreen
+            OnCheat?.Invoke();
         }
-    }
-    
-    void TriggerCheatLoss()
-    {
-        OnCheat?.Invoke();
     }
     IEnumerator CountDown()
     {

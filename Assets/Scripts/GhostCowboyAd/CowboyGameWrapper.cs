@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -74,17 +75,28 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
     private void OnPlayerWins()
     {
         if (!gameStarted) return;
-        
         Debug.Log("[CowboyGameWrapper] Player won cowboy game!");
         gameStarted = false;
-        
-        // Wait 3 seconds to show win sprite and let gunfire sound play, then trigger win condition
-        Invoke(nameof(TriggerWinConditionDelayed), 3f);
+
+        // After 3s, show fullscreen ad
+        StartCoroutine(EndWithFullscreenAfter(3f));
     }
-    
-    private void TriggerWinConditionDelayed()
+
+    private void OnPlayerLoses()
     {
-        // Trigger win condition (same as Japanese simulator)
+        if (!gameStarted) return;
+        Debug.Log("[CowboyGameWrapper] Player lost cowboy game!");
+        gameStarted = false;
+
+        // After 3s, show fullscreen ad (same as cheat/win)
+        StartCoroutine(EndWithFullscreenAfter(3f));
+    }
+
+    private IEnumerator EndWithFullscreenAfter(float seconds)
+    {
+        // Use realtime so it works while timeScale == 0
+        yield return new WaitForSecondsRealtime(seconds);
+
         if (adManager != null)
         {
             adManager.TriggerWinCondition();
@@ -92,24 +104,15 @@ public class CowboyGameWrapper : MonoBehaviour, IInteractiveAd
         else
         {
             Debug.LogError("[CowboyGameWrapper] No InteractiveAdManager found!");
-            EndGame(); // Fallback
+            // Fallback: close out if manager missing (not typical)
+            EndGame();
         }
     }
 
-    private void OnPlayerLoses()
-    {
-        if (!gameStarted) return;
-        
-        Debug.Log("[CowboyGameWrapper] Player lost cowboy game!");
-        gameStarted = false;
-        
-        // Wait a moment to show the loss state, then end the ad
-        Invoke(nameof(EndGame), 1.5f);
-    }
-
+    // Keep this for fallback/debug menu only
     private void EndGame()
     {
-        Debug.Log("[CowboyGameWrapper] Ending cowboy game");
+        Debug.Log("[CowboyGameWrapper] Ending cowboy game (fallback)");
         gameStarted = false;
         
         // Hide the cowboy canvas

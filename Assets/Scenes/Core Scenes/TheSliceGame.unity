@@ -1572,6 +1572,10 @@ PrefabInstance:
       value: TheSliceGame
       objectReference: {fileID: 0}
     - target: {fileID: 42634495207238638, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      propertyPath: fullscreenAdImage
+      value: 
+      objectReference: {fileID: 1628647899}
+    - target: {fileID: 42634495207238638, guid: 154d24b41991ac944b87e22526381dca, type: 3}
       propertyPath: backgroundBlockerImage
       value: 
       objectReference: {fileID: 1020968588}
@@ -1583,6 +1587,14 @@ PrefabInstance:
       propertyPath: interactiveAds.Array.data[1].adName
       value: CowboyInteractiveAd
       objectReference: {fileID: 0}
+    - target: {fileID: 42634495207238638, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      propertyPath: interactiveAds.Array.data[0].adImage
+      value: 
+      objectReference: {fileID: -6564705949774262826, guid: 2bdc44280ddefde4da695199371bd835, type: 3}
+    - target: {fileID: 42634495207238638, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      propertyPath: interactiveAds.Array.data[1].adImage
+      value: 
+      objectReference: {fileID: 9062877394715628822, guid: 49830a0b70d31e44cb80524f4ba1011f, type: 3}
     - target: {fileID: 42634495207238638, guid: 154d24b41991ac944b87e22526381dca, type: 3}
       propertyPath: interactiveAds.Array.data[1].adCanvas
       value: 
@@ -9993,6 +10005,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7084679699874554759, guid: 77a5f6f5c60859449b78518bf2397252, type: 3}
   m_PrefabInstance: {fileID: 1620006551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1628647899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4391328036517639607, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+  m_PrefabInstance: {fileID: 232940365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1633708019
 PrefabInstance:
   m_ObjectHideFlags: 0
