@@ -22,6 +22,7 @@ public class InteractiveAdManager : MonoBehaviour
         public GameObject adCanvas;           // The canvas GameObject for this ad
         public MonoBehaviour adScript;        // The interactive ad script component (must implement IInteractiveAd)
         public Sprite adImage;                // The image to show in fullscreen ad for this interactive ad
+        public AudioClip adMusic;             // The music to play during this interactive ad
         
         [Header("Settings")]
         public bool isEnabled = true;         // Whether this ad can be shown
@@ -58,6 +59,10 @@ public class InteractiveAdManager : MonoBehaviour
     [Header("Fullscreen Ad")]
     [SerializeField] private Image fullscreenAdImage; // The fullscreen ad image that will be swapped based on interactive ad
 
+    // --- Audio Settings ---
+    [Header("Audio")]
+    [SerializeField] private AudioSource musicAudioSource; // The audio source that will play music
+
     // --- Debug Settings ---
     [Header("Debug")]
     [SerializeField] private bool enableDebugKey = true;    // Enable U key for debugging
@@ -69,6 +74,7 @@ public class InteractiveAdManager : MonoBehaviour
     private Action onCompleteCallback = null;              // Callback when ad completes
     private bool isShowingWinCondition = false;            // Is win condition currently active?
     private Coroutine winCloseButtonCoroutine = null;      // Coroutine for enabling win close button
+    private AudioClip originalMusic = null;                // Store the original music to restore later
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -272,6 +278,9 @@ public class InteractiveAdManager : MonoBehaviour
         // Switch fullscreen ad image to match the current interactive ad
         SwitchFullscreenAdImage(ad);
 
+        // Switch music to the interactive ad's music
+        SwitchToInteractiveAdMusic(ad);
+
         // Start the interactive ad with completion callback
         var adInterface = ad.GetAdInterface();
         if (adInterface != null)
@@ -343,6 +352,55 @@ public class InteractiveAdManager : MonoBehaviour
         // Switch the fullscreen ad image to match the current interactive ad
         fullscreenAdImage.sprite = ad.adImage;
         Debug.Log($"[InteractiveAdManager] Switched fullscreen ad image to '{ad.adName}' image");
+    }
+
+    private void SwitchToInteractiveAdMusic(InteractiveAdEntry ad)
+    {
+        if (musicAudioSource == null)
+        {
+            Debug.LogWarning("[InteractiveAdManager] No music audio source assigned");
+            return;
+        }
+
+        // Store the original music (only if we haven't stored it yet)
+        if (originalMusic == null && musicAudioSource.clip != null)
+        {
+            originalMusic = musicAudioSource.clip;
+            Debug.Log($"[InteractiveAdManager] Stored original music: {originalMusic.name}");
+        }
+
+        // Switch to the interactive ad's music if available
+        if (ad?.adMusic != null)
+        {
+            musicAudioSource.clip = ad.adMusic;
+            musicAudioSource.Play();
+            Debug.Log($"[InteractiveAdManager] Switched to interactive ad music: {ad.adMusic.name}");
+        }
+        else
+        {
+            Debug.Log($"[InteractiveAdManager] No music assigned for interactive ad '{ad?.adName ?? "Unknown"}'");
+        }
+    }
+
+    private void RestoreOriginalMusic()
+    {
+        if (musicAudioSource == null)
+        {
+            Debug.LogWarning("[InteractiveAdManager] No music audio source assigned");
+            return;
+        }
+
+        if (originalMusic != null)
+        {
+            musicAudioSource.clip = originalMusic;
+            musicAudioSource.Play();
+            Debug.Log($"[InteractiveAdManager] Restored original music: {originalMusic.name}");
+            originalMusic = null; // Reset for next time
+        }
+        else
+        {
+            Debug.Log("[InteractiveAdManager] No original music to restore");
+        }
     }
 
     private void HideAllInteractiveAds()
@@ -440,6 +498,9 @@ public class InteractiveAdManager : MonoBehaviour
 
         // Reset win condition state
         isShowingWinCondition = false;
+
+        // Restore original music before loading scene
+        RestoreOriginalMusic();
 
         // Robustness: clear time scale and disable current ad canvas before scene load
         Time.timeScale = 1f;

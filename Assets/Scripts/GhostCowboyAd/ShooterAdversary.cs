@@ -5,6 +5,15 @@ public class ShooterAdversary : MonoBehaviour
 {
     [SerializeField] int shootDelay; // time after "draw" before shooting at player
     
+    [Header("Enemy Sprites")]
+    [SerializeField] private Sprite waitSprite;  // Default/waiting state
+    [SerializeField] private Sprite fireSprite;  // When enemy shoots
+    [SerializeField] private Sprite shotSprite;  // When enemy dies
+    [SerializeField] private Sprite winSprite;   // When enemy wins
+    
+    [Header("Enemy Image")]
+    [SerializeField] private UnityEngine.UI.Image enemyImage; // The Image component to change sprites
+    
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource; // AudioSource for sound effects
     [SerializeField] private AudioClip deathSound; // Sound to play when enemy dies
@@ -19,6 +28,12 @@ public class ShooterAdversary : MonoBehaviour
     private bool isDead = false; // Track if enemy is dead
     public delegate void PlayerDeath();
     public static event PlayerDeath OnPlayerDeath;
+
+    void Start()
+    {
+        // Set default wait sprite
+        SetEnemySprite(waitSprite);
+    }
 
     void OnEnable()
     {
@@ -35,12 +50,17 @@ public class ShooterAdversary : MonoBehaviour
     
     void ShootPlayer()
     {
+        // Change to fire sprite when enemy shoots
+        SetEnemySprite(fireSprite);
         TimeToShootCoroutine = StartCoroutine(TimeToShootPlayer(shootDelay));
     }
     
     void NotShootPlayer()
     {
         isDead = true; // Mark enemy as dead
+        
+        // Change to shot sprite when enemy dies
+        SetEnemySprite(shotSprite);
         
         // Play death sound when enemy is killed
         if (audioSource != null && deathSound != null)
@@ -73,6 +93,8 @@ public class ShooterAdversary : MonoBehaviour
         if (!isDead)
         {
             OnPlayerDeath?.Invoke();
+            // After shooting (winning), wait 1 second then show win sprite
+            StartCoroutine(ShowWinSpriteAfterDelay(1f));
         }
     }
     
@@ -96,6 +118,33 @@ public class ShooterAdversary : MonoBehaviour
             StopCoroutine(TimeToShootCoroutine);
             TimeToShootCoroutine = null;
         }
+        // Reset to wait sprite
+        SetEnemySprite(waitSprite);
         Debug.Log("[ShooterAdversary] Enemy state reset for new game");
+    }
+
+    // Helper method to set enemy sprite
+    void SetEnemySprite(Sprite sprite)
+    {
+        if (enemyImage != null && sprite != null)
+        {
+            enemyImage.sprite = sprite;
+        }
+    }
+
+    // Coroutine to show win sprite after delay
+    IEnumerator ShowWinSpriteAfterDelay(float seconds)
+    {
+        // Use unscaled time if running as interactive ad (game paused)
+        if (useUnscaledTime)
+            yield return new WaitForSecondsRealtime(seconds);
+        else
+            yield return new WaitForSeconds(seconds);
+            
+        // Only show win sprite if enemy is still alive
+        if (!isDead)
+        {
+            SetEnemySprite(winSprite);
+        }
     }
 }
