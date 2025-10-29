@@ -23,10 +23,12 @@ public class SlicePiece : MonoBehaviour
     protected InputAction TouchPressedAction;
     protected InputAction TouchPosAction;
 
+    protected Collider2D sliceCollider;
+
     void Awake()
     {
         originalPos = transform.position;
-        
+        sliceCollider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -45,7 +47,11 @@ public class SlicePiece : MonoBehaviour
 
     void Update()
     {
-        if (isPlaced) return;
+        if (isPlaced)
+        {
+            sliceCollider.enabled = false;
+            return;
+        }
 
 
         foreach (SliceSlot _slot in sliceSlotList)
