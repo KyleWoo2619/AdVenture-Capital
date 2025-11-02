@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Dot : MonoBehaviour
 {
-
     [Header("Board Variables")]
     public int column;
     public int row;
@@ -14,7 +13,6 @@ public class Dot : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
-
     private FindMatches findMatches;
     private Board board;
     [HideInInspector] public GameObject otherDot;
@@ -23,8 +21,14 @@ public class Dot : MonoBehaviour
     private Vector2 tempPosition;
 
     [Header("Swipe Stuff")]
-    public float swipeAngle = 0;
+    public float swipeAngle = 0f;
     public float swipeResist = 1f;
+
+    [Header("Playability")]
+    [Tooltip("Row index that cannot be swiped from or swiped into (typically 0).")]
+    [SerializeField] private int blockedRow = 0;
+    [Tooltip("Board/visibility may also set this at runtime. If false, all swipes are ignored.")]
+    public bool canSwipe = true;
 
     [Header("Powerup Stuff")]
     public bool isColorBomb;
@@ -34,33 +38,24 @@ public class Dot : MonoBehaviour
     public GameObject columnArrow;
     public GameObject colorBomb;
 
-
     void Awake()
     {
         board = Object.FindFirstObjectByType<Board>();
         findMatches = Object.FindFirstObjectByType<FindMatches>();
     }
 
-    // Use this for initialization
     void Start()
     {
-
         isColumnBomb = false;
         isRowBomb = false;
 
-        board = FindFirstObjectByType<Board>();
-        findMatches = FindFirstObjectByType<FindMatches>();
-        //targetX = (int)transform.position.x;
-        //targetY = (int)transform.position.y;
-        //row = targetY;
-        //column = targetX;
-        //previousRow = row;
-        //previousColumn = column;
-
+        // (Re)acquire just in case
+        if (!board) board = Object.FindFirstObjectByType<Board>();
+        if (!findMatches) findMatches = Object.FindFirstObjectByType<FindMatches>();
     }
 
+    private bool IsBlockedRow(int r) => r == blockedRow;
 
-   
     private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(1))
@@ -71,34 +66,23 @@ public class Dot : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
     void Update()
     {
-        /*
-        if(isMatched){
-            
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            Color currentColor = mySprite.color;
-            mySprite.color = new Color(currentColor.r, currentColor.g, currentColor.b, .5f);
-        }
-        */
+        // Drive transform toward (column,row) in LOCAL space
         targetX = column;
         targetY = row;
+
         if (Mathf.Abs(targetX - transform.localPosition.x) > .1f)
         {
-            // Move Towards the target (local space)
             tempPosition = new Vector2(targetX, transform.localPosition.y);
             transform.localPosition = Vector2.Lerp(transform.localPosition, tempPosition, .6f);
             if (board.allDots[column, row] != this.gameObject)
-            {
                 board.allDots[column, row] = this.gameObject;
-            }
+
             findMatches.FindAllMatches();
         }
         else
         {
-            // Directly set the local position
             tempPosition = new Vector2(targetX, transform.localPosition.y);
             transform.localPosition = tempPosition;
         }
@@ -108,9 +92,8 @@ public class Dot : MonoBehaviour
             tempPosition = new Vector2(transform.localPosition.x, targetY);
             transform.localPosition = Vector2.Lerp(transform.localPosition, tempPosition, .6f);
             if (board.allDots[column, row] != this.gameObject)
-            {
                 board.allDots[column, row] = this.gameObject;
-            }
+
             findMatches.FindAllMatches();
         }
         else
@@ -124,124 +107,159 @@ public class Dot : MonoBehaviour
     {
         if (isColorBomb)
         {
-            //This piece is a color bomb, and the other piece is the color to destroy
+            // This piece is a color bomb; destroy the color of the other piece
             findMatches.MatchPiecesOfColor(otherDot.tag);
             isMatched = true;
         }
-        else if (otherDot.GetComponent<Dot>().isColorBomb)
+        else if (otherDot != null && otherDot.GetComponent<Dot>().isColorBomb)
         {
-            //The other piece is a color bomb, and this piece has the color to destroy
+            // Other piece is a color bomb
             findMatches.MatchPiecesOfColor(this.gameObject.tag);
             otherDot.GetComponent<Dot>().isMatched = true;
         }
+
         yield return new WaitForSeconds(.5f);
+
         if (otherDot != null)
         {
             if (!isMatched && !otherDot.GetComponent<Dot>().isMatched)
             {
+                // no match → revert
                 otherDot.GetComponent<Dot>().row = row;
                 otherDot.GetComponent<Dot>().column = column;
                 row = previousRow;
                 column = previousColumn;
+
                 yield return new WaitForSeconds(.5f);
                 board.currentDot = null;
                 board.currentState = GameState.move;
             }
             else
             {
+                // matched → resolve
                 board.DestroyMatches();
-
             }
-            //otherDot = null;
         }
-
     }
 
     private void OnMouseDown()
     {
-        if (board.currentState == GameState.move)
-        {
-            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
+        if (board.currentState != GameState.move) return;
+        if (!canSwipe) return;
+        if (IsBlockedRow(row)) return; // cannot begin a swipe from the blocked row
+
+        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void OnMouseUp()
     {
-        if (board.currentState == GameState.move)
-        {
-            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            CalculateAngle();
-        }
+        if (board.currentState != GameState.move) return;
+        if (!canSwipe) return;
+        if (IsBlockedRow(row)) return; // still on blocked row; ignore
+
+        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        CalculateAngle();
     }
 
     void CalculateAngle()
     {
-        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist || Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
+        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
+            Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
-            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-            MovePieces();
-            board.currentState = GameState.wait;
-            board.currentDot = this;
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y,
+                                     finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
 
+            // Try to initiate a move
+            otherDot = null; // ensure clean state
+            MovePieces();
+
+            // Only enter WAIT if a move actually got scheduled
+            if (otherDot != null)
+            {
+                board.currentState = GameState.wait;
+                board.currentDot = this;
+            }
+            else
+            {
+                board.currentState = GameState.move; // no move happened
+            }
         }
         else
         {
             board.currentState = GameState.move;
-
         }
     }
 
     void MovePieces()
     {
+        // Right
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
         {
-            //Right Swipe
-            otherDot = board.allDots[column + 1, row];
+            var target = board.allDots[column + 1, row];
+            if (target == null) return;
+
+            // lateral move doesn't change row; allowed
+            otherDot = target;
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Dot>().column -= 1;
             column += 1;
-
         }
+        // Up
         else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
-            //Up Swipe
-            otherDot = board.allDots[column, row + 1];
+            var target = board.allDots[column, row + 1];
+            if (target == null) return;
+
+            // moving up: otherDot moves down one; ensure it wouldn't land on blocked row
+            int otherNewRow = row; // target goes from row+1 down to row
+            if (IsBlockedRow(otherNewRow)) return; // would push neighbor into blocked row (only if row==0)
+
+            otherDot = target;
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Dot>().row -= 1;
             row += 1;
-
         }
+        // Left
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
-            //Left Swipe
-            otherDot = board.allDots[column - 1, row];
+            var target = board.allDots[column - 1, row];
+            if (target == null) return;
+
+            // lateral move doesn't change row; allowed
+            otherDot = target;
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Dot>().column += 1;
             column -= 1;
         }
+        // Down
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
-            //Down Swipe
-            otherDot = board.allDots[column, row - 1];
+            // DOWN would land us on row-1
+            int myNewRow = row - 1;
+            if (IsBlockedRow(myNewRow)) return; // disallow swiping into blocked row
+
+            var target = board.allDots[column, row - 1];
+            if (target == null) return;
+
+            otherDot = target;
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Dot>().row += 1;
             row -= 1;
         }
 
-        // Only set otherDot if the move is valid
-        if (otherDot != null)
+        // If we started a valid move, mark that the player moved so scoring can apply
+        if (otherDot != null && findMatches != null)
         {
-            if (findMatches != null)
-                findMatches.playerHasMoved = true;
-
+            findMatches.playerHasMoved = true;
             StartCoroutine(CheckMoveCo());
         }
     }
 
+    // (Optional) local helper for 3-in-a-row marking; unchanged from your original
     void FindMatches()
     {
         if (column > 0 && column < board.width - 1)
@@ -272,7 +290,6 @@ public class Dot : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void MakeRowBomb()
@@ -295,5 +312,4 @@ public class Dot : MonoBehaviour
         GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
         color.transform.parent = this.transform;
     }
-
 }
