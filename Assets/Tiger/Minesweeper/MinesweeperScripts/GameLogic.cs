@@ -53,6 +53,7 @@ public class GameLogic : MonoBehaviour
     private void Start()
     {
         // Remove touchPress initialization from here
+        mineCount = Random.Range(5, 13);
         NewGame();
     }
 
