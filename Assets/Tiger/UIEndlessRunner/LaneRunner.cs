@@ -5,13 +5,13 @@ public class LaneRunner : MonoBehaviour
 {
     [Header("Refs")]
     public RectTransform track;      // The UI area defining lane width
-    public RectTransform player;     // This object’s RectTransform
+    public RectTransform player;     // This objectï¿½s RectTransform
     public RectTransform safeBottom; // Optional invisible line to clamp Y
 
     [Header("Lanes")]
     public int currentLane = 1;      // 0=Left, 1=Mid, 2=Right
     public float laneMoveDuration = 0.12f;
-    public float bottomY = 150f;     // player’s Y on the track
+    public float bottomY = 150f;     // playerï¿½s Y on the track
 
     [Header("Input")]
     public bool allowKeyboard = true;
@@ -24,6 +24,7 @@ public class LaneRunner : MonoBehaviour
 
     Vector2 swipeStartPos;
     bool swiping;
+    bool useUnscaledTime = false;    // For working during pause
 
     void Awake()
     {
@@ -40,13 +41,20 @@ public class LaneRunner : MonoBehaviour
         startPos = targetPos = player.anchoredPosition;
     }
 
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
+    }
+
     void Update()
     {
+        float deltaTime = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+        
         HandleInput();
         // Smooth lane transition
         if (t < laneMoveDuration)
         {
-            t += Time.deltaTime;
+            t += deltaTime;
             float a = Mathf.Clamp01(t / laneMoveDuration);
             player.anchoredPosition = Vector2.Lerp(startPos, targetPos, a);
         }

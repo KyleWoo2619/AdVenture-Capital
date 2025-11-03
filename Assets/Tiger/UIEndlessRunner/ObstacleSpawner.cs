@@ -25,6 +25,7 @@ public class ObstacleSpawner : MonoBehaviour
     float[] lanes;
     float elapsed;
     bool bossSpawned;
+    bool useUnscaledTime = false; // For working during pause
 
     void Start()
     {
@@ -32,9 +33,16 @@ public class ObstacleSpawner : MonoBehaviour
         lanes = new[] { -w / 3f, 0f, w / 3f };
     }
 
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
+    }
+
     void Update()
     {
-        elapsed += Time.deltaTime;
+        float deltaTime = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+        
+        elapsed += deltaTime;
 
         // stop normal spawning after round ends
         bool roundActive = elapsed < roundDuration;
@@ -49,7 +57,7 @@ public class ObstacleSpawner : MonoBehaviour
         // normal spawns
         if (roundActive)
         {
-            timer += Time.deltaTime;
+            timer += deltaTime;
             if (timer >= spawnInterval)
             {
                 timer = 0f;
@@ -72,7 +80,18 @@ public class ObstacleSpawner : MonoBehaviour
                 var ort = (RectTransform)o.transform;
                 if (UIOverlap(brt, ort))
                 {
+                    var obstacle = o.GetComponent<Obstacle>();
                     o.Hit();
+                    
+                    // If obstacle is destroyed (health <= 0), add points
+                    if (obstacle != null && obstacle.health <= 0)
+                    {
+                        if (ScoreManager.Instance != null)
+                        {
+                            ScoreManager.Instance.AddScore(5);
+                        }
+                    }
+                    
                     Destroy(b.gameObject);
                     break;
                 }
@@ -101,7 +120,23 @@ public class ObstacleSpawner : MonoBehaviour
             var purt = (RectTransform)pu.transform;
             if (UIOverlap((RectTransform)player, purt))
             {
-                player.GetComponent<PlayerShooter>().LevelUp();
+                var powerUp = pu.GetComponent<PowerUp>();
+                var shooter = player.GetComponent<PlayerShooter>();
+                
+                if (powerUp.type == PowerUpType.Multiply)
+                {
+                    shooter.LevelUp();
+                }
+                else // Addition type
+                {
+                    if (ScoreManager.Instance != null)
+                    {
+                        ScoreManager.Instance.AddScore(powerUp.scoreValue);
+                    }
+                    // Also boost bullet speed
+                    shooter.BoostBulletSpeed();
+                }
+                
                 Destroy(pu.gameObject);
             }
         }
@@ -113,6 +148,21 @@ public class ObstacleSpawner : MonoBehaviour
             if (UIOverlap((RectTransform)player, ort))
             {
                 Debug.Log("HIT PLAYER! 💥");
+                
+                // Deduct points equal to obstacle's current health
+                var obstacle = o.GetComponent<Obstacle>();
+                if (obstacle != null && ScoreManager.Instance != null)
+                {
+                    ScoreManager.Instance.AddScore(-obstacle.health);
+                }
+                
+                // Level down the player
+                var shooter = player.GetComponent<PlayerShooter>();
+                if (shooter != null)
+                {
+                    shooter.LevelDown();
+                }
+                
                 Destroy(o.gameObject);
                 //PLAY AD HERE
             }
@@ -135,15 +185,46 @@ public class ObstacleSpawner : MonoBehaviour
     {
         bool spawnPower = Random.value < powerUpChance;
         int lane = Random.Range(0, 3);
-        var prefab = spawnPower ? powerUpPrefab : obstaclePrefab;
-
-        var obj = Instantiate(prefab, track);
-        obj.anchoredPosition = new Vector2(lanes[lane], track.rect.height / 2 + 150f);
-
+        
+        // Check player level to determine if multiply powerup should spawn
+        var shooter = player.GetComponent<PlayerShooter>();
+        int playerLevel = shooter != null ? shooter.GetLevel() : 0;
+        bool canSpawnMultiply = playerLevel < 2; // Not at Quad yet
+        
         if (spawnPower)
-            obj.GetComponent<PowerUp>().speed = obstacleSpeed * 0.8f;
+        {
+            // Spawn powerup
+            var obj = Instantiate(powerUpPrefab, track);
+            obj.anchoredPosition = new Vector2(lanes[lane], track.rect.height / 2 + 150f);
+            
+            var powerUp = obj.GetComponent<PowerUp>();
+            powerUp.speed = obstacleSpeed * 0.8f;
+            powerUp.useUnscaledTime = useUnscaledTime; // Pass unscaled time mode
+            
+            // Randomize type: if player can't level up, always spawn Addition
+            PowerUpType type;
+            if (canSpawnMultiply)
+            {
+                // 50/50 chance between Multiply and Addition
+                type = Random.value < 0.5f ? PowerUpType.Multiply : PowerUpType.Addition;
+            }
+            else
+            {
+                // Player is at max level, only spawn Addition
+                type = PowerUpType.Addition;
+            }
+            
+            powerUp.SetType(type);
+        }
         else
-            obj.GetComponent<Obstacle>().speed = obstacleSpeed;
+        {
+            // Spawn obstacle
+            var obj = Instantiate(obstaclePrefab, track);
+            obj.anchoredPosition = new Vector2(lanes[lane], track.rect.height / 2 + 150f);
+            var obstacle = obj.GetComponent<Obstacle>();
+            obstacle.speed = obstacleSpeed;
+            obstacle.useUnscaledTime = useUnscaledTime; // Pass unscaled time mode
+        }
     }
     void SpawnBoss()
     {
@@ -153,6 +234,7 @@ public class ObstacleSpawner : MonoBehaviour
 
         var b = bossRT.GetComponent<Boss>();
         b.speed = bossSpeed;
+        b.useUnscaledTime = useUnscaledTime; // Pass unscaled time mode
         b.GetType().GetField("health").SetValue(b, bossHealth); 
     }
 

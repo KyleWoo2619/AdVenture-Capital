@@ -8,21 +8,32 @@ public class PlayerShooter : MonoBehaviour
     public RectTransform firePoint;
     public float shootInterval = 0.4f;
     public float bulletSpeed = 1400f;
+    public float spread = 50f;
+    public float speedBoostPerPowerup = 50f; // Speed added per Addition powerup
     public Sprite defaultSprite, duoSprite, quadSprite;
 
     float shootTimer;
     Image image;
     int level = 0; // 0 = default, 1 = duo, 2 = quad
+    float currentBulletSpeed; // Actual bullet speed including boosts
+    bool useUnscaledTime = false; // For working during pause
 
     void Awake()
     {
         image = GetComponent<Image>();
+        currentBulletSpeed = bulletSpeed; // Initialize with base speed
         UpdateSprite();
+    }
+
+    public void SetUnscaledTimeMode(bool enabled)
+    {
+        useUnscaledTime = enabled;
     }
 
     void Update()
     {
-        shootTimer += Time.deltaTime;
+        float deltaTime = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+        shootTimer += deltaTime;
         if (shootTimer >= shootInterval)
         {
             shootTimer = 0f;
@@ -33,7 +44,6 @@ public class PlayerShooter : MonoBehaviour
     void Shoot()
     {
         int count = level == 0 ? 1 : (level == 1 ? 2 : 4);
-        float spread = 20f;
 
         for (int i = 0; i < count; i++)
         {
@@ -51,8 +61,10 @@ public class PlayerShooter : MonoBehaviour
 
             brt.anchoredPosition += Vector2.right * offset;
 
-            // Set speed
-            b.GetComponent<Bullet>().speed = bulletSpeed;
+            // Set speed (use current boosted speed)
+            var bullet = b.GetComponent<Bullet>();
+            bullet.speed = currentBulletSpeed;
+            bullet.useUnscaledTime = useUnscaledTime; // Pass unscaled time mode to bullet
         }
     }
 
@@ -60,6 +72,22 @@ public class PlayerShooter : MonoBehaviour
     {
         level = Mathf.Clamp(level + 1, 0, 2);
         UpdateSprite();
+    }
+
+    public void LevelDown()
+    {
+        level = Mathf.Clamp(level - 1, 0, 2);
+        UpdateSprite();
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public void BoostBulletSpeed()
+    {
+        currentBulletSpeed += speedBoostPerPowerup;
     }
 
     void UpdateSprite()

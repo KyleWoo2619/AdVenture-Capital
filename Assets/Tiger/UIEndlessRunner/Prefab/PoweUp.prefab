@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -144.48, y: 52.4658}
-  m_SizeDelta: {x: 20.6396, y: 20.6396}
+  m_AnchoredPosition: {x: 0, y: 0.0000076294}
+  m_SizeDelta: {x: 295.4014, y: 193.3737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6680867498544068491
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3412435131681045415, guid: 837d604b8ef3f334583785ac73e33a12, type: 3}
+  m_Sprite: {fileID: 4695676501349237925, guid: 452afeb76ae2c014f99e4406c9d48942, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,3 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUp
   speed: 600
+  type: 0
+  scoreValue: 5
+  multiplySprite: {fileID: 3839110034112002531, guid: dcbd2e46a5c582d41970743c02895f34, type: 3}
+  additionSprite: {fileID: 4695676501349237925, guid: 452afeb76ae2c014f99e4406c9d48942, type: 3}
