@@ -20,10 +20,11 @@ public class TripleSlices : MonoBehaviour
     protected List<SliceSlot> TripleSlotList2 = new List<SliceSlot>();
     protected List<SliceSlot> TripleSlotList3 = new List<SliceSlot>();
 
-   
+    protected Collider2D sliceCollider;
     void Awake()
     {
         originalPos = transform.position;
+        sliceCollider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -43,7 +44,11 @@ public class TripleSlices : MonoBehaviour
 
     void Update()
     {
-        if (isPlaced) return;
+        if (isPlaced)
+        {
+            sliceCollider.enabled = false;
+            return;
+        }
 
 
         //var mousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);

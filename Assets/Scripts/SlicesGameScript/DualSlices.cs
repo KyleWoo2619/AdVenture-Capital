@@ -17,10 +17,11 @@ public class DualSlices : MonoBehaviour
     protected List<SliceSlot> DualSlotList1 = new List<SliceSlot>(); //mainly contain 0, 180
     protected List<SliceSlot> DualSlotList2 = new List<SliceSlot>(); //mainly contain 60,120,240,300
 
-   
+    protected Collider2D sliceCollider;
     void Awake()
     {
         originalPos = transform.position;
+        sliceCollider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -42,7 +43,11 @@ public class DualSlices : MonoBehaviour
 
     void Update()
     {
-        if (isPlaced) return;
+        if (isPlaced)
+        {
+            sliceCollider.enabled = false;
+            return;
+        }
 
 
         foreach (SliceSlot _slot1 in DualSlotList1)
