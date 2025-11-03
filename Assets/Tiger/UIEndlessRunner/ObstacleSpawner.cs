@@ -21,6 +21,11 @@ public class ObstacleSpawner : MonoBehaviour
 
     public float roundDuration = 30f;
 
+    [Header("Audio")]
+    public AudioSource audioSource; // Drag AudioSource component here
+    public AudioClip wrongSound; // Sound when player gets hit
+    public AudioClip powerUpSound; // Sound when player collects powerup
+
     float timer;
     float[] lanes;
     float elapsed;
@@ -123,6 +128,12 @@ public class ObstacleSpawner : MonoBehaviour
                 var powerUp = pu.GetComponent<PowerUp>();
                 var shooter = player.GetComponent<PlayerShooter>();
                 
+                // Play powerup sound
+                if (audioSource != null && powerUpSound != null)
+                {
+                    audioSource.PlayOneShot(powerUpSound);
+                }
+                
                 if (powerUp.type == PowerUpType.Multiply)
                 {
                     shooter.LevelUp();
@@ -149,6 +160,12 @@ public class ObstacleSpawner : MonoBehaviour
             {
                 Debug.Log("HIT PLAYER! 💥");
                 
+                // Play wrong sound
+                if (audioSource != null && wrongSound != null)
+                {
+                    audioSource.PlayOneShot(wrongSound);
+                }
+                
                 // Deduct points equal to obstacle's current health
                 var obstacle = o.GetComponent<Obstacle>();
                 if (obstacle != null && ScoreManager.Instance != null)
@@ -174,9 +191,24 @@ public class ObstacleSpawner : MonoBehaviour
             var brtBoss = (RectTransform)boss.transform;
             if (UIOverlap((RectTransform)player, brtBoss))
             {
-                Debug.Log("HIT PLAYER (BOSS)! 💥");
-                Destroy(boss.gameObject); // simple rule: remove boss on contact
-                //PLAY AD HERE
+                Debug.Log("HIT PLAYER (BOSS)! 💥 - Boss reached player, ending game");
+                
+                // Play wrong sound
+                if (audioSource != null && wrongSound != null)
+                {
+                    audioSource.PlayOneShot(wrongSound);
+                }
+                
+                // Trigger boss defeated event (game ends) - player lost
+                var bossComponent = boss.GetComponent<Boss>();
+                if (bossComponent != null)
+                {
+                    bossComponent.TriggerDefeat(false); // false = player lost (boss reached player)
+                }
+                else
+                {
+                    Destroy(boss.gameObject);
+                }
             }
         }
     }
