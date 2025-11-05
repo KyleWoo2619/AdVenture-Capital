@@ -46,4 +46,14 @@ public class VolumeSettings : MonoBehaviour
         SetSFXVolume();
 
     }
+
+    public void EnableSettingsMenu()
+    {
+        enabled = true;
+    }
+
+    public void DisableSettingsMenu()
+    {
+        enabled = false;
+    }
 }
