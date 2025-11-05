@@ -11,6 +11,10 @@ public class PlayerShooter : MonoBehaviour
     public float spread = 50f;
     public float speedBoostPerPowerup = 50f; // Speed added per Addition powerup
     public Sprite defaultSprite, duoSprite, quadSprite;
+    
+    [Header("Audio")]
+    public AudioSource audioSource; // Drag AudioSource component here
+    public AudioClip fireSound; // Sound when shooting
 
     float shootTimer;
     Image image;
@@ -44,6 +48,12 @@ public class PlayerShooter : MonoBehaviour
     void Shoot()
     {
         int count = level == 0 ? 1 : (level == 1 ? 2 : 4);
+
+        // Play fire sound
+        if (audioSource != null && fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
 
         for (int i = 0; i < count; i++)
         {

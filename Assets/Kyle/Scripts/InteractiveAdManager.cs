@@ -63,6 +63,10 @@ public class InteractiveAdManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource musicAudioSource; // The audio source that will play music
 
+    // --- External References ---
+    [Header("External References")]
+    [SerializeField] private FullscreenAdSpawner fullscreenAdSpawner; // Reference to pause fullscreen ad spawning
+
     // --- Debug Settings ---
     [Header("Debug")]
     [SerializeField] private bool enableDebugKey = true;    // Enable U key for debugging
@@ -79,6 +83,12 @@ public class InteractiveAdManager : MonoBehaviour
     // --- Unity Lifecycle ---
     void Awake()
     {
+        // Find fullscreen ad spawner if not assigned
+        if (fullscreenAdSpawner == null)
+        {
+            fullscreenAdSpawner = FindFirstObjectByType<FullscreenAdSpawner>();
+        }
+
         // Setup win close button listener
         if (winCloseButton != null)
         {
@@ -262,6 +272,13 @@ public class InteractiveAdManager : MonoBehaviour
         onCompleteCallback = onComplete;
         isShowingInteractiveAd = true;
 
+        // Pause fullscreen ad spawning while interactive ad is showing
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.PauseInterval();
+            Debug.Log("[InteractiveAdManager] Paused fullscreen ad spawning");
+        }
+
         // Setup canvas properties
         SetupAdCanvas(ad.adCanvas);
 
@@ -310,6 +327,13 @@ public class InteractiveAdManager : MonoBehaviour
         // Resume game if we paused it
         if (pauseGameOnShow)
             Time.timeScale = 1f;
+
+        // Resume fullscreen ad spawning
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.ResumeInterval();
+            Debug.Log("[InteractiveAdManager] Resumed fullscreen ad spawning");
+        }
 
         // Reset state
         isShowingInteractiveAd = false;
@@ -501,6 +525,13 @@ public class InteractiveAdManager : MonoBehaviour
 
         // Restore original music before loading scene
         RestoreOriginalMusic();
+
+        // Resume fullscreen ad spawning before loading scene
+        if (fullscreenAdSpawner != null)
+        {
+            fullscreenAdSpawner.ResumeInterval();
+            Debug.Log("[InteractiveAdManager] Resumed fullscreen ad spawning before scene load");
+        }
 
         // Robustness: clear time scale and disable current ad canvas before scene load
         Time.timeScale = 1f;

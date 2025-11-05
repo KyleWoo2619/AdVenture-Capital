@@ -11,9 +11,15 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
     [SerializeField] private LaneRunner laneRunner; // Player lane movement
     [SerializeField] private ScoreManager scoreManager; // Score tracking
     
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource; // Drag AudioSource component here
+    [SerializeField] private AudioClip winSound; // Sound when boss is defeated (win)
+    [SerializeField] private AudioClip loseSound; // Sound when boss reaches player (lose)
+    
     private Action onComplete;
     private InteractiveAdManager adManager;
     private bool gameStarted = false;
+    private bool playerWon = false; // Track if player defeated boss or boss reached player
 
     void Awake()
     {
@@ -63,10 +69,33 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         Debug.Log("[UCFRunnerWrapper] Runner game started with unscaled time - works during pause!");
     }
 
-    private void OnBossDefeated()
+    private void OnBossDefeated(bool playerWon)
     {
         if (!gameStarted) return;
-        Debug.Log("[UCFRunnerWrapper] Boss defeated! Player wins!");
+        
+        this.playerWon = playerWon;
+        
+        if (playerWon)
+        {
+            Debug.Log("[UCFRunnerWrapper] Boss defeated by player! Player wins!");
+            
+            // Play win sound
+            if (audioSource != null && winSound != null)
+            {
+                audioSource.PlayOneShot(winSound);
+            }
+        }
+        else
+        {
+            Debug.Log("[UCFRunnerWrapper] Boss reached player! Player loses!");
+            
+            // Play lose sound
+            if (audioSource != null && loseSound != null)
+            {
+                audioSource.PlayOneShot(loseSound);
+            }
+        }
+        
         gameStarted = false;
 
         // Pause spawning

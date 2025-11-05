@@ -8,6 +8,11 @@ public class Obstacle : MonoBehaviour
     public int health = 5;
     public TMP_Text healthText; // Drag TMP component here in Inspector
     
+    [Header("Audio")]
+    public AudioSource audioSource; // Drag AudioSource component here
+    public AudioClip hitSound; // Sound when hit by bullet
+    public AudioClip breakSound; // Sound when destroyed (health = 0)
+    
     [HideInInspector] public bool useUnscaledTime = false; // Set by spawner
 
     void Start()
@@ -30,7 +35,22 @@ public class Obstacle : MonoBehaviour
         UpdateHealthDisplay();
         
         if (health <= 0)
+        {
+            // Play break sound when destroyed
+            if (audioSource != null && breakSound != null)
+            {
+                audioSource.PlayOneShot(breakSound);
+            }
             Destroy(gameObject);
+        }
+        else
+        {
+            // Play hit sound only if not destroyed
+            if (audioSource != null && hitSound != null)
+            {
+                audioSource.PlayOneShot(hitSound);
+            }
+        }
     }
 
     void UpdateHealthDisplay()
