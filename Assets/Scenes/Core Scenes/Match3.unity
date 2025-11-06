@@ -3025,7 +3025,7 @@ MonoBehaviour:
   failMenuRoot: {fileID: 850342348}
   mainBGM: {fileID: 212625237}
   deathOneShot: {fileID: 1911052586}
-  seconds: 120
+  seconds: 60
   startOnEnable: 1
   repeatEveryMinute: 0
   duckVolume: 0.2
@@ -3839,11 +3839,11 @@ PrefabInstance:
       objectReference: {fileID: 1702863513}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: maxInterval
-      value: 180
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: minInterval
-      value: 180
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: failMenuRoot
