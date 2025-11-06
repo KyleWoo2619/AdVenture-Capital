@@ -1,0 +1,849 @@
+fileFormatVersion: 2
+guid: 4371f5e506e0b344f8e562d5cdf65570
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -489752412412907726
+    second: shatterPSYS_0
+  - first:
+      213: 9779040231456382
+    second: shatterPSYS_1
+  - first:
+      213: 3708356587887021585
+    second: shatterPSYS_2
+  - first:
+      213: 3134073779001343183
+    second: shatterPSYS_3
+  - first:
+      213: -3156110757102431930
+    second: shatterPSYS_4
+  - first:
+      213: 6306433623308917651
+    second: shatterPSYS_5
+  - first:
+      213: -692255775371368027
+    second: shatterPSYS_6
+  - first:
+      213: -1691900781043329368
+    second: shatterPSYS_7
+  - first:
+      213: -3610649125689943728
+    second: shatterPSYS_8
+  - first:
+      213: -246482839982686209
+    second: shatterPSYS_9
+  - first:
+      213: 6930666526121279434
+    second: shatterPSYS_10
+  - first:
+      213: -2406157540765460928
+    second: shatterPSYS_11
+  - first:
+      213: 3694089493737332174
+    second: shatterPSYS_12
+  - first:
+      213: -8332493561705315272
+    second: shatterPSYS_13
+  - first:
+      213: 4110914906621984131
+    second: shatterPSYS_14
+  - first:
+      213: -202451978007634620
+    second: shatterPSYS_15
+  - first:
+      213: -1611752529873601303
+    second: shatterPSYS_16
+  - first:
+      213: 4252530708410009211
+    second: shatterPSYS_17
+  - first:
+      213: -5421412791479555162
+    second: shatterPSYS_18
+  - first:
+      213: 1394169210921767222
+    second: shatterPSYS_19
+  - first:
+      213: 1834245345161362860
+    second: shatterPSYS_20
+  - first:
+      213: -7770842616414800862
+    second: shatterPSYS_21
+  - first:
+      213: 1191264134632660668
+    second: shatterPSYS_22
+  - first:
+      213: -8026933746198235308
+    second: shatterPSYS_23
+  - first:
+      213: 7761024077351360590
+    second: shatterPSYS_24
+  - first:
+      213: -1834009613024024852
+    second: shatterPSYS_25
+  - first:
+      213: -7366733009163104798
+    second: shatterPSYS_26
+  - first:
+      213: 6634109547736463637
+    second: shatterPSYS_27
+  - first:
+      213: -611676101273000121
+    second: shatterPSYS_28
+  - first:
+      213: -3994849642367485244
+    second: shatterPSYS_29
+  - first:
+      213: -5152505679798384265
+    second: shatterPSYS_30
+  - first:
+      213: 6957534706668581469
+    second: shatterPSYS_31
+  - first:
+      213: -4736513015148078611
+    second: shatterPSYS_32
+  - first:
+      213: -5639872592937529563
+    second: shatterPSYS_33
+  - first:
+      213: -8852413691548834797
+    second: shatterPSYS_34
+  - first:
+      213: -984409972426764619
+    second: shatterPSYS_35
+  - first:
+      213: 8212966598958555382
+    second: shatterPSYS_36
+  - first:
+      213: -7025823640777684032
+    second: shatterPSYS_37
+  - first:
+      213: 6018822989506878847
+    second: shatterPSYS_38
+  - first:
+      213: -3033810415026016795
+    second: shatterPSYS_39
+  - first:
+      213: -2811482690425856940
+    second: shatterPSYS_40
+  - first:
+      213: 8272721534196775563
+    second: shatterPSYS_41
+  - first:
+      213: 6771339014350910767
+    second: shatterPSYS_42
+  - first:
+      213: 241554792114139785
+    second: shatterPSYS_43
+  - first:
+      213: 6956743090420369092
+    second: shatterPSYS_44
+  - first:
+      213: -2950699544465027094
+    second: shatterPSYS_45
+  - first:
+      213: -7640392375079820550
+    second: shatterPSYS_46
+  - first:
+      213: -4574724196162928228
+    second: shatterPSYS_47
+  - first:
+      213: -6891590553251174150
+    second: shatterPSYS_48
+  - first:
+      213: -6145331941279373492
+    second: shatterPSYS_49
+  - first:
+      213: 8912230062422648353
+    second: shatterPSYS_50
+  - first:
+      213: -7239973175362746115
+    second: shatterPSYS_51
+  - first:
+      213: -2864139964960771628
+    second: shatterPSYS_52
+  - first:
+      213: -9109731698632911862
+    second: shatterPSYS_53
+  - first:
+      213: 8842657165501878678
+    second: shatterPSYS_54
+  - first:
+      213: -5575504592382737927
+    second: shatterPSYS_55
+  - first:
+      213: -8934144854259994516
+    second: shatterPSYS_56
+  - first:
+      213: -277579182829584725
+    second: shatterPSYS_57
+  - first:
+      213: 2381418800223919124
+    second: shatterPSYS_58
+  - first:
+      213: 69094442404661145
+    second: shatterPSYS_59
+  - first:
+      213: 443385774697761629
+    second: shatterPSYS_60
+  - first:
+      213: -5745806764148133323
+    second: shatterPSYS_61
+  - first:
+      213: 8970267586906003560
+    second: shatterPSYS_62
+  - first:
+      213: 7166473425200883005
+    second: shatterPSYS_63
+  - first:
+      213: 5956358191815418685
+    second: shatterPSYS_64
+  - first:
+      213: -4607023387288812499
+    second: shatterPSYS_65
+  - first:
+      213: 6703037675190706380
+    second: shatterPSYS_66
+  - first:
+      213: -1565248049808810159
+    second: shatterPSYS_67
+  - first:
+      213: 7777775458175192747
+    second: shatterPSYS_68
+  - first:
+      213: 8011491842267689405
+    second: shatterPSYS_69
+  - first:
+      213: -7378494449834318619
+    second: shatterPSYS_70
+  - first:
+      213: -3191893444406145191
+    second: shatterPSYS_71
+  - first:
+      213: 1675457079080598244
+    second: shatterPSYS_72
+  - first:
+      213: 4345683404386091276
+    second: shatterPSYS_73
+  - first:
+      213: -3509938073944644351
+    second: shatterPSYS_74
+  - first:
+      213: -6821779904238292054
+    second: shatterPSYS_75
+  - first:
+      213: -979877906403896761
+    second: shatterPSYS_76
+  - first:
+      213: -6595917847069185409
+    second: shatterPSYS_77
+  - first:
+      213: 5436978850546650138
+    second: shatterPSYS_78
+  - first:
+      213: -8648588009256002537
+    second: shatterPSYS_79
+  - first:
+      213: 8357669562578568520
+    second: shatterPSYS_80
+  - first:
+      213: -5763929166519125191
+    second: shatterPSYS_81
+  - first:
+      213: 2186263796509556281
+    second: shatterPSYS_82
+  - first:
+      213: 6733724116175783741
+    second: shatterPSYS_83
+  - first:
+      213: 6951691680290957806
+    second: shatterPSYS_84
+  - first:
+      213: 1320265627721948553
+    second: shatterPSYS_85
+  - first:
+      213: 7953797397950271083
+    second: shatterPSYS_86
+  - first:
+      213: 4938107199722510194
+    second: shatterPSYS_87
+  - first:
+      213: -5125291993352308226
+    second: shatterPSYS_88
+  - first:
+      213: 5856911437252190190
+    second: shatterPSYS_89
+  - first:
+      213: -763904870354237058
+    second: shatterPSYS_90
+  - first:
+      213: 4516631666078420091
+    second: shatterPSYS_91
+  - first:
+      213: -2449696674623442872
+    second: shatterPSYS_92
+  - first:
+      213: 8091573488136378710
+    second: shatterPSYS_93
+  - first:
+      213: -6619347227431655422
+    second: shatterPSYS_94
+  - first:
+      213: 2664663250665067581
+    second: shatterPSYS_95
+  - first:
+      213: 1457481746766726714
+    second: shatterPSYS_96
+  - first:
+      213: 6849616156525818299
+    second: shatterPSYS_97
+  - first:
+      213: 4492908083834559848
+    second: shatterPSYS_98
+  - first:
+      213: 3719660666912619878
+    second: shatterPSYS_99
+  - first:
+      213: -8868621039552684571
+    second: shatterPSYS_100
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: shatterPSYS_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23fec3696cc0439f0800000000000000
+      internalID: -489752412412907726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_1
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7e7d3b3cfdb22000800000000000000
+      internalID: 9779040231456382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_2
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11e4c714baab67330800000000000000
+      internalID: 3708356587887021585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_3
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fccbd393f777e7b20800000000000000
+      internalID: 3134073779001343183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_4
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 641de1bfcfd3334d0800000000000000
+      internalID: -3156110757102431930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_5
+      rect:
+        serializedVersion: 2
+        x: 7000
+        y: 2800
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39b58eca7f3f48750800000000000000
+      internalID: 6306433623308917651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a9e64f3a0d9466f0800000000000000
+      internalID: -692255775371368027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6d4b624392588e0800000000000000
+      internalID: -1691900781043329368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_8
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0591dae00c564edc0800000000000000
+      internalID: -3610649125689943728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_9
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fff3a97b921549cf0800000000000000
+      internalID: -246482839982686209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_10
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acf362a3c7cae2060800000000000000
+      internalID: 6930666526121279434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_11
+      rect:
+        serializedVersion: 2
+        x: 7000
+        y: 1400
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0461c0d077c9b9ed0800000000000000
+      internalID: -2406157540765460928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd57ba82da044330800000000000000
+      internalID: 3694089493737332174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_13
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8344359c0490d5c80800000000000000
+      internalID: -8332493561705315272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_14
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38dbf07b357ec0930800000000000000
+      internalID: 4110914906621984131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_15
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44d97c6affeb03df0800000000000000
+      internalID: -202451978007634620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_16
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ecfb0f0d97e1a9e0800000000000000
+      internalID: -1611752529873601303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shatterPSYS_17
+      rect:
+        serializedVersion: 2
+        x: 7000
+        y: 0
+        width: 1400
+        height: 1400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76083ff526040b30800000000000000
+      internalID: 4252530708410009211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a767f9f97b3fb5e4dafb02d60c5234c1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":3.0},"gridSpriteSize":{"x":1400.0,"y":1400.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      shatterPSYS_0: -489752412412907726
+      shatterPSYS_1: 9779040231456382
+      shatterPSYS_10: 6930666526121279434
+      shatterPSYS_11: -2406157540765460928
+      shatterPSYS_12: 3694089493737332174
+      shatterPSYS_13: -8332493561705315272
+      shatterPSYS_14: 4110914906621984131
+      shatterPSYS_15: -202451978007634620
+      shatterPSYS_16: -1611752529873601303
+      shatterPSYS_17: 4252530708410009211
+      shatterPSYS_2: 3708356587887021585
+      shatterPSYS_3: 3134073779001343183
+      shatterPSYS_4: -3156110757102431930
+      shatterPSYS_5: 6306433623308917651
+      shatterPSYS_6: -692255775371368027
+      shatterPSYS_7: -1691900781043329368
+      shatterPSYS_8: -3610649125689943728
+      shatterPSYS_9: -246482839982686209
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
