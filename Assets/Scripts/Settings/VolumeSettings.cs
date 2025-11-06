@@ -5,25 +5,26 @@ using Unity.VisualScripting;
 
 public class VolumeSettings : MonoBehaviour
 {
-    private static VolumeSettings instance;
+    public static VolumeSettings instance;
     [SerializeField] private AudioMixer myMixer;
 
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
+    public Canvas vRenderer;
+
     void Awake()
     {
+        vRenderer = GetComponent<Canvas>();
         
         if (instance != null && instance != this)
         {
-            Destroy(instance.gameObject);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            instance = this;
-        }
-        
-        DontDestroyOnLoad(gameObject);
+
+        instance = this;
+        DontDestroyOnLoad(instance.gameObject);
     }
 
     void Start()
@@ -64,5 +65,16 @@ public class VolumeSettings : MonoBehaviour
         SetSFXVolume();
 
     }
+
+    public void RendererOff()
+    {
+        vRenderer.enabled = false;
+    }
+
+    public void RendererOn()
+    {
+        vRenderer.enabled = true;
+    }
+
 
 }

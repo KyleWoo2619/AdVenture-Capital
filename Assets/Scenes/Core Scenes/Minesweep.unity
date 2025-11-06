@@ -5103,8 +5103,12 @@ PrefabInstance:
       value: 193.39099
       objectReference: {fileID: 0}
     - target: {fileID: 3827349728893655, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827349728893655, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -618
+      value: -676
       objectReference: {fileID: 0}
     - target: {fileID: 438608394423599830, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: targetImage
@@ -5357,6 +5361,14 @@ PrefabInstance:
     - target: {fileID: 5233932121279598468, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: m_Name
       value: HomeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460281539308889270, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -441
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162173653982276369, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -200.89
       objectReference: {fileID: 0}
     - target: {fileID: 7419527811353263856, guid: 4e8277621f2757d479fe55033c337846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
