@@ -19,6 +19,8 @@ public class VideoAdSpawner : MonoBehaviour
     {
         public string adName;           // Name for identification
         public VideoClip videoClip;     // The video to play
+
+        public AudioSource audioSource;
         public Sprite fullscreenImage;  // The fullscreen ad image to show after video
     }
 
@@ -762,6 +764,8 @@ public class VideoAdSpawner : MonoBehaviour
         {
             currentAdPair = videoAdPairs[UnityEngine.Random.Range(0, videoAdPairs.Count)];
             videoPlayer.clip = currentAdPair.videoClip;
+            videoPlayer.SetTargetAudioSource(0, currentAdPair.audioSource);
+            
             Debug.Log($"Assigned random video ad pair: {currentAdPair.adName} (video: {currentAdPair.videoClip?.name}, image: {currentAdPair.fullscreenImage?.name})");
         }
         else
