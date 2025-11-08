@@ -10,6 +10,7 @@ public class VolumeSettings : MonoBehaviour
 
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider adSlider;
 
     public Canvas vRenderer;
 
@@ -37,6 +38,7 @@ public class VolumeSettings : MonoBehaviour
         {
             SetMusicVolume();
             SetSFXVolume();
+            SetAdVolume();
         }
 
         
@@ -56,13 +58,22 @@ public class VolumeSettings : MonoBehaviour
         PlayerPrefs.SetFloat("sfxVolume", volume);
     }
 
+    public void SetAdVolume()
+    {
+        float volume = adSlider.value;
+        myMixer.SetFloat("adVolume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("adVolume", volume);
+    }
+
     private void LoadVolume()
     {
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        adSlider.value = PlayerPrefs.GetFloat("adVolume");
 
         SetMusicVolume();
         SetSFXVolume();
+        SetAdVolume();
 
     }
 

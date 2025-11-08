@@ -2175,11 +2175,11 @@ RectTransform:
   - {fileID: 6416149645642855110}
   - {fileID: 8111596206373527844}
   - {fileID: 245655104894949428}
+  - {fileID: 7859226934523359115}
   - {fileID: 8337872697627544747}
   - {fileID: 3353631075373335388}
   - {fileID: 7494273658022769265}
   - {fileID: 6931450808087823158}
-  - {fileID: 7859226934523359115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2194,7 +2194,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8669935167684031157}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -2265,6 +2265,7 @@ MonoBehaviour:
   myMixer: {fileID: 24100000, guid: 19d4d38098f1d854d872fd409f5f429f, type: 2}
   musicSlider: {fileID: 1886984208821848387}
   sfxSlider: {fileID: 7226202473313955555}
+  adSlider: {fileID: 7570014887213527236}
   vRenderer: {fileID: 0}
 --- !u!1 &9190715414079327734
 GameObject:
@@ -2349,10 +2350,22 @@ MonoBehaviour:
   m_FillRect: {fileID: 6688197936856381782}
   m_HandleRect: {fileID: 3003936616265430204}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5486889413588848164}
+        m_TargetAssemblyTypeName: VolumeSettings, Assembly-CSharp
+        m_MethodName: SetAdVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
