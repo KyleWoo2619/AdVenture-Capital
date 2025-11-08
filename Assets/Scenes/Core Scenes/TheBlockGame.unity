@@ -4395,10 +4395,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---VideoAd---
       objectReference: {fileID: 0}
-    - target: {fileID: 439971597753345645, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2054146376684322471, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4412,37 +4408,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1865451286}
     - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1865451286}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlayOneShot
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.AudioSource, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 8300000, guid: f68eeedd82400484b88a6af64e4c391d, type: 3}
-    - target: {fileID: 8016436657523656989, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.AudioClip, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: adCanvas
       value: 
@@ -4456,10 +4424,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4744667199870888278}
     - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: skipButtonDelay
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: FailMenuInstance
       value: 
       objectReference: {fileID: 9091871636444515165}
@@ -4467,34 +4431,6 @@ PrefabInstance:
       propertyPath: fullscreenAdSpawner
       value: 
       objectReference: {fileID: 1322963878}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[5].adName
-      value: GMHN
-      objectReference: {fileID: 0}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[6].adName
-      value: DRUG
-      objectReference: {fileID: 0}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[5].videoClip
-      value: 
-      objectReference: {fileID: 32900000, guid: 392a4ea9a36ae3b47b49f93ea2822b73, type: 3}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[6].videoClip
-      value: 
-      objectReference: {fileID: 32900000, guid: 9cfaf0e0f550a334490ee3392a94c5fb, type: 3}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[5].fullscreenImage
-      value: 
-      objectReference: {fileID: 9062877394715628822, guid: 7532ed0f58bc8494d933482a18c478cd, type: 3}
-    - target: {fileID: 8186832714345280387, guid: f85a67108422d9341ba47fa61db56337, type: 3}
-      propertyPath: videoAdPairs.Array.data[6].fullscreenImage
-      value: 
-      objectReference: {fileID: 5480738567015667329, guid: 5c3e21fb9b7806e45a41d7b5ca79cff1, type: 3}
     - target: {fileID: 8959211997342235320, guid: f85a67108422d9341ba47fa61db56337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 540
@@ -6382,5 +6318,5 @@ SceneRoots:
   - {fileID: 3237802072690132537}
   - {fileID: 1411840762}
   - {fileID: 289203356}
-  - {fileID: 2883402202425474755}
   - {fileID: 2093485022861112819}
+  - {fileID: 2883402202425474755}
