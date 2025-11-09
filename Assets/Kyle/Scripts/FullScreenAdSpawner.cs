@@ -17,10 +17,11 @@ public class FullscreenAdSpawner : MonoBehaviour
     [SerializeField] private Canvas adCanvas;      // The canvas that displays the ad overlay
     [SerializeField] private Image adImage;        // The fullscreen ad image
     [SerializeField] private Button closeButton;   // The close button for the ad
+    [SerializeField] private Button adClickButton; // Button covering ad for clicking to URL
 
     // --- Ad Content ---
     [Header("Ad Content")]
-    [SerializeField] private List<Sprite> adSprites = new(); // List of possible ad images
+    [SerializeField] private List<AdWithLink> adSprites = new(); // List of possible ad images with links
 
     // --- Timing Configuration ---
     [Header("Schedule (seconds)")]
@@ -53,6 +54,7 @@ public class FullscreenAdSpawner : MonoBehaviour
     private bool isPaused = false;           // Is the ad spawning loop paused?
     private int showToken = 0;               // Token to track current ad instance
     private Action onCloseOneShot;           // Callback to run after ad closes (non-death flow)
+    private AdWithLink currentAd;            // Currently displayed ad
     private bool IsPlayerDeadSafe =>         // Helper: safely check if player is dead
         GameManager.instance != null && GameManager.instance.isDead;
     private bool showFailOnClose = false;    // Should fail menu show after ad closes?
@@ -72,11 +74,18 @@ public class FullscreenAdSpawner : MonoBehaviour
             closeButton.onClick.AddListener(CloseAd);
         }
 
+        // Setup ad click button listener
+        if (adClickButton != null)
+        {
+            adClickButton.onClick.RemoveAllListeners();
+            adClickButton.onClick.AddListener(OnAdClicked);
+        }
+
         // Hide ad and close button at start
         SetAdVisible(false);
         SetCloseButtonVisible(false);
 
-        // Prevent ad image from blocking clicks (only close button should)
+        // Prevent ad image from blocking clicks (only buttons should)
         if (adImage)
             adImage.raycastTarget = false;
     }
@@ -127,10 +136,12 @@ public class FullscreenAdSpawner : MonoBehaviour
             if (isPaused)
                 continue;
 
-            // Pick a random ad sprite and show ad
+            // Pick a random ad and show it
             if (adSprites != null && adSprites.Count > 0 && adImage != null)
             {
-                adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+                currentAd = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+                adImage.sprite = currentAd.adImage;
+                UpdateAdClickButton();
                 ShowAd();
             }
 
@@ -298,7 +309,11 @@ public class FullscreenAdSpawner : MonoBehaviour
     public void ShowAdRandomThen(Action afterClose)
     {
         if (adSprites != null && adSprites.Count > 0 && adImage != null)
-            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+        {
+            currentAd = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+            adImage.sprite = currentAd.adImage;
+            UpdateAdClickButton();
+        }
         ShowAdThen(afterClose);
     }
 
@@ -308,7 +323,11 @@ public class FullscreenAdSpawner : MonoBehaviour
         onCloseOneShot = () => SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         showFailOnClose = false;
         if (adImage && adSprites.Count > 0)
-            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+        {
+            currentAd = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+            adImage.sprite = currentAd.adImage;
+            UpdateAdClickButton();
+        }
         ShowAd();
     }
 
@@ -336,7 +355,11 @@ public class FullscreenAdSpawner : MonoBehaviour
     private void AssignRandomSpriteIfNeeded()
     {
         if (adImage && adImage.sprite == null && adSprites != null && adSprites.Count > 0)
-            adImage.sprite = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+        {
+            currentAd = adSprites[UnityEngine.Random.Range(0, adSprites.Count)];
+            adImage.sprite = currentAd.adImage;
+            UpdateAdClickButton();
+        }
     }
 
     // --- Interval Control Methods ---
@@ -364,5 +387,30 @@ public class FullscreenAdSpawner : MonoBehaviour
     public bool IsIntervalPaused()
     {
         return isPaused;
+    }
+
+    // --- Ad Click Handling ---
+    /// <summary>
+    /// Called when the ad itself is clicked (opens URL)
+    /// </summary>
+    public void OnAdClicked()
+    {
+        if (currentAd != null && !string.IsNullOrEmpty(currentAd.clickUrl))
+        {
+            Application.OpenURL(currentAd.clickUrl);
+            MobileHaptics.ImpactMedium(); // Haptic feedback
+            Debug.Log($"[FullscreenAdSpawner] Opened URL: {currentAd.clickUrl}");
+        }
+    }
+
+    /// <summary>
+    /// Update ad click button based on current ad's clickable state
+    /// </summary>
+    private void UpdateAdClickButton()
+    {
+        if (adClickButton != null && currentAd != null)
+        {
+            adClickButton.interactable = currentAd.isClickable && !string.IsNullOrEmpty(currentAd.clickUrl);
+        }
     }
 }

@@ -11,7 +11,8 @@ using UnityEngine.UI;
 public class AdRotator : MonoBehaviour
 {
     [SerializeField] private Image targetImage;
-    [SerializeField] private List<Sprite> banners = new();
+    [SerializeField] private List<AdWithLink> banners = new();
+    [SerializeField] private Button bannerClickButton; // Button for clicking banner
 
     [Header("Timing (seconds)")]
     [SerializeField] private float minInterval = 30f;
@@ -29,10 +30,18 @@ public class AdRotator : MonoBehaviour
 
     private int currentIndex = -1;
     private Coroutine loop;
+    private AdWithLink currentBanner;
 
     void Awake()
     {
         if (!targetImage) targetImage = GetComponent<Image>();
+        
+        // Setup banner click button
+        if (bannerClickButton != null)
+        {
+            bannerClickButton.onClick.RemoveAllListeners();
+            bannerClickButton.onClick.AddListener(OnBannerClicked);
+        }
     }
 
     void OnEnable()
@@ -85,7 +94,9 @@ public class AdRotator : MonoBehaviour
     void ApplyImmediate(int idx)
     {
         currentIndex = idx;
-        targetImage.sprite = banners[idx];
+        currentBanner = banners[idx];
+        targetImage.sprite = currentBanner.adImage;
+        UpdateBannerClickButton();
         // targetImage.SetNativeSize(); // optional
     }
 
@@ -107,7 +118,9 @@ public class AdRotator : MonoBehaviour
             }
 
             // swap sprite
-            targetImage.sprite = banners[newIndex];
+            currentBanner = banners[newIndex];
+            targetImage.sprite = currentBanner.adImage;
+            UpdateBannerClickButton();
 
             // fade in
             t = 0f;
@@ -122,7 +135,9 @@ public class AdRotator : MonoBehaviour
         }
         else
         {
-            targetImage.sprite = banners[newIndex];
+            currentBanner = banners[newIndex];
+            targetImage.sprite = currentBanner.adImage;
+            UpdateBannerClickButton();
         }
 
         currentIndex = newIndex;
@@ -134,5 +149,30 @@ public class AdRotator : MonoBehaviour
         if (loop != null) StopCoroutine(loop);
         StartCoroutine(SwapTo(PickNewIndex()));
         if (loop == null) loop = StartCoroutine(Run());
+    }
+
+    // --- Banner Click Handling ---
+    /// <summary>
+    /// Called when the banner is clicked (opens URL)
+    /// </summary>
+    public void OnBannerClicked()
+    {
+        if (currentBanner != null && !string.IsNullOrEmpty(currentBanner.clickUrl))
+        {
+            Application.OpenURL(currentBanner.clickUrl);
+            MobileHaptics.ImpactLight(); // Light haptic for banner click
+            Debug.Log($"[AdRotator] Opened URL: {currentBanner.clickUrl}");
+        }
+    }
+
+    /// <summary>
+    /// Update banner click button based on current banner's clickable state
+    /// </summary>
+    private void UpdateBannerClickButton()
+    {
+        if (bannerClickButton != null && currentBanner != null)
+        {
+            bannerClickButton.interactable = currentBanner.isClickable && !string.IsNullOrEmpty(currentBanner.clickUrl);
+        }
     }
 }
