@@ -59,6 +59,9 @@ public class PlayerController : MonoBehaviour
                 if (jumpOneShot != null)
                     jumpOneShot.Play();
 
+                // Haptic feedback for jump
+                MobileHaptics.ImpactMedium();
+
                 hasJumped = true;
 
                 // Change to jumping sprite immediately when jump starts

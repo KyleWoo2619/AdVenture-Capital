@@ -149,6 +149,9 @@ public class Dot : MonoBehaviour
         if (IsBlockedRow(row)) return; // cannot begin a swipe from the blocked row
 
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        // Medium haptic when gem is touched
+        MobileHaptics.ImpactMedium();
     }
 
     private void OnMouseUp()

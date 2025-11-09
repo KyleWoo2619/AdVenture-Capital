@@ -26,17 +26,20 @@ public class PauseMenuManager : MonoBehaviour
 
     public void LoadBackToMainMenu()
     {
+        MobileHaptics.ImpactMedium(); // Haptic feedback
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void Continue()
     {
+        MobileHaptics.ImpactMedium(); // Haptic feedback
         canvas.enabled = false;
         this.gameObject.SetActive(false);
     }
 
     public void Pause()
     {
+        MobileHaptics.ImpactMedium(); // Haptic feedback
         Time.timeScale = 0;
         canvas.enabled = true;
         this.gameObject.SetActive(true);

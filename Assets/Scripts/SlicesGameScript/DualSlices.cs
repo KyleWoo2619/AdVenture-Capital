@@ -89,6 +89,9 @@ public class DualSlices : MonoBehaviour
 
                 slot1.ObjectOnSlot = this.gameObject;
                 slot2.ObjectOnSlot = this.gameObject;
+                
+                // Medium haptic when slice is placed into socket
+                MobileHaptics.ImpactMedium();
             }
             
             else

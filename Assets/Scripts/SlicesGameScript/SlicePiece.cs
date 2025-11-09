@@ -81,6 +81,9 @@ public class SlicePiece : MonoBehaviour
 
             slot.ObjectOnSlot = this.gameObject;
             slot.SetIsFilledtoTrue(slot);
+            
+            // Medium haptic when slice is placed into socket
+            MobileHaptics.ImpactMedium();
         }
         else
         {

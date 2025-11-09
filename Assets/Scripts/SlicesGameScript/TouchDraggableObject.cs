@@ -63,6 +63,9 @@ public class TouchDraggableObject2D : MonoBehaviour
             // Play pickup sound when object is touched/selected
             if (pickupSound != null && pickupSound.clip != null)
                 pickupSound.PlayOneShot(pickupSound.clip);
+            
+            // Medium haptic when slice is touched
+            MobileHaptics.ImpactMedium();
         }
     }
 

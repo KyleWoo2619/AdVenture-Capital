@@ -23,6 +23,9 @@ public class WholePie : MonoBehaviour
                 matchingSound.PlayOneShot(matchingSound.clip);
 
             hasPlayedMatchSound = true; // Prevent multiple plays
+            
+            // Medium haptic when full pie is completed
+            MobileHaptics.ImpactMedium();
 
             Invoke(nameof(ClearAllSlices), 0.05f); // slight delay
             adjecentPies[0].ClearAllSlices();

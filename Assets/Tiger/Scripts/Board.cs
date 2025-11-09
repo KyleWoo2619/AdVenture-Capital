@@ -187,6 +187,10 @@ public class Board : MonoBehaviour
                 // Normal destruction
                 Vector3 pos = allDots[column, row].transform.position;
                 if (matchOneShot != null) matchOneShot.Play();
+                
+                // Medium haptic when gem is broken/matched
+                MobileHaptics.ImpactMedium();
+                
                 GameObject particle = Instantiate(destroyParticle, pos, Quaternion.identity);
                 Destroy(particle, .5f);
                 Destroy(allDots[column, row]);

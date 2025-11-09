@@ -200,6 +200,9 @@ public class GameLogic : MonoBehaviour
         // Play touch sound
         if (touchSound != null)
             touchSound.Play();
+        
+        // Medium haptic for flag toggle
+        MobileHaptics.ImpactMedium();
             
         cell.isFlagged = !cell.isFlagged;
         state[cellPosition.x, cellPosition.y] = cell;
@@ -220,6 +223,9 @@ public class GameLogic : MonoBehaviour
         // Play touch sound
         if (touchSound != null)
             touchSound.Play();
+        
+        // Medium haptic for flag toggle
+        MobileHaptics.ImpactMedium();
             
         cell.isFlagged = !cell.isFlagged;
         state[cellPosition.x, cellPosition.y] = cell;
@@ -240,6 +246,9 @@ public class GameLogic : MonoBehaviour
         // Play touch sound
         if (touchSound != null)
             touchSound.Play();
+        
+        // Medium haptic for tile reveal (hold action)
+        MobileHaptics.ImpactMedium();
 
         switch (cell.type)
         {
@@ -277,6 +286,9 @@ public class GameLogic : MonoBehaviour
         // Play touch sound
         if (touchSound != null)
             touchSound.Play();
+        
+        // Medium haptic for tile reveal (hold action)
+        MobileHaptics.ImpactMedium();
 
         switch (cell.type)
         {
@@ -370,6 +382,9 @@ public class GameLogic : MonoBehaviour
         // Play win sound
         if (winSound != null)
             winSound.Play();
+        
+        // Heavy haptic for winning (finding all tiles)
+        MobileHaptics.ImpactHeavy();
 
         // Show ad after a brief delay - for win screen
         StartCoroutine(ShowAdForWinAfterDelay(2f));
