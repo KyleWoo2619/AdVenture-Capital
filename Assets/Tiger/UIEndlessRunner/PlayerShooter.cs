@@ -55,6 +55,20 @@ public class PlayerShooter : MonoBehaviour
             audioSource.PlayOneShot(fireSound);
         }
 
+        // Play haptic feedback based on bullet count
+        if (count == 1)
+        {
+            MobileHaptics.Tap(); // Light tap for single shot
+        }
+        else if (count == 2)
+        {
+            MobileHaptics.ImpactMedium(); // Medium for duo shot
+        }
+        else // count == 4
+        {
+            MobileHaptics.ImpactHeavy(); // Heavy for quad shot
+        }
+
         for (int i = 0; i < count; i++)
         {
             

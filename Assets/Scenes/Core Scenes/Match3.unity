@@ -1123,8 +1123,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7303139831689550538, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 363974388}
+    - targetCorrespondingSourceObject: {fileID: 7021573268793123306, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 363974387}
   m_SourcePrefab: {fileID: 100100000, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+--- !u!1 &363974385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7021573268793123306, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+  m_PrefabInstance: {fileID: 363974384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &363974386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7303139831689550538, guid: f85a67108422d9341ba47fa61db56337, type: 3}
+  m_PrefabInstance: {fileID: 363974384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &363974387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363974385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!114 &363974388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363974386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &400694741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,7 +1498,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2093485023108040371, guid: 154d24b41991ac944b87e22526381dca, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1455476749}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1516632282664652701, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469495606}
+    - targetCorrespondingSourceObject: {fileID: 4067526537469547978, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469495610}
+    - targetCorrespondingSourceObject: {fileID: 3109347118386222173, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469495609}
   m_SourcePrefab: {fileID: 100100000, guid: 154d24b41991ac944b87e22526381dca, type: 3}
 --- !u!4 &469495603 stripped
 Transform:
@@ -1474,6 +1525,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!1 &469495605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1516632282664652701, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+  m_PrefabInstance: {fileID: 469495602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &469495606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469495605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!1 &469495607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3109347118386222173, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+  m_PrefabInstance: {fileID: 469495602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &469495608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4067526537469547978, guid: 154d24b41991ac944b87e22526381dca, type: 3}
+  m_PrefabInstance: {fileID: 469495602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &469495609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469495607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!114 &469495610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469495608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &843301416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,6 +2387,7 @@ GameObject:
   - component: {fileID: 1126642243}
   - component: {fileID: 1126642242}
   - component: {fileID: 1126642241}
+  - component: {fileID: 1126642244}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -2415,6 +2521,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126642239}
   m_CullTransparentMesh: 1
+--- !u!114 &1126642244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126642239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1129936963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2540,6 +2659,7 @@ GameObject:
   - component: {fileID: 1222244396}
   - component: {fileID: 1222244395}
   - component: {fileID: 1222244394}
+  - component: {fileID: 1222244398}
   m_Layer: 5
   m_Name: HomeButton
   m_TagString: Untagged
@@ -2693,6 +2813,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222244392}
   m_CullTransparentMesh: 1
+--- !u!114 &1222244398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222244392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1290509860
 GameObject:
   m_ObjectHideFlags: 0
@@ -3900,8 +4033,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1396207920929530131, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1593791070}
   m_SourcePrefab: {fileID: 100100000, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+--- !u!1 &1593791069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1396207920929530131, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+  m_PrefabInstance: {fileID: 1593791068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1593791070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593791069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1684872056
 GameObject:
   m_ObjectHideFlags: 0
@@ -4158,7 +4312,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2159167479934603166, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859426025}
+    - targetCorrespondingSourceObject: {fileID: 7976954824030688730, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859426024}
+    - targetCorrespondingSourceObject: {fileID: 4540646009681225618, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859426023}
+    - targetCorrespondingSourceObject: {fileID: 5233932121279598468, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859426022}
   m_SourcePrefab: {fileID: 100100000, guid: 4e8277621f2757d479fe55033c337846, type: 3}
 --- !u!114 &1859426016 stripped
 MonoBehaviour:
@@ -4176,6 +4342,78 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 6370154236398999865, guid: 4e8277621f2757d479fe55033c337846, type: 3}
   m_PrefabInstance: {fileID: 1859426015}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859426018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5233932121279598468, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+  m_PrefabInstance: {fileID: 1859426015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859426019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4540646009681225618, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+  m_PrefabInstance: {fileID: 1859426015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859426020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7976954824030688730, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+  m_PrefabInstance: {fileID: 1859426015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859426021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2159167479934603166, guid: 4e8277621f2757d479fe55033c337846, type: 3}
+  m_PrefabInstance: {fileID: 1859426015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1859426022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859426018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!114 &1859426023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859426019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!114 &1859426024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859426020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
+--- !u!114 &1859426025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859426021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1881748742
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,6 +5038,7 @@ GameObject:
   - component: {fileID: 2073987013}
   - component: {fileID: 2073987012}
   - component: {fileID: 2073987011}
+  - component: {fileID: 2073987015}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -4953,6 +5192,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073987009}
   m_CullTransparentMesh: 1
+--- !u!114 &2073987015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073987009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &2122446239
 GameObject:
   m_ObjectHideFlags: 0

@@ -128,6 +128,10 @@ public class TouchAndShoot : MonoBehaviour
             {
                 OnEnemyDeath?.Invoke();
                 hitEnemy = true;
+                
+                // Heavy haptic when player shoots enemy
+                MobileHaptics.ImpactHeavy();
+                
                 // Change to win sprite when player hits enemy
                 SetCharacterSprite(winSprite);
             }
@@ -143,6 +147,10 @@ public class TouchAndShoot : MonoBehaviour
     void SetPlayerDead()
     {
         isDead = true;
+        
+        // Heavy haptic when player gets hit
+        MobileHaptics.ImpactHeavy();
+        
         // Change to lose sprite when player dies
         SetCharacterSprite(loseSprite);
     }

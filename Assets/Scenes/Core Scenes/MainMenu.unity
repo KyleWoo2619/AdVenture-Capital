@@ -624,6 +624,7 @@ GameObject:
   - component: {fileID: 809519357}
   - component: {fileID: 809519356}
   - component: {fileID: 809519359}
+  - component: {fileID: 809519360}
   m_Layer: 5
   m_Name: SettingsBtn
   m_TagString: Untagged
@@ -770,6 +771,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FindVolumeSettings
   volumeSettingsRef: {fileID: 0}
+--- !u!114 &809519360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809519354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,13 +1674,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1393983213}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
 --- !u!224 &1393983211 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
   m_PrefabInstance: {fileID: 1393983210}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1393983212 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 1393983210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1393983213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393983212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!224 &1501508025 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1908986181600148590, guid: a674e78e93d425549be285edb6e2568c, type: 3}
@@ -1884,13 +1919,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1646470823}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
 --- !u!224 &1646470821 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
   m_PrefabInstance: {fileID: 1646470820}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1646470822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 1646470820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1646470823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646470822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1720875800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2244,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 443521702274678778, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1870379014}
   m_SourcePrefab: {fileID: 100100000, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
 --- !u!114 &1870379012 stripped
 MonoBehaviour:
@@ -2201,6 +2260,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f985525ae940a84ea9bdbf434d286eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSettings
+--- !u!1 &1870379013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 443521702274678778, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
+  m_PrefabInstance: {fileID: 1870379011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1870379014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870379013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1001 &1907083279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2396,8 +2473,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1907083281}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+--- !u!1 &1907083280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 1907083279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1907083281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907083280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &1954172867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,8 +2828,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2064838040613334494}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+--- !u!1 &2064838040613334493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 2064838040613334492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2064838040613334494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064838040613334493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1001 &4471441984204527845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3047,7 +3166,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1396207920929530131, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4471441984204527849}
   m_SourcePrefab: {fileID: 100100000, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
 --- !u!223 &4471441984204527846 stripped
 Canvas:
@@ -3065,6 +3187,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f54a8b4d09545ad77aa967e873fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &4471441984204527848 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1396207920929530131, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+  m_PrefabInstance: {fileID: 4471441984204527845}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4471441984204527849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471441984204527848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1001 &4714031045983032187
 PrefabInstance:
   m_ObjectHideFlags: 0
