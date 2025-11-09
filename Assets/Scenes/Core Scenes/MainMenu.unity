@@ -2113,6 +2113,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399185634879214637, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2229,25 +2233,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8191167585661659039, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8669935167684031157, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_Name
       value: SettingsMenuUI
       objectReference: {fileID: 0}
-    - target: {fileID: 8669935167684031157, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 443521702274678778, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1870379014}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
 --- !u!114 &1870379012 stripped
 MonoBehaviour:
@@ -2260,24 +2253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f985525ae940a84ea9bdbf434d286eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSettings
---- !u!1 &1870379013 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 443521702274678778, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
-  m_PrefabInstance: {fileID: 1870379011}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1870379014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870379013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
-  hapticType: 2
 --- !u!1001 &1907083279
 PrefabInstance:
   m_ObjectHideFlags: 0

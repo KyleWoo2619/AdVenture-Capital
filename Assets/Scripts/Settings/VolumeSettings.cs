@@ -11,6 +11,9 @@ public class VolumeSettings : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider adSlider;
+    
+    [Header("Vibration Settings")]
+    [SerializeField] private Toggle vibrationToggle; // Drag your Toggle UI element here
 
     public Canvas vRenderer;
 
@@ -41,6 +44,8 @@ public class VolumeSettings : MonoBehaviour
             SetAdVolume();
         }
 
+        // Load vibration setting
+        LoadVibrationSetting();
         
     }
 
@@ -87,5 +92,26 @@ public class VolumeSettings : MonoBehaviour
         vRenderer.enabled = true;
     }
 
+    // Vibration toggle methods
+    public void SetVibration(bool enabled)
+    {
+        MobileHaptics.SetEnabled(enabled);
+        PlayerPrefs.SetInt("vibrationEnabled", enabled ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadVibrationSetting()
+    {
+        // Default to enabled if no preference exists
+        bool vibrationEnabled = PlayerPrefs.GetInt("vibrationEnabled", 1) == 1;
+        
+        if (vibrationToggle != null)
+        {
+            vibrationToggle.isOn = vibrationEnabled;
+            vibrationToggle.onValueChanged.AddListener(SetVibration);
+        }
+        
+        MobileHaptics.SetEnabled(vibrationEnabled);
+    }
 
 }

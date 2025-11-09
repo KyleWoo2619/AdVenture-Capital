@@ -3,6 +3,25 @@ using System;
 
 public static class MobileHaptics
 {
+    // Global toggle for haptics
+    private static bool isEnabled = true;
+    
+    /// <summary>
+    /// Enable or disable all haptic feedback
+    /// </summary>
+    public static void SetEnabled(bool enabled)
+    {
+        isEnabled = enabled;
+    }
+    
+    /// <summary>
+    /// Check if haptics are currently enabled
+    /// </summary>
+    public static bool IsEnabled()
+    {
+        return isEnabled;
+    }
+
 #if UNITY_ANDROID && !UNITY_EDITOR
     static AndroidJavaObject vibrator;
     static bool hasAmplitude;
@@ -38,7 +57,7 @@ public static class MobileHaptics
     static void VibrateOneShot(int durationMs, int amplitude /*1-255*/)
     {
         EnsureInit();
-        if (vibrator == null || Throttle()) return;
+        if (vibrator == null || Throttle() || !isEnabled) return;
 
         if (sdkInt >= 26)
         {
@@ -62,7 +81,7 @@ public static class MobileHaptics
     static void VibratePattern(long[] patternMs, int[] amplitudes)
     {
         EnsureInit();
-        if (vibrator == null || Throttle()) return;
+        if (vibrator == null || Throttle() || !isEnabled) return;
 
         if (sdkInt >= 26)
         {
