@@ -41,6 +41,7 @@ public class AdRotator : MonoBehaviour
         {
             bannerClickButton.onClick.RemoveAllListeners();
             bannerClickButton.onClick.AddListener(OnBannerClicked);
+            // Keep banner button always active
         }
     }
 
@@ -170,9 +171,15 @@ public class AdRotator : MonoBehaviour
     /// </summary>
     private void UpdateBannerClickButton()
     {
-        if (bannerClickButton != null && currentBanner != null)
+        if (bannerClickButton == null) return;
+
+        // Keep button always active, just update interactivity
+        bool shouldBeInteractable = currentBanner != null && currentBanner.isClickable && !string.IsNullOrEmpty(currentBanner.clickUrl);
+        bannerClickButton.interactable = shouldBeInteractable;
+        
+        if (bannerClickButton.targetGraphic != null)
         {
-            bannerClickButton.interactable = currentBanner.isClickable && !string.IsNullOrEmpty(currentBanner.clickUrl);
+            bannerClickButton.targetGraphic.raycastTarget = shouldBeInteractable;
         }
     }
 }

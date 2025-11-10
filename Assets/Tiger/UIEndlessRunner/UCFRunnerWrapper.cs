@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using TMPro; // For TextMeshPro
 
 public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
 {
@@ -10,6 +11,9 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
     [SerializeField] private PlayerShooter playerShooter; // Player shooting mechanics
     [SerializeField] private LaneRunner laneRunner; // Player lane movement
     [SerializeField] private ScoreManager scoreManager; // Score tracking
+    
+    [Header("Win/Lose UI")]
+    [SerializeField] private TextMeshProUGUI winLoseText; // Text to show "You Win!!" or "You Lost!!"
     
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource; // Drag AudioSource component here
@@ -24,6 +28,10 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
     void Awake()
     {
         adManager = FindFirstObjectByType<InteractiveAdManager>();
+        
+        // Hide win/lose text at start
+        if (winLoseText != null)
+            winLoseText.gameObject.SetActive(false);
         
         // Subscribe to boss defeat event
         Boss.OnBossDefeated += OnBossDefeated;
@@ -45,6 +53,10 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         if (runnerCanvas != null)
             runnerCanvas.gameObject.SetActive(true);
 
+        // Hide win/lose text
+        if (winLoseText != null)
+            winLoseText.gameObject.SetActive(false);
+
         // Reset score
         if (scoreManager != null)
             scoreManager.ResetScore();
@@ -59,6 +71,7 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         if (playerShooter != null)
         {
             playerShooter.SetUnscaledTimeMode(true);
+            playerShooter.StartShooting(); // Make sure shooting is enabled
         }
 
         if (laneRunner != null)
@@ -75,9 +88,20 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         
         this.playerWon = playerWon;
         
+        // Stop shooting immediately
+        if (playerShooter != null)
+            playerShooter.StopShooting();
+        
         if (playerWon)
         {
             Debug.Log("[UCFRunnerWrapper] Boss defeated by player! Player wins!");
+            
+            // Show "You Win!!" text
+            if (winLoseText != null)
+            {
+                winLoseText.text = "You Win!!";
+                winLoseText.gameObject.SetActive(true);
+            }
             
             // Play win sound
             if (audioSource != null && winSound != null)
@@ -88,6 +112,13 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         else
         {
             Debug.Log("[UCFRunnerWrapper] Boss reached player! Player loses!");
+            
+            // Show "You Lost!!" text
+            if (winLoseText != null)
+            {
+                winLoseText.text = "You Lost!!";
+                winLoseText.gameObject.SetActive(true);
+            }
             
             // Play lose sound
             if (audioSource != null && loseSound != null)
@@ -148,9 +179,17 @@ public class UCFRunnerWrapper : MonoBehaviour, IInteractiveAd
         if (runnerCanvas != null)
             runnerCanvas.gameObject.SetActive(false);
 
+        // Hide win/lose text
+        if (winLoseText != null)
+            winLoseText.gameObject.SetActive(false);
+
         // Stop spawning
         if (obstacleSpawner != null)
             obstacleSpawner.enabled = false;
+
+        // Stop shooting
+        if (playerShooter != null)
+            playerShooter.StopShooting();
 
         // Clear any spawned objects
         ClearSpawnedObjects();

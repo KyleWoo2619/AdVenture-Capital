@@ -24,6 +24,10 @@ public class InteractiveAdManager : MonoBehaviour
         public Sprite adImage;                // The image to show in fullscreen ad for this interactive ad
         public AudioClip adMusic;             // The music to play during this interactive ad
         
+        [Header("Ad Link Settings")]
+        public string clickUrl;               // URL to open when ad image is clicked
+        public bool isClickable = true;       // Whether the ad image can be clicked
+        
         [Header("Settings")]
         public bool isEnabled = true;         // Whether this ad can be shown
         
@@ -58,6 +62,7 @@ public class InteractiveAdManager : MonoBehaviour
     // --- Fullscreen Ad Settings ---
     [Header("Fullscreen Ad")]
     [SerializeField] private Image fullscreenAdImage; // The fullscreen ad image that will be swapped based on interactive ad
+    [SerializeField] private Button adClickButton; // Invisible button covering the ad image for clicks
 
     // --- Audio Settings ---
     [Header("Audio")]
@@ -94,6 +99,15 @@ public class InteractiveAdManager : MonoBehaviour
         {
             winCloseButton.onClick.RemoveAllListeners();
             winCloseButton.onClick.AddListener(OnWinCloseButtonPressed);
+        }
+
+        // Setup ad click button listener
+        if (adClickButton != null)
+        {
+            adClickButton.onClick.RemoveAllListeners();
+            adClickButton.onClick.AddListener(OnAdClicked);
+            // Start with button disabled
+            adClickButton.gameObject.SetActive(false);
         }
 
         // Hide all interactive ads, background blocker, and win UI at start
@@ -248,6 +262,9 @@ public class InteractiveAdManager : MonoBehaviour
         // Hide background blocker when win condition is triggered
         SetBackgroundBlockerVisible(false);
 
+        // Show the ad click button now that fullscreen ad image is visible
+        UpdateAdClickButton();
+
         // Show win UI
         SetWinUIVisible(true);
 
@@ -295,6 +312,10 @@ public class InteractiveAdManager : MonoBehaviour
         // Switch fullscreen ad image to match the current interactive ad
         SwitchFullscreenAdImage(ad);
 
+        // Don't show ad click button during interactive gameplay - only when win condition shows
+        if (adClickButton != null)
+            adClickButton.gameObject.SetActive(false);
+
         // Switch music to the interactive ad's music
         SwitchToInteractiveAdMusic(ad);
 
@@ -323,6 +344,10 @@ public class InteractiveAdManager : MonoBehaviour
 
         // Hide the background blocker
         SetBackgroundBlockerVisible(false);
+
+        // Hide the ad click button
+        if (adClickButton != null)
+            adClickButton.gameObject.SetActive(false);
 
         // Resume game if we paused it
         if (pauseGameOnShow)
@@ -570,5 +595,38 @@ public class InteractiveAdManager : MonoBehaviour
         {
             backgroundBlockerImage.gameObject.SetActive(visible);
         }
+    }
+
+    // --- Ad Click Handling ---
+
+    private void UpdateAdClickButton()
+    {
+        if (adClickButton == null) return;
+
+        bool shouldBeActive = currentAd != null && currentAd.isClickable && !string.IsNullOrEmpty(currentAd.clickUrl);
+        adClickButton.gameObject.SetActive(shouldBeActive);
+        adClickButton.interactable = shouldBeActive;
+        
+        if (adClickButton.targetGraphic != null)
+        {
+            adClickButton.targetGraphic.raycastTarget = shouldBeActive;
+        }
+    }
+
+    private void OnAdClicked()
+    {
+        if (currentAd == null || !currentAd.isClickable || string.IsNullOrEmpty(currentAd.clickUrl))
+        {
+            Debug.LogWarning("[InteractiveAdManager] Ad clicked but no valid URL or not clickable");
+            return;
+        }
+
+        Debug.Log($"[InteractiveAdManager] Opening ad URL: {currentAd.clickUrl}");
+        
+        // Play haptic feedback
+        MobileHaptics.ImpactMedium();
+        
+        // Open the URL
+        Application.OpenURL(currentAd.clickUrl);
     }
 }

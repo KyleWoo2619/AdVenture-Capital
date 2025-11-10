@@ -6,9 +6,6 @@ using UnityEngine;
 [System.Serializable]
 public class AdWithLink
 {
-    [Tooltip("Name of the ad (for organization)")]
-    public string adName;
-    
     [Tooltip("The sprite/image for this ad")]
     public Sprite adImage;
     

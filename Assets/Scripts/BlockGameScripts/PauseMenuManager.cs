@@ -33,6 +33,12 @@ public class PauseMenuManager : MonoBehaviour
     public void Continue()
     {
         MobileHaptics.ImpactMedium(); // Haptic feedback
+        
+        // Enable tile input
+        GameLogic gameLogic = FindObjectOfType<GameLogic>();
+        if (gameLogic != null)
+            gameLogic.ResumeGame();
+        
         canvas.enabled = false;
         this.gameObject.SetActive(false);
     }

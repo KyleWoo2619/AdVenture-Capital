@@ -22,6 +22,10 @@ public class VideoAdSpawner : MonoBehaviour
 
         public AudioSource audioSource;
         public Sprite fullscreenImage;  // The fullscreen ad image to show after video
+        
+        [Header("Ad Link Settings")]
+        public string clickUrl;         // URL to open when ad image is clicked
+        public bool isClickable = true; // Whether the ad image can be clicked
     }
 
     // --- UI References ---
@@ -35,6 +39,7 @@ public class VideoAdSpawner : MonoBehaviour
     [SerializeField] private Slider progressSlider;     // The progress slider (0 to 1)
     [SerializeField] private Button skipButton;         // The skip button
     [SerializeField] private Button fullscreenCloseButton; // Close button for the fullscreen ad
+    [SerializeField] private Button adClickButton;      // Invisible button covering the ad image for clicks
     
     // --- Audio References ---
     [Header("Audio Management")]
@@ -97,6 +102,15 @@ public class VideoAdSpawner : MonoBehaviour
         {
             fullscreenCloseButton.onClick.RemoveAllListeners();
             fullscreenCloseButton.onClick.AddListener(CloseFullscreenAd);
+        }
+
+        // Setup ad click button listener
+        if (adClickButton != null)
+        {
+            adClickButton.onClick.RemoveAllListeners();
+            adClickButton.onClick.AddListener(OnAdClicked);
+            // Start with button disabled
+            adClickButton.gameObject.SetActive(false);
         }
 
         // Hide video ad and skip button at start
@@ -497,12 +511,14 @@ public class VideoAdSpawner : MonoBehaviour
         if (showFailOnSkip)
         {
             // Show paired fullscreen ad first, then fail menu after close
+            // Don't reset flags yet - they're needed in CloseFullscreenAd()
             ShowFullscreenAd();
         }
         else if (restartOnSkip)
         {
-            // Restart scene
-            RestartScene();
+            // Show paired fullscreen ad first, then restart after close
+            // Don't reset flags yet - they're needed in CloseFullscreenAd()
+            ShowFullscreenAd();
         }
         else if (onSkipCallback != null)
         {
@@ -510,11 +526,17 @@ public class VideoAdSpawner : MonoBehaviour
             var cb = onSkipCallback;
             onSkipCallback = null;
             cb?.Invoke();
+            
+            // Reset flags for callbacks since they don't show fullscreen ads
+            showFailOnSkip = false;
+            restartOnSkip = false;
         }
-
-        // Reset flags for next video
-        showFailOnSkip = false;
-        restartOnSkip = false;
+        else
+        {
+            // No action - reset flags
+            showFailOnSkip = false;
+            restartOnSkip = false;
+        }
     }
 
     // --- Scene Management ---
@@ -666,6 +688,9 @@ public class VideoAdSpawner : MonoBehaviour
         // Show the fullscreen ad
         SetFullscreenAdVisible(true);
 
+        // Update ad click button state
+        UpdateAdClickButton();
+
         // Hide the close button initially
         if (fullscreenCloseButton != null)
         {
@@ -705,7 +730,7 @@ public class VideoAdSpawner : MonoBehaviour
 
     void CloseFullscreenAd()
     {
-        Debug.Log("CloseFullscreenAd: Closing fullscreen ad and showing fail menu");
+        Debug.Log("CloseFullscreenAd: Closing fullscreen ad");
         showingFullscreenAd = false;
 
         // Stop close button coroutine
@@ -725,19 +750,35 @@ public class VideoAdSpawner : MonoBehaviour
             fullscreenCloseButton.interactable = false;
         }
 
-        // Show fail menu (time should stay paused)
-        if (FailMenuInstance != null)
+        // Hide ad click button
+        if (adClickButton != null)
+            adClickButton.gameObject.SetActive(false);
+
+        // Decide what to do after closing ad based on flow type
+        if (showFailOnSkip)
         {
-            FailMenuInstance.DisplayFailMenu();
-            Debug.Log("CloseFullscreenAd: Displayed fail menu");
+            // Death flow: Show fail menu (time should stay paused)
+            if (FailMenuInstance != null)
+            {
+                FailMenuInstance.DisplayFailMenu();
+                Debug.Log("CloseFullscreenAd: Displayed fail menu");
+            }
+            else
+            {
+                Debug.LogWarning("CloseFullscreenAd: FailMenuInstance is null!");
+            }
         }
-        else
+        else if (restartOnSkip)
         {
-            Debug.LogWarning("CloseFullscreenAd: FailMenuInstance is null!");
+            // Restart flow: Restart the scene
+            Debug.Log("CloseFullscreenAd: Restarting scene");
+            RestartScene();
         }
         
         // Reset state for next ad
         currentAdPair = null;
+        showFailOnSkip = false;
+        restartOnSkip = false;
         
         Debug.Log("CloseFullscreenAd: Fullscreen ad closed successfully");
     }
@@ -783,5 +824,38 @@ public class VideoAdSpawner : MonoBehaviour
     public void SetSkipButtonDelay(float newDelay)
     {
         skipButtonDelay = newDelay;
+    }
+
+    // --- Ad Click Handling ---
+
+    private void UpdateAdClickButton()
+    {
+        if (adClickButton == null) return;
+
+        bool shouldBeActive = currentAdPair != null && currentAdPair.isClickable && !string.IsNullOrEmpty(currentAdPair.clickUrl);
+        adClickButton.gameObject.SetActive(shouldBeActive);
+        adClickButton.interactable = shouldBeActive;
+        
+        if (adClickButton.targetGraphic != null)
+        {
+            adClickButton.targetGraphic.raycastTarget = shouldBeActive;
+        }
+    }
+
+    private void OnAdClicked()
+    {
+        if (currentAdPair == null || !currentAdPair.isClickable || string.IsNullOrEmpty(currentAdPair.clickUrl))
+        {
+            Debug.LogWarning("[VideoAdSpawner] Ad clicked but no valid URL or not clickable");
+            return;
+        }
+
+        Debug.Log($"[VideoAdSpawner] Opening ad URL: {currentAdPair.clickUrl}");
+        
+        // Play haptic feedback
+        MobileHaptics.ImpactMedium();
+        
+        // Open the URL
+        Application.OpenURL(currentAdPair.clickUrl);
     }
 }

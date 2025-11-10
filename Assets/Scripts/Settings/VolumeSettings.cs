@@ -15,11 +15,15 @@ public class VolumeSettings : MonoBehaviour
     [Header("Vibration Settings")]
     [SerializeField] private Toggle vibrationToggle; // Drag your Toggle UI element here
 
+    [Header("Settings UI Reference")]
+    [SerializeField] private Canvas settingsCanvas; // Drag the Settings Menu Canvas here (if it's a child)
+    
     public Canvas vRenderer;
 
     void Awake()
     {
-        vRenderer = GetComponent<Canvas>();
+        // Use settingsCanvas if assigned, otherwise get Canvas from this GameObject
+        vRenderer = settingsCanvas != null ? settingsCanvas : GetComponent<Canvas>();
         
         if (instance != null && instance != this)
         {

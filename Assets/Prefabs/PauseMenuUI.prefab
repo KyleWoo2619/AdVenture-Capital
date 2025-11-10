@@ -313,19 +313,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   targetImage: {fileID: 1618101743174841951}
   banners:
-  - {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
-  - {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
-  - {fileID: -1792890282266326374, guid: 46c597b46e4ca71419266264f16359d0, type: 3}
-  - {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
-  - {fileID: 7746126246772194694, guid: 4fa7ace86c580df4197686c232ac2d1b, type: 3}
-  - {fileID: 8174844779809709143, guid: 2b45fb7741028e74fa4d298aa3120ed1, type: 3}
-  - {fileID: 1274299836955854301, guid: d4082aff4966f2b4891518b03f55aa66, type: 3}
-  - {fileID: -595353952390168928, guid: 94c41beffcc05a240b9a0ac29fc41003, type: 3}
-  - {fileID: -3612473473856642037, guid: 08e0a92ddc0bc8245a093863a356d44a, type: 3}
-  - {fileID: -5556064513204565040, guid: ee229818cf9aea64881a39f304b132ef, type: 3}
-  - {fileID: 3422197090429662487, guid: e5bc8cb184bf3c04683848bc2a37f04d, type: 3}
-  - {fileID: -3347457018524759526, guid: 46e859cbdfa3c52449b49b7a66dbe8a1, type: 3}
-  - {fileID: -6946446915397072417, guid: 7895b124fb0956e4c8157af4a6a5c628, type: 3}
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  bannerClickButton: {fileID: 0}
   minInterval: 10
   maxInterval: 15
   playOnEnable: 1
@@ -346,6 +386,7 @@ GameObject:
   - component: {fileID: 115337272366224050}
   - component: {fileID: 1363911883429435929}
   - component: {fileID: 8934467622057411320}
+  - component: {fileID: 6448480016263150845}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -370,7 +411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -434}
+  m_AnchoredPosition: {x: 0, y: -390}
   m_SizeDelta: {x: 541.7898, y: 202.11304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9098982806732364750
@@ -499,6 +540,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6448480016263150845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2159167479934603166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &2319891036556968377
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +1052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 336}
+  m_AnchoredPosition: {x: 0, y: 380}
   m_SizeDelta: {x: 581, y: 124.88257}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3100776000465225818
@@ -1326,19 +1380,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   targetImage: {fileID: 6463633947266871387}
   banners:
-  - {fileID: -4099629187399566310, guid: 16864ba862d187542a5bf5e97202653a, type: 3}
-  - {fileID: -4057727239011057168, guid: 6fe67703fa0248d4fb5e81b73ccf4ed8, type: 3}
-  - {fileID: -1792890282266326374, guid: 46c597b46e4ca71419266264f16359d0, type: 3}
-  - {fileID: -2337107256034444934, guid: 0c4b51c1fe720784ab1ae345f1af2b1f, type: 3}
-  - {fileID: 7746126246772194694, guid: 4fa7ace86c580df4197686c232ac2d1b, type: 3}
-  - {fileID: 8174844779809709143, guid: 2b45fb7741028e74fa4d298aa3120ed1, type: 3}
-  - {fileID: 1274299836955854301, guid: d4082aff4966f2b4891518b03f55aa66, type: 3}
-  - {fileID: -595353952390168928, guid: 94c41beffcc05a240b9a0ac29fc41003, type: 3}
-  - {fileID: -3612473473856642037, guid: 08e0a92ddc0bc8245a093863a356d44a, type: 3}
-  - {fileID: -5556064513204565040, guid: ee229818cf9aea64881a39f304b132ef, type: 3}
-  - {fileID: 3422197090429662487, guid: e5bc8cb184bf3c04683848bc2a37f04d, type: 3}
-  - {fileID: -3347457018524759526, guid: 46e859cbdfa3c52449b49b7a66dbe8a1, type: 3}
-  - {fileID: -6946446915397072417, guid: 7895b124fb0956e4c8157af4a6a5c628, type: 3}
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  - adName: 
+    adImage: {fileID: 0}
+    clickUrl: 
+    isClickable: 1
+  bannerClickButton: {fileID: 0}
   minInterval: 10
   maxInterval: 15
   playOnEnable: 1
@@ -1360,6 +1454,7 @@ GameObject:
   - component: {fileID: 6626798656171050144}
   - component: {fileID: 3209346929332312987}
   - component: {fileID: 1407374520889354702}
+  - component: {fileID: 4746851783671973885}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -1384,7 +1479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000002861, y: -167}
+  m_AnchoredPosition: {x: -0.000002861, y: -123}
   m_SizeDelta: {x: 541.7898, y: 202.11304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6453811019924724416
@@ -1525,6 +1620,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead32bca56c9ef546b38fb0547b504e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FindVolumeSettings
+  volumeSettingsRef: {fileID: 0}
+--- !u!114 &4746851783671973885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7976954824030688730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!1 &8488982797611753883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,7 +1843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 101.06
+      value: 145.06
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1751,8 +1860,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3074252830968026901}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+--- !u!1 &4540646009681225618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 989052741100902441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3074252830968026901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4540646009681225618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2
 --- !u!224 &8623456510690538177 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
@@ -1892,11 +2022,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 518.41
+      value: 541.79
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 193.39099
+      value: 193.391
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1928,11 +2058,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000002861
+      value: -0.000090122
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -695
+      value: -651
       objectReference: {fileID: 0}
     - target: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1949,10 +2079,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2563264793202191711}
   m_SourcePrefab: {fileID: 100100000, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
 --- !u!224 &3827349728893655 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8797076242073332456, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
   m_PrefabInstance: {fileID: 8798035653025247295}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5233932121279598468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655321215413403579, guid: 42375091fa9179a48ad743d931fd8d8a, type: 3}
+  m_PrefabInstance: {fileID: 8798035653025247295}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2563264793202191711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5233932121279598468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38382ee766026343b40becd1772d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHaptic
+  hapticType: 2

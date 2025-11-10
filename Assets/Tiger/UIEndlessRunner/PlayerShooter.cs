@@ -21,6 +21,7 @@ public class PlayerShooter : MonoBehaviour
     int level = 0; // 0 = default, 1 = duo, 2 = quad
     float currentBulletSpeed; // Actual bullet speed including boosts
     bool useUnscaledTime = false; // For working during pause
+    bool canShoot = true; // Control whether shooting is allowed
 
     void Awake()
     {
@@ -34,8 +35,20 @@ public class PlayerShooter : MonoBehaviour
         useUnscaledTime = enabled;
     }
 
+    public void StopShooting()
+    {
+        canShoot = false;
+    }
+
+    public void StartShooting()
+    {
+        canShoot = true;
+    }
+
     void Update()
     {
+        if (!canShoot) return; // Don't shoot if disabled
+        
         float deltaTime = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
         shootTimer += deltaTime;
         if (shootTimer >= shootInterval)

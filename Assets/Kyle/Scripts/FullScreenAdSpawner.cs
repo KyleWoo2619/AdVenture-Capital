@@ -79,6 +79,8 @@ public class FullscreenAdSpawner : MonoBehaviour
         {
             adClickButton.onClick.RemoveAllListeners();
             adClickButton.onClick.AddListener(OnAdClicked);
+            // Start with button disabled
+            adClickButton.gameObject.SetActive(false);
         }
 
         // Hide ad and close button at start
@@ -228,6 +230,10 @@ public class FullscreenAdSpawner : MonoBehaviour
         // Hide ad and close button
         SetCloseButtonVisible(false);
         SetAdVisible(false);
+
+        // Hide ad click button
+        if (adClickButton != null)
+            adClickButton.gameObject.SetActive(false);
 
         // Prevent ad image from blocking raycasts
         if (adImage) adImage.raycastTarget = false;
@@ -408,9 +414,15 @@ public class FullscreenAdSpawner : MonoBehaviour
     /// </summary>
     private void UpdateAdClickButton()
     {
-        if (adClickButton != null && currentAd != null)
+        if (adClickButton == null) return;
+
+        bool shouldBeActive = currentAd != null && currentAd.isClickable && !string.IsNullOrEmpty(currentAd.clickUrl);
+        adClickButton.gameObject.SetActive(shouldBeActive);
+        adClickButton.interactable = shouldBeActive;
+        
+        if (adClickButton.targetGraphic != null)
         {
-            adClickButton.interactable = currentAd.isClickable && !string.IsNullOrEmpty(currentAd.clickUrl);
+            adClickButton.targetGraphic.raycastTarget = shouldBeActive;
         }
     }
 }
