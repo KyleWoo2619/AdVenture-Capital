@@ -14,7 +14,7 @@ public class BounceAd : MonoBehaviour
 
     public float wBound;
     public float hBound;
-    public float speed = 150;
+    public float speed = 240;
     int lastListNum = -1;
 
     [SerializeField] private List<GameObject> topEdgePoints = new List<GameObject>();

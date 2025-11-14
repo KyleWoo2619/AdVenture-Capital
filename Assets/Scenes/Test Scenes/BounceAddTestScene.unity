@@ -343,14 +343,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1827710557}
     m_Modifications:
-    - target: {fileID: 1512928101383312945, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Name
       value: BannerAd
       objectReference: {fileID: 0}
+    - target: {fileID: 3588396099143839240, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1827710556}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -434,10 +434,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2028032775}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
 --- !u!224 &1493528031 stripped
 RectTransform:
@@ -546,31 +543,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &2028032769 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-  m_PrefabInstance: {fileID: 1493528030}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2028032775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028032769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67d5399278dc0d4bbaf9bc4c90b04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BounceAd
-  canvas: {fileID: 1827710556}
-  wBound: 0
-  hBound: 0
-  speed: 150
-  topEdgePoints: []
-  leftEdgePoints: []
-  bottomEdgePoints: []
-  rightEdgePoints: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
