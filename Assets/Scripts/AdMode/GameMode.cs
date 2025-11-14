@@ -75,12 +75,12 @@ public class GameModeController : MonoBehaviour
     }
 
 
-    [ContextMenu("Set → Normal Mode")]
+    [ContextMenu("Set -> Normal Mode")]
     private void TestSetNormal() => SetGameMode(GameMode.NormalMode);
 
-    [ContextMenu("Set → Ad Free Mode")]
+    [ContextMenu("Set -> Ad Free Mode")]
     private void TestSetAdFree() => SetGameMode(GameMode.AdFreeMode);
 
-    [ContextMenu("Set → No Ad Mode")]
+    [ContextMenu("Set -> No Ad Mode")]
     private void TestSetNoAd() => SetGameMode(GameMode.NoAdMode);
 }
