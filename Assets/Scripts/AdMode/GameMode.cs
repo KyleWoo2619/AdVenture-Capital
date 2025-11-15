@@ -1,6 +1,4 @@
-﻿using Microsoft.Unity.VisualStudio.Editor;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
+﻿using UnityEngine;
 
 public enum GameMode
 {
@@ -23,7 +21,7 @@ public class GameModeController : MonoBehaviour
     [Header("Current Mode")]
     public GameMode currentMode = GameMode.NormalMode;
 
-    private void Update()
+    private void Start()
     {
         ApplyModeSettings();
     }
@@ -44,40 +42,15 @@ public class GameModeController : MonoBehaviour
         switch (currentMode)
         {
             case GameMode.NormalMode:
-                //SetActiveForObjects(hideInNormal, false);
-                foreach(GameObject bannerad in hideInNormal)
-                {
-                    if (bannerad.GetComponent<BounceAd>())
-                    {
-                        bannerad.GetComponent<BounceAd>().enabled = false;
-                        bannerad.GetComponent<Canvas>().enabled = true;
-                        
-                    }
-                }
+                SetActiveForObjects(hideInNormal, false);
                 break;
 
             case GameMode.AdFreeMode:
-                //SetActiveForObjects(hideInAdFree, false);
-                foreach(GameObject bannerad in hideInNormal)
-                {
-                    if (bannerad.GetComponent<BounceAd>())
-                    {
-                        bannerad.GetComponent<BounceAd>().enabled = true;
-                        bannerad.GetComponent<Canvas>().enabled = true;
-                    }
-                }
+                SetActiveForObjects(hideInAdFree, false);
                 break;
 
             case GameMode.NoAdMode:
-                //SetActiveForObjects(hideInNoAd, false);
-                foreach(GameObject bannerad in hideInNormal)
-                {
-                    if (bannerad.GetComponent<BounceAd>())
-                    {
-                        bannerad.GetComponent<BounceAd>().enabled = false;
-                        bannerad.GetComponent<Canvas>().enabled = false;
-                    }
-                }
+                SetActiveForObjects(hideInNoAd, false);
                 break;
         }
     }

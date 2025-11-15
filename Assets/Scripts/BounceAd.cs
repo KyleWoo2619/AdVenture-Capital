@@ -11,12 +11,10 @@ public class BounceAd : MonoBehaviour
     private RectTransform adRectBorder;
     private Vector2 pointToGoTo;
     
-    public Vector2 initialPos {get; private set;}
+
     public float wBound;
     public float hBound;
-    
-
-    public float speed = 500;
+    public float speed = 240;
     int lastListNum = -1;
 
     [SerializeField] private List<GameObject> topEdgePoints = new List<GameObject>();
@@ -34,10 +32,9 @@ public class BounceAd : MonoBehaviour
 
         wBound = rectBorder.rect.width;
         hBound = rectBorder.rect.height;
-        //initialPos = transform.position;
-        
 
         
+
         GameObject point = new GameObject();
 
         for (int i = 100; i < 1000; i += 100) //points at top edge
@@ -59,26 +56,22 @@ public class BounceAd : MonoBehaviour
         {
             rightEdgePoints.Add(Instantiate(point, new Vector3(0, i, 0), Quaternion.identity));
         }
-        
+
         
     }
 
     void Start()
     {
-        //initialPos = rectBorder.anchoredPosition;
         StartCoroutine(SearchForPoint());
     }
 
-
     void Update()
     {
-        
         transform.position = Vector3.MoveTowards(transform.position, pointToGoTo, speed*Time.deltaTime);
     }
 
      IEnumerator SearchForPoint()
      {
-        
         for(;;){
             
             int newListNum;
@@ -91,35 +84,31 @@ public class BounceAd : MonoBehaviour
             randListNum = newListNum;
             lastListNum = randListNum;
 
-           // Debug.Log($"the random list number is {randListNum}");
+            Debug.Log($"the random list number is {randListNum}");
 
             switch(randListNum)
             {
                 case 1: //pick a random point in this list, same for all of them
                     randPointNum = Random.Range(0, topEdgePoints.Count);
-                   // Debug.Log(randPointNum);
-                    adRectBorder.pivot = new Vector2(0.5f,1);
+                    Debug.Log(randPointNum);
                     pointToGoTo = topEdgePoints[randPointNum].transform.position;
                 break;
 
                 case 2: 
                     randPointNum = Random.Range(0, bottomEdgePoints.Count);
-                  //  Debug.Log(randPointNum);
-                    adRectBorder.pivot = new Vector2(0.5f, 0);
+                    Debug.Log(randPointNum);
                     pointToGoTo = bottomEdgePoints[randPointNum].transform.position;
                 break;
 
                 case 3: 
                     randPointNum = Random.Range(0, rightEdgePoints.Count);
-                   // Debug.Log(randPointNum);
-                    adRectBorder.pivot = new Vector2(0, 0.5f);
+                    Debug.Log(randPointNum);
                     pointToGoTo = rightEdgePoints[randPointNum].transform.position;
                 break;
 
                 case 4:
                     randPointNum = Random.Range(0, leftEdgePoints.Count);
-                  //  Debug.Log(randPointNum);
-                    adRectBorder.pivot = new Vector2(1,0.5f);
+                    Debug.Log(randPointNum);
                     pointToGoTo = leftEdgePoints[randPointNum].transform.position;
                 break;
                 
@@ -130,7 +119,7 @@ public class BounceAd : MonoBehaviour
     
     bool AtPoint()
     {
-        if((Vector2) transform.position ==  pointToGoTo) return true;
+        if((Vector2) transform.position == pointToGoTo) return true;
 
         return false;
     }
