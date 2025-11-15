@@ -10,17 +10,23 @@ public class MainMenuManager : MonoBehaviour
 
     //public static event Action Click; //always has a void return type, but can have parameters
 
-
     public void LoadConstructionJump()
     {
-        SceneManager.LoadScene("TheBlockGame", LoadSceneMode.Single);
+        SceneManager.LoadScene("Match3", LoadSceneMode.Single);
     }
 
     public void LoadCandyJump()
     {
-        SceneManager.LoadScene("BonBonCrushAP", LoadSceneMode.Single);
+        SceneManager.LoadScene("TheBlockGame", LoadSceneMode.Single);
     }
-
+    public void LoadAdSweeper()
+    {
+        SceneManager.LoadScene("Minesweep", LoadSceneMode.Single);
+    }
+    public void LoadPicnicPie()
+    {
+        SceneManager.LoadScene("TheSliceGame", LoadSceneMode.Single);
+    }
     public void ReturnToStart()
     {
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
