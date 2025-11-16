@@ -35,26 +35,35 @@ public class BounceAd : MonoBehaviour
 
         
 
-        GameObject point = new GameObject();
+        GameObject point = new GameObject("EdgePoint", typeof(RectTransform));
 
-        for (int i = 100; i < 1000; i += 100) //points at top edge
+        for (int i = -500; i < 600; i += 200) //points at top edge
         {
-            topEdgePoints.Add(Instantiate(point, new Vector3(i, hBound, 0), Quaternion.identity));
+            GameObject p = Instantiate(point, canvas.transform);
+            p.GetComponent<RectTransform>().anchoredPosition = new Vector2(i, hBound/2);
+            topEdgePoints.Add(p);
+            
         }
 
-        for (int i = 100; i < 2000; i += 100) //points at left edge
+        for (int i = -500; i < 600; i += 200) //points at left edge
         {
-            leftEdgePoints.Add(Instantiate(point, new Vector3(wBound, i, 0), Quaternion.identity));
+            GameObject p = Instantiate(point, canvas.transform);
+            p.GetComponent<RectTransform>().anchoredPosition = new Vector2(wBound/2, i);
+            leftEdgePoints.Add(p);
         }
 
-        for (int i = 100; i < 1000; i += 100) //points at bottom edge
+        for (int i = -500; i < 600; i += 200) //points at bottom edge
         {
-            bottomEdgePoints.Add(Instantiate(point, new Vector3(i, 0, 0), Quaternion.identity));
+            GameObject p = Instantiate(point, canvas.transform);
+            p.GetComponent<RectTransform>().anchoredPosition = new Vector2(i, -hBound/2);
+            bottomEdgePoints.Add(p);
         }
         
-        for(int i = 100; i<2000; i += 100) //points at right edge
+        for(int i = -500; i<600; i += 200) //points at right edge
         {
-            rightEdgePoints.Add(Instantiate(point, new Vector3(0, i, 0), Quaternion.identity));
+            GameObject p = Instantiate(point, canvas.transform);
+            p.GetComponent<RectTransform>().anchoredPosition = new Vector2(-wBound/2, i);
+            rightEdgePoints.Add(p);
         }
 
         
@@ -67,7 +76,13 @@ public class BounceAd : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pointToGoTo, speed*Time.deltaTime);
+        
+        adRectBorder.anchoredPosition = Vector2.MoveTowards(
+            adRectBorder.anchoredPosition,
+            pointToGoTo,
+            speed * Time.deltaTime
+        );
+        
     }
 
      IEnumerator SearchForPoint()
@@ -91,25 +106,25 @@ public class BounceAd : MonoBehaviour
                 case 1: //pick a random point in this list, same for all of them
                     randPointNum = Random.Range(0, topEdgePoints.Count);
                     Debug.Log(randPointNum);
-                    pointToGoTo = topEdgePoints[randPointNum].transform.position;
+                    pointToGoTo = topEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 2: 
                     randPointNum = Random.Range(0, bottomEdgePoints.Count);
                     Debug.Log(randPointNum);
-                    pointToGoTo = bottomEdgePoints[randPointNum].transform.position;
+                    pointToGoTo = bottomEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 3: 
                     randPointNum = Random.Range(0, rightEdgePoints.Count);
                     Debug.Log(randPointNum);
-                    pointToGoTo = rightEdgePoints[randPointNum].transform.position;
+                    pointToGoTo = rightEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 4:
                     randPointNum = Random.Range(0, leftEdgePoints.Count);
                     Debug.Log(randPointNum);
-                    pointToGoTo = leftEdgePoints[randPointNum].transform.position;
+                    pointToGoTo = leftEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
                 
             }
@@ -119,9 +134,7 @@ public class BounceAd : MonoBehaviour
     
     bool AtPoint()
     {
-        if((Vector2) transform.position == pointToGoTo) return true;
-
-        return false;
+        return (adRectBorder.anchoredPosition - pointToGoTo).sqrMagnitude < 0.1f; 
     }
 
     

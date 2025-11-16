@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &343815827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+  m_PrefabInstance: {fileID: 1493528030}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1135826247
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,10 +352,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BannerAd
       objectReference: {fileID: 0}
-    - target: {fileID: 3588396099143839240, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      propertyPath: canvas
-      value: 
-      objectReference: {fileID: 1827710556}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -365,7 +366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.x
@@ -373,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_SizeDelta.x
@@ -413,11 +414,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.9998779
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 117
+      value: -836
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -434,13 +435,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1493528032}
   m_SourcePrefab: {fileID: 100100000, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
 --- !u!224 &1493528031 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
   m_PrefabInstance: {fileID: 1493528030}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1493528032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343815827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67d5399278dc0d4bbaf9bc4c90b04ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BounceAd
+  canvas: {fileID: 1827710556}
+  wBound: 0
+  hBound: 0
+  speed: 240
+  topEdgePoints: []
+  leftEdgePoints: []
+  bottomEdgePoints: []
+  rightEdgePoints: []
 --- !u!1 &1827710553
 GameObject:
   m_ObjectHideFlags: 0
