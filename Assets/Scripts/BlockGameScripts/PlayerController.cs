@@ -78,4 +78,23 @@ public class PlayerController : MonoBehaviour
                 playerSpriteRenderer.sprite = jumpingSprite;
         }
     }
+    public void ForceJump()
+    {
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer);
+
+        if (isGrounded && !hasJumped)
+        {
+            player_RB.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
+
+            if (jumpOneShot != null)
+                jumpOneShot.Play();
+
+            MobileHaptics.ImpactMedium();
+
+            hasJumped = true;
+
+            if (playerSpriteRenderer != null && jumpingSprite != null)
+                playerSpriteRenderer.sprite = jumpingSprite;
+        }
+    }
 }
