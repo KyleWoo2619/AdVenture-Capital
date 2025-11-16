@@ -119,66 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &343815827 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-  m_PrefabInstance: {fileID: 1493528030}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &543578060
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 543578062}
-  - component: {fileID: 543578061}
-  m_Layer: 0
-  m_Name: GameMode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &543578061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543578060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57674ff35c87e77449b2d4ef0f7e0a6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameModeController
-  hideInNormal:
-  - {fileID: 343815827}
-  - {fileID: 1250648466}
-  hideInAdFree:
-  - {fileID: 343815827}
-  - {fileID: 1250648466}
-  hideInNoAd:
-  - {fileID: 343815827}
-  - {fileID: 1250648466}
-  currentMode: 0
---- !u!4 &543578062
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543578060}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 279.46277, y: 1560.831, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &576474249
+--- !u!1001 &218278506
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -189,6 +130,14 @@ PrefabInstance:
     - target: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Name
       value: BannerAd (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342940293337598886, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1827710556}
+    - target: {fileID: 4342940293337598886, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Pivot.x
@@ -252,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 846
+      value: 851
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -273,14 +222,67 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1250648468}
-    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1250648474}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+--- !u!1 &343815827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+  m_PrefabInstance: {fileID: 1493528030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &543578060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543578062}
+  - component: {fileID: 543578061}
+  m_Layer: 0
+  m_Name: GameMode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &543578061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543578060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57674ff35c87e77449b2d4ef0f7e0a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameModeController
+  hideInNormal:
+  - {fileID: 343815827}
+  - {fileID: 0}
+  hideInAdFree:
+  - {fileID: 343815827}
+  - {fileID: 0}
+  hideInNoAd:
+  - {fileID: 343815827}
+  - {fileID: 0}
+  currentMode: 0
+--- !u!4 &543578062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543578060}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 279.46277, y: 1560.831, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1135826247
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,59 +362,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1250648466 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-  m_PrefabInstance: {fileID: 576474249}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1250648467 stripped
+--- !u!224 &1228740135 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-  m_PrefabInstance: {fileID: 576474249}
+  m_PrefabInstance: {fileID: 218278506}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1250648468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250648466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67d5399278dc0d4bbaf9bc4c90b04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BounceAd
-  canvas: {fileID: 1827710556}
-  wBound: 0
-  hBound: 0
-  speed: 240
-  topEdgePoints: []
-  leftEdgePoints: []
-  bottomEdgePoints: []
-  rightEdgePoints: []
---- !u!223 &1250648474
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250648466}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &1362716584
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BannerAd
       objectReference: {fileID: 0}
+    - target: {fileID: 4342940293337598886, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1827710556}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -645,62 +603,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1493528032}
-    - targetCorrespondingSourceObject: {fileID: 2909684861545733613, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1493528038}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
 --- !u!224 &1493528031 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
   m_PrefabInstance: {fileID: 1493528030}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1493528032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343815827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67d5399278dc0d4bbaf9bc4c90b04ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BounceAd
-  canvas: {fileID: 1827710556}
-  wBound: 0
-  hBound: 0
-  speed: 240
-  topEdgePoints: []
-  leftEdgePoints: []
-  bottomEdgePoints: []
-  rightEdgePoints: []
---- !u!223 &1493528038
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343815827}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &1827710553
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +705,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1493528031}
-  - {fileID: 1250648467}
+  - {fileID: 1228740135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
