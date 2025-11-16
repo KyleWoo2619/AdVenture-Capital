@@ -1235,11 +1235,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 713761605414011607, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 713761605414011607, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 828771895951500018, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: sceneToLoad
@@ -1320,6 +1320,10 @@ PrefabInstance:
     - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_Name
       value: ---Advertisement---
+      objectReference: {fileID: 0}
+    - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7276543365376086003, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: bgmAudioSource
@@ -2074,7 +2078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1612879294
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2655,6 +2659,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ShowRandomInteractiveAd
       objectReference: {fileID: 0}
+    - target: {fileID: 2749970647553467444, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310198435850730436, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5111138491319241251, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2709,6 +2721,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981870306268646416, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697955157494444161, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
