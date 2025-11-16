@@ -21,7 +21,7 @@ public class GameModeController : MonoBehaviour
     [Header("Current Mode")]
     public GameMode currentMode = GameMode.NormalMode;
 
-    private void Start()
+    private void Update()
     {
         ApplyModeSettings();
     }
@@ -42,15 +42,30 @@ public class GameModeController : MonoBehaviour
         switch (currentMode)
         {
             case GameMode.NormalMode:
-                SetActiveForObjects(hideInNormal, false);
+              //  SetActiveForObjects(hideInNormal, false);
+               foreach(GameObject bannerAd in hideInNormal)
+                {
+                    bannerAd.GetComponent<BounceAd>().enabled = false;
+                    bannerAd.GetComponent<Canvas>().enabled = true;
+                }
                 break;
 
             case GameMode.AdFreeMode:
-                SetActiveForObjects(hideInAdFree, false);
+              //  SetActiveForObjects(hideInAdFree, false);
+               foreach(GameObject bannerAd in hideInNormal)
+                {
+                    bannerAd.GetComponent<BounceAd>().enabled = true;
+                    bannerAd.GetComponent<Canvas>().enabled = true;
+                }
                 break;
 
             case GameMode.NoAdMode:
-                SetActiveForObjects(hideInNoAd, false);
+             //   SetActiveForObjects(hideInNoAd, false);
+               foreach(GameObject bannerAd in hideInNormal)
+                {
+                    bannerAd.GetComponent<BounceAd>().enabled = false;
+                    bannerAd.GetComponent<Canvas>().enabled = false;
+                }
                 break;
         }
     }
