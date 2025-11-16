@@ -4,7 +4,7 @@ public class VFXManager : MonoBehaviour
 {
     [Header("References")]
     public PlayerController playerController; // Script with ForceJump()
-    public GameObject vfxPrefab;             // Prefab with Rigidbody2D
+    public GameObject vfxPrefab;             // VFX prefab to spawn
     public Transform vfxSpawnPoint;          // Where VFX spawns
     public Transform vfxTarget;              // Target transform VFX moves toward
 

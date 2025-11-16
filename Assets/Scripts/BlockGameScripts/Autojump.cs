@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ArmTapVFX : MonoBehaviour
+public class Autojump : MonoBehaviour
 {
     [Header("References")]
     public VFXManager vfxController; 
