@@ -99,31 +99,31 @@ public class BounceAd : MonoBehaviour
             randListNum = newListNum;
             lastListNum = randListNum;
 
-            Debug.Log($"the random list number is {randListNum}");
+           // Debug.Log($"the random list number is {randListNum}");
 
             switch(randListNum)
             {
                 case 1: //pick a random point in this list, same for all of them
                     randPointNum = Random.Range(0, topEdgePoints.Count);
-                    Debug.Log(randPointNum);
+                //    Debug.Log(randPointNum);
                     pointToGoTo = topEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 2: 
                     randPointNum = Random.Range(0, bottomEdgePoints.Count);
-                    Debug.Log(randPointNum);
+                //    Debug.Log(randPointNum);
                     pointToGoTo = bottomEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 3: 
                     randPointNum = Random.Range(0, rightEdgePoints.Count);
-                    Debug.Log(randPointNum);
+                //    Debug.Log(randPointNum);
                     pointToGoTo = rightEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
 
                 case 4:
                     randPointNum = Random.Range(0, leftEdgePoints.Count);
-                    Debug.Log(randPointNum);
+                //   Debug.Log(randPointNum);
                     pointToGoTo = leftEdgePoints[randPointNum].GetComponent<RectTransform>().anchoredPosition;
                 break;
                 
