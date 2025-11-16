@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
     }
 
-    void PlayerJump()
+   public void PlayerJump()
     {
         // Prevent jumping while paused
         if (Time.timeScale == 0f) return;
@@ -74,6 +74,25 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, Vector3.down, Color.red);
 
             // Change to jumping sprite when in air
+            if (playerSpriteRenderer != null && jumpingSprite != null)
+                playerSpriteRenderer.sprite = jumpingSprite;
+        }
+    }
+    public void ForceJump()
+    {
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer);
+
+        if (isGrounded && !hasJumped)
+        {
+            player_RB.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
+
+            if (jumpOneShot != null)
+                jumpOneShot.Play();
+
+            MobileHaptics.ImpactMedium();
+
+            hasJumped = true;
+
             if (playerSpriteRenderer != null && jumpingSprite != null)
                 playerSpriteRenderer.sprite = jumpingSprite;
         }
