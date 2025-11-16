@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
     }
 
-    void PlayerJump()
+   public void PlayerJump()
     {
         // Prevent jumping while paused
         if (Time.timeScale == 0f) return;
