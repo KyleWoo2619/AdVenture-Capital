@@ -2203,7 +2203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2211,7 +2211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2255,7 +2255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -900
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2302,7 +2302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 1358371084}
   gameModeController: {fileID: 1542907216}
@@ -3651,7 +3651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 1358371084}
   gameModeController: {fileID: 1542907216}
@@ -4333,7 +4333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 1358371084}
   gameModeController: {fileID: 1542907216}
@@ -4694,7 +4694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4702,7 +4702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4746,7 +4746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 900.00006
+      value: -59.99994
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4827,7 +4827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 1358371084}
   gameModeController: {fileID: 1542907216}
@@ -4905,6 +4905,18 @@ PrefabInstance:
       propertyPath: gameModeController
       value: 
       objectReference: {fileID: 1542907216}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4718470747684755007, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4977,6 +4989,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 298000101}
+    - target: {fileID: 7366476982164000560, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_text
+      value: Oops! Stumbled on Ad?
+      objectReference: {fileID: 0}
     - target: {fileID: 7772480892533665478, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: canvas
       value: 

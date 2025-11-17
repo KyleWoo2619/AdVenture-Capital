@@ -81,6 +81,7 @@ public class VideoAdSpawner : MonoBehaviour
     private string targetSceneName = "";     // Scene name to load when restarting
     private VideoAdPair currentAdPair;       // Currently selected ad pair
     private bool showingFullscreenAd = false; // Is the fullscreen ad currently showing?
+    private bool wasGamePausedBeforeVideo = false; // Track if game was already paused before video started
     // Custom flow: after video, show fullscreen image then invoke callback
     private bool customOnSkipShowImage = false;
     private System.Action customOnImageClose = null;
@@ -252,6 +253,10 @@ public class VideoAdSpawner : MonoBehaviour
         // Select random video clip
         AssignRandomVideoIfNeeded();
         Debug.Log("Video ad setup starting...");
+
+        // Capture current pause state BEFORE showing the video
+        wasGamePausedBeforeVideo = (Time.timeScale == 0f);
+        Debug.Log($"VideoAdSpawner: Game was paused before video: {wasGamePausedBeforeVideo}");
 
         isShowing = true;
         Debug.Log($"Setting video ad visible: videoAdCanvas={videoAdCanvas}");
@@ -457,6 +462,9 @@ public class VideoAdSpawner : MonoBehaviour
         if (videoPlayer != null && videoPlayer.isPlaying)
             videoPlayer.Stop();
 
+        // Reset one-shot override to ensure next video uses normal skip delay
+        oneShotSkipDelayOverride = null;
+
         // Hide video ad and skip button
         SetSkipButtonVisible(false);
         SetVideoAdVisible(false);
@@ -474,15 +482,22 @@ public class VideoAdSpawner : MonoBehaviour
         }
 
         // For death videos (showFailOnSkip = true), keep the game paused - let the fail menu handle unpausing
-        // Only unpause for non-death videos like restart ads
+        // If the game was already paused before video (e.g., pause menu), keep it paused
+        // Only unpause for non-death videos that weren't paused before
         if (pauseGameOnShow && showFailOnSkip)
         {
             // Keep paused for death videos - don't unpause
             Debug.Log("SkipVideoAd: Keeping game paused for death video");
         }
+        else if (pauseGameOnShow && wasGamePausedBeforeVideo)
+        {
+            // Keep paused if it was already paused before video (e.g., from pause menu)
+            Debug.Log("SkipVideoAd: Keeping game paused (was paused before video started)");
+        }
         else if (pauseGameOnShow)
         {
-            // Unpause for non-death videos
+            // Unpause for non-death videos that weren't paused before
+            Debug.Log("SkipVideoAd: Unpausing game");
             Time.timeScale = 1f;
         }
 

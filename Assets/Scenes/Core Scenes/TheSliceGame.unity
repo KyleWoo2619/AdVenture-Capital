@@ -964,6 +964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---Advertisement---
       objectReference: {fileID: 0}
+    - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7276543365376086003, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: bgmAudioSource
       value: 
@@ -4238,7 +4242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 191103999}
   gameModeController: {fileID: 623823171}
@@ -4722,7 +4726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4730,7 +4734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4774,7 +4778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 900.00006
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5114,10 +5118,10 @@ RectTransform:
   - {fileID: 1173575344}
   m_Father: {fileID: 972551452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1920}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &849282415
 PrefabInstance:
@@ -6875,7 +6879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.x
@@ -6883,7 +6887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_SizeDelta.x
@@ -6927,7 +6931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -900
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4670122665668782795, guid: fd80455448a2ba24eb1183b152132b33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6974,7 +6978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 191103999}
   gameModeController: {fileID: 623823171}
@@ -9829,6 +9833,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ads_P
       objectReference: {fileID: 0}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007557545978639090, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5111138491319241251, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -9905,6 +9921,10 @@ PrefabInstance:
       propertyPath: gameModeController
       value: 
       objectReference: {fileID: 623823171}
+    - target: {fileID: 7366476982164000560, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_text
+      value: Got Too Full?
+      objectReference: {fileID: 0}
     - target: {fileID: 7981870306268646416, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.14429
@@ -10107,7 +10127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe70bef4c80dba4db608cbe463cfd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BannerAdGrow
-  isTopBanner: 1
+  isTopBanner: 0
   takeoverDuration: 30
   videoAdSpawner: {fileID: 191103999}
   gameModeController: {fileID: 623823171}

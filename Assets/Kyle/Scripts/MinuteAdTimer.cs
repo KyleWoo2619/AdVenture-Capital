@@ -66,8 +66,31 @@ public class AdAfterMinuteTMP : MonoBehaviour
 
             SetLabel("00:00");
             
-            // Use VideoAdSpawner to show video ad which will then show fail menu
-            if (videoAdSpawner != null)
+            // Check if we're in NoAdMode or AdFreeMode - if so, skip video ads and show fail menu directly
+            var gameModeController = GameModeController.Instance;
+            if (gameModeController != null && gameModeController.currentMode != GameMode.NormalMode)
+            {
+                Debug.Log($"MinuteAdTimer: In {gameModeController.currentMode} - skipping video ad, showing fail menu after delay");
+                
+                // Wait 2 seconds then show fail menu directly
+                yield return new WaitForSecondsRealtime(2f);
+                
+                // Pause the game
+                Time.timeScale = 0f;
+                
+                if (failMenuRoot != null)
+                {
+                    failMenuRoot.SetActive(true);
+                    PlayDeathSoundWithDuck();
+
+                    // force-enable Canvas if something else disabled it
+                    var canvas = failMenuRoot.GetComponent<Canvas>();
+                    if (canvas != null && !canvas.enabled)
+                        canvas.enabled = true;
+                }
+            }
+            // Normal mode - use VideoAdSpawner to show video ad which will then show fail menu
+            else if (videoAdSpawner != null)
             {
                 videoAdSpawner.ShowVideoAdForDeath();
                 PlayDeathSoundWithDuck();
