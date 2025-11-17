@@ -82,6 +82,11 @@ public class VideoAdSpawner : MonoBehaviour
     private RenderTexture videoRenderTexture; // temporary render texture for video playback
     private VideoAdPair currentAdPair;       // Currently selected ad pair
     private bool showingFullscreenAd = false; // Is the fullscreen ad currently showing?
+    // Custom flow: after video, show fullscreen image then invoke callback
+    private bool customOnSkipShowImage = false;
+    private System.Action customOnImageClose = null;
+    // One-shot override for skip delay (e.g., enforce full length)
+    private float? oneShotSkipDelayOverride = null;
 
     // --- Unity Lifecycle ---
     void Awake()
@@ -285,17 +290,17 @@ public class VideoAdSpawner : MonoBehaviour
     }
 
     // --- Update Progress Slider ---
-    IEnumerator UpdateProgressSlider()
+    IEnumerator UpdateProgressSlider(float duration)
     {
         float elapsed = 0f;
 
-        while (elapsed < skipButtonDelay && isShowing)
+        while (elapsed < duration && isShowing)
         {
             elapsed += Time.unscaledDeltaTime; // Use unscaled time since game might be paused
             
             if (progressSlider != null)
             {
-                progressSlider.value = elapsed / skipButtonDelay;
+                progressSlider.value = duration <= 0.0001f ? 1f : (elapsed / duration);
             }
 
             yield return null;
@@ -387,10 +392,20 @@ public class VideoAdSpawner : MonoBehaviour
 
         // Start progress/skip/completion coroutines
         if (progressCoroutine != null) { StopCoroutine(progressCoroutine); progressCoroutine = null; }
-        progressCoroutine = StartCoroutine(UpdateProgressSlider());
+        
+        // Determine the effective skip delay and progress duration
+        float effectiveSkipDelay = oneShotSkipDelayOverride.HasValue ? oneShotSkipDelayOverride.Value : skipButtonDelay;
+        
+        // For progress slider, use video clip length if available, otherwise use skip delay
+        float progressDuration = (videoPlayer != null && videoPlayer.clip != null) 
+            ? (float)videoPlayer.clip.length 
+            : effectiveSkipDelay;
+        
+        oneShotSkipDelayOverride = null; // consume one-shot
+        progressCoroutine = StartCoroutine(UpdateProgressSlider(progressDuration));
 
         if (skipButtonCoroutine != null) { StopCoroutine(skipButtonCoroutine); skipButtonCoroutine = null; }
-        skipButtonCoroutine = StartCoroutine(EnableSkipAfterDelay(skipButtonDelay));
+        skipButtonCoroutine = StartCoroutine(EnableSkipAfterDelay(effectiveSkipDelay));
 
         if (videoCompletionCoroutine != null) { StopCoroutine(videoCompletionCoroutine); videoCompletionCoroutine = null; }
         videoCompletionCoroutine = StartCoroutine(WatchForVideoCompletion());
@@ -518,6 +533,11 @@ public class VideoAdSpawner : MonoBehaviour
         {
             // Show paired fullscreen ad first, then restart after close
             // Don't reset flags yet - they're needed in CloseFullscreenAd()
+            ShowFullscreenAd();
+        }
+        else if (customOnSkipShowImage)
+        {
+            // Show paired fullscreen image first, then run custom callback after close
             ShowFullscreenAd();
         }
         else if (onSkipCallback != null)
@@ -774,11 +794,19 @@ public class VideoAdSpawner : MonoBehaviour
             Debug.Log("CloseFullscreenAd: Restarting scene");
             RestartScene();
         }
+        else if (customOnSkipShowImage)
+        {
+            // Custom flow: call callback
+            var cb = customOnImageClose;
+            customOnImageClose = null;
+            cb?.Invoke();
+        }
         
         // Reset state for next ad
         currentAdPair = null;
         showFailOnSkip = false;
         restartOnSkip = false;
+        customOnSkipShowImage = false;
         
         Debug.Log("CloseFullscreenAd: Fullscreen ad closed successfully");
     }
@@ -824,6 +852,32 @@ public class VideoAdSpawner : MonoBehaviour
     public void SetSkipButtonDelay(float newDelay)
     {
         skipButtonDelay = newDelay;
+    }
+
+    // --- New Public Flows ---
+    /// <summary>
+    /// Show video, then show paired fullscreen image, then run callback after image close
+    /// </summary>
+    public void ShowVideoAdThenImageThen(System.Action afterImageClose)
+    {
+        if (isShowing) return;
+        onSkipCallback = null;
+        showFailOnSkip = false;
+        restartOnSkip = false;
+        customOnSkipShowImage = true;
+        customOnImageClose = afterImageClose;
+        ShowVideoAd();
+    }
+
+    /// <summary>
+    /// Same as above, but enforce full-length by setting skip delay to match video length
+    /// </summary>
+    public void ShowVideoAdFullLengthThenImageThen(System.Action afterImageClose)
+    {
+        // Set skip delay to match video length - will be calculated properly in PrepareAndPlay
+        // Using large value to prevent skip button from appearing early
+        oneShotSkipDelayOverride = 9999f;
+        ShowVideoAdThenImageThen(afterImageClose);
     }
 
     // --- Ad Click Handling ---
