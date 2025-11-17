@@ -342,10 +342,24 @@ public class GameLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        // Direct call to video ad spawner for death
-        if (videoAdSpawner != null)
+        // Check game mode - only show video ad in Normal Mode
+        var gameModeController = GameModeController.Instance;
+        bool showVideoAd = (gameModeController == null || gameModeController.currentMode == GameMode.NormalMode);
+        
+        if (showVideoAd && videoAdSpawner != null)
         {
+            // Normal Mode - show video ad then fail menu
             videoAdSpawner.ShowVideoAdForDeath();
+        }
+        else
+        {
+            // Not Normal Mode - skip video ad, show fail menu directly
+            Debug.Log("GameLogic: Not in Normal Mode - skipping video ad, showing fail menu");
+            var failMenu = FindFirstObjectByType<FailMenuManager>();
+            if (failMenu != null)
+            {
+                failMenu.DisplayFailMenu();
+            }
         }
     }
 
@@ -394,10 +408,28 @@ public class GameLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        // Use the win-specific ad method that shows win menu after
-        if (adSpawner != null)
+        // Check game mode - only show ads in Normal Mode
+        var gameModeController = GameModeController.Instance;
+        bool showAds = (gameModeController == null || gameModeController.currentMode == GameMode.NormalMode);
+        
+        if (showAds && adSpawner != null)
         {
+            // Normal Mode - show ads then win menu
             adSpawner.ShowAdForWin();
+        }
+        else
+        {
+            // Not Normal Mode - skip ads, show win menu directly
+            Debug.Log("GameLogic: Not in Normal Mode - skipping ads, showing win menu");
+            var failMenuManager = FindFirstObjectByType<FailMenuManager>();
+            if (failMenuManager != null)
+            {
+                failMenuManager.DisplayWinMenu();
+            }
+            else
+            {
+                Debug.LogWarning("GameLogic: FailMenuManager not found!");
+            }
         }
     }
 

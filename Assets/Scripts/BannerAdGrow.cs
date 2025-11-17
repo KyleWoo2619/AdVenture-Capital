@@ -19,6 +19,16 @@ public class BannerAdGrow : MonoBehaviour
     private static bool? useBounceForThisSession = null;
     private static bool hasRolled = false;
     
+    /// <summary>
+    /// Resets static coordination flags. Called by GameModeController when entering NoAdMode.
+    /// </summary>
+    public static void ResetStaticFlags()
+    {
+        useBounceForThisSession = null;
+        hasRolled = false;
+        Debug.Log("BannerAdGrow: Static flags reset");
+    }
+    
     [Header("Banner Position")]
     [Tooltip("Check if this is a top banner (grows down). Uncheck for bottom banner (grows up).")]
     [SerializeField] private bool isTopBanner = true;
@@ -356,10 +366,10 @@ public class BannerAdGrow : MonoBehaviour
             {
                 Debug.Log("BannerAdGrow: Video ad completed. Switching to Normal Mode.");
                 
-                // Return to Normal Mode after video completes
+                // Return to Normal Mode after video completes (only way to exit NoAdMode)
                 if (gameModeController != null)
                 {
-                    gameModeController.SetGameMode(GameMode.NormalMode);
+                    gameModeController.CompleteNoAdModeAndReturnToNormal();
                 }
                 
                 // Restore banner to original state
@@ -373,7 +383,7 @@ public class BannerAdGrow : MonoBehaviour
             // Fallback: just switch to Normal Mode
             if (gameModeController != null)
             {
-                gameModeController.SetGameMode(GameMode.NormalMode);
+                gameModeController.CompleteNoAdModeAndReturnToNormal();
             }
             
             // Restore banner

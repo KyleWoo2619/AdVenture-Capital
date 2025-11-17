@@ -12,12 +12,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadConstructionJump()
     {
-        SceneManager.LoadScene("Match3", LoadSceneMode.Single);
-    }
-
-    public void LoadCandyJump()
-    {
         SceneManager.LoadScene("TheBlockGame", LoadSceneMode.Single);
+    }
+    public void LoadCandyCrush()
+    {
+        SceneManager.LoadScene("Match3", LoadSceneMode.Single);
     }
     public void LoadAdSweeper()
     {
@@ -29,6 +28,6 @@ public class MainMenuManager : MonoBehaviour
     }
     public void ReturnToStart()
     {
-        SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

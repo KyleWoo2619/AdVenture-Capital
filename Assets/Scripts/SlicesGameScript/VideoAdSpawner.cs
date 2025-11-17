@@ -79,7 +79,6 @@ public class VideoAdSpawner : MonoBehaviour
     private bool showFailOnSkip = false;     // Should fail menu show after skip?
     private bool restartOnSkip = false;      // Should restart scene after skip?
     private string targetSceneName = "";     // Scene name to load when restarting
-    private RenderTexture videoRenderTexture; // temporary render texture for video playback
     private VideoAdPair currentAdPair;       // Currently selected ad pair
     private bool showingFullscreenAd = false; // Is the fullscreen ad currently showing?
     // Custom flow: after video, show fullscreen image then invoke callback
@@ -143,6 +142,16 @@ public class VideoAdSpawner : MonoBehaviour
             progressSlider.maxValue = 1f;
             progressSlider.value = 0f;
             progressSlider.interactable = false; // Player can't interact with slider
+        }
+    }
+
+    void Update()
+    {
+        // Debug key: Press Q to skip video and jump to fullscreen ad
+        if (Input.GetKeyDown(KeyCode.Q) && isShowing && !showingFullscreenAd)
+        {
+            Debug.Log("Q pressed - Debug skip to fullscreen ad");
+            DebugSkipToFullscreenAd();
         }
     }
 
@@ -341,42 +350,10 @@ public class VideoAdSpawner : MonoBehaviour
 
         if (!videoPlayer.isPrepared)
         {
-            Debug.LogWarning("PrepareAndPlay: video did not prepare within timeout, attempting to play anyway");
+                        Debug.LogWarning("PrepareAndPlay: video did not prepare within timeout, attempting to play anyway");
         }
 
-        // Ensure a render target is available for the player (use RawImage on videoImageCanvas)
-        try
-        {
-            var raw = videoImageCanvas != null ? videoImageCanvas.GetComponentInChildren<UnityEngine.UI.RawImage>() : null;
-            if (raw != null)
-            {
-                // Create a temporary render texture matching screen size (or clip size)
-                if (videoRenderTexture != null)
-                {
-                    if (videoPlayer.targetTexture != videoRenderTexture)
-                        videoPlayer.targetTexture = videoRenderTexture;
-                }
-                else
-                {
-                    int w = Math.Max(256, Screen.width);
-                    int h = Math.Max(256, Screen.height);
-                    videoRenderTexture = new RenderTexture(w, h, 0, RenderTextureFormat.Default);
-                    videoRenderTexture.Create();
-                    videoPlayer.targetTexture = videoRenderTexture;
-                    raw.texture = videoRenderTexture;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("PrepareAndPlay: No RawImage found under videoImageCanvas; video may not be visible without target texture.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"PrepareAndPlay render target setup failed: {ex.Message}");
-        }
-
-        // Start playback
+        // Start playing video and wait for completion
         Debug.Log($"PrepareAndPlay: Playing video {videoPlayer.clip?.name} (isPrepared={videoPlayer.isPrepared})");
         videoPlayer.Play();
 
@@ -480,19 +457,6 @@ public class VideoAdSpawner : MonoBehaviour
         if (videoPlayer != null && videoPlayer.isPlaying)
             videoPlayer.Stop();
 
-        // Release temporary render texture
-        if (videoRenderTexture != null)
-        {
-            try
-            {
-                if (videoPlayer != null && videoPlayer.targetTexture == videoRenderTexture)
-                    videoPlayer.targetTexture = null;
-                UnityEngine.Object.Destroy(videoRenderTexture);
-            }
-            catch (Exception) { }
-            videoRenderTexture = null;
-        }
-
         // Hide video ad and skip button
         SetSkipButtonVisible(false);
         SetVideoAdVisible(false);
@@ -557,6 +521,48 @@ public class VideoAdSpawner : MonoBehaviour
             showFailOnSkip = false;
             restartOnSkip = false;
         }
+    }
+
+    /// <summary>
+    /// Debug method - Press Q to skip video and jump directly to fullscreen ad
+    /// </summary>
+    private void DebugSkipToFullscreenAd()
+    {
+        Debug.Log("DEBUG: Skipping video and showing fullscreen ad immediately");
+        
+        // Stop all coroutines
+        if (progressCoroutine != null)
+        {
+            StopCoroutine(progressCoroutine);
+            progressCoroutine = null;
+        }
+        if (skipButtonCoroutine != null)
+        {
+            StopCoroutine(skipButtonCoroutine);
+            skipButtonCoroutine = null;
+        }
+        if (videoCompletionCoroutine != null)
+        {
+            StopCoroutine(videoCompletionCoroutine);
+            videoCompletionCoroutine = null;
+        }
+
+        // Stop video
+        if (videoPlayer != null && videoPlayer.isPlaying)
+            videoPlayer.Stop();
+
+        // Hide video ad UI
+        SetSkipButtonVisible(false);
+        SetVideoAdVisible(false);
+        SetVideoImageVisible(false);
+        SetBackgroundBlockerVisible(false);
+        
+        // Restore BGM and AdCanvas
+        SetBGMAudioMuted(false);
+        SetAdCanvasActive(true);
+
+        // Show the fullscreen ad immediately (don't reset isShowing or flags yet)
+        ShowFullscreenAd();
     }
 
     // --- Scene Management ---

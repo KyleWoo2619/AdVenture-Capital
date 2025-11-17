@@ -14,6 +14,10 @@ public class GameModeController : MonoBehaviour
     
     // Static mode value that persists across scenes without DontDestroyOnLoad
     private static GameMode persistentMode = GameMode.NormalMode;
+    
+    // Flag to prevent mode changes except through video ad completion
+    private static bool isLockedInNoAdMode = false;
+    
     [Header("Hide these in Normal Mode")]
     public GameObject[] hideInNormal;
 
@@ -49,9 +53,43 @@ public class GameModeController : MonoBehaviour
 
     public void SetGameMode(GameMode newMode)
     {
+        // If locked in NoAdMode, prevent any mode changes
+        if (isLockedInNoAdMode && currentMode == GameMode.NoAdMode)
+        {
+            Debug.LogWarning($"SetGameMode: Cannot change mode while locked in NoAdMode. Must complete video ad first!");
+            return;
+        }
+        
         Debug.Log($"Switching mode to: {newMode}");
         currentMode = newMode;
         persistentMode = newMode; // Save to static variable
+        
+        // Lock the mode if entering NoAdMode
+        if (newMode == GameMode.NoAdMode)
+        {
+            isLockedInNoAdMode = true;
+            Debug.Log("NoAdMode locked - can only exit through video ad completion");
+        }
+        
+        ApplyModeSettings();
+    }
+    
+    /// <summary>
+    /// Special method only called by video ad completion callbacks in BounceAd and BannerAdGrow.
+    /// This is the ONLY way to exit NoAdMode back to NormalMode.
+    /// </summary>
+    public void CompleteNoAdModeAndReturnToNormal()
+    {
+        if (currentMode != GameMode.NoAdMode)
+        {
+            Debug.LogWarning("CompleteNoAdModeAndReturnToNormal called but not in NoAdMode!");
+            return;
+        }
+        
+        Debug.Log("Video ad completed! Unlocking NoAdMode and returning to NormalMode.");
+        isLockedInNoAdMode = false;
+        currentMode = GameMode.NormalMode;
+        persistentMode = GameMode.NormalMode;
         ApplyModeSettings();
     }
 
@@ -100,6 +138,10 @@ public class GameModeController : MonoBehaviour
                 break;
 
             case GameMode.NoAdMode:
+                // Reset static flags in BounceAd and BannerAdGrow before rolling
+                BounceAd.ResetStaticFlags();
+                BannerAdGrow.ResetStaticFlags();
+                
                 // Enable interactive ads with random animation (80% Bounce, 20% Grow)
                 float randomValue = Random.Range(0f, 1f);
                 bool useBounce = randomValue <= 0.8f; // 80% chance

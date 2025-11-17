@@ -68,6 +68,28 @@ public class SliceGameManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay); // Use real time since game is paused
 
+        // Check if we're in NoAdMode - if so, skip video ads and show fail menu directly
+        var gameModeController = GameModeController.Instance;
+        if (gameModeController != null && gameModeController.currentMode != GameMode.NormalMode)
+        {
+            Debug.Log($"SliceGameManager: In {gameModeController.currentMode} - skipping video ad, showing fail menu after delay");
+            
+            // Wait 2 seconds then show fail menu directly
+            yield return new WaitForSecondsRealtime(2f);
+            
+            // Show fail menu directly
+            if (videoAdSpawner != null && videoAdSpawner.FailMenuInstance != null)
+            {
+                videoAdSpawner.FailMenuInstance.DisplayFailMenu();
+            }
+            else
+            {
+                Debug.LogWarning("SliceGameManager: FailMenuInstance not found on VideoAdSpawner");
+            }
+            yield break;
+        }
+
+        // Normal mode - show video ad as usual
         // Prefer VideoAdSpawner when available for death videos
         if (videoAdSpawner != null)
         {

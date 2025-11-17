@@ -10,7 +10,9 @@ public class GameInitializer : MonoBehaviour
 
         if (gameModeController != null)
         {
-            gameModeController.SetGameMode(GameMode.NormalMode);
+            // Don't force reset the mode - let it persist from previous scene
+            // The GameModeController already loads the persistent mode in Awake()
+            Debug.Log($"GameInitializer: GameModeController found. Current mode: {gameModeController.currentMode}");
         }
         else
         {

@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 public class FailMenuManager : MonoBehaviour
 {
     private Canvas canvas;
+    
+    [Header("Win Menu")]
+    [SerializeField] private GameObject winMenuObject; // Assign the win menu GameObject in Inspector
+    
     void Awake()
     {
         canvas = this.GetComponentInParent<Canvas>();
@@ -27,5 +31,19 @@ public class FailMenuManager : MonoBehaviour
     public void DisplayFailMenu()
     {
         canvas.enabled = true;
+    }
+    
+    public void DisplayWinMenu()
+    {
+        // If there's a separate win menu object, enable it
+        if (winMenuObject != null)
+        {
+            winMenuObject.SetActive(true);
+        }
+        else
+        {
+            // Fallback: just enable the canvas (same as fail menu)
+            canvas.enabled = true;
+        }
     }
 }

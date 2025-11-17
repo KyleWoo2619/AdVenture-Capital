@@ -13,9 +13,19 @@ using UnityEngine.UI;
 /// </summary>
 public class BounceAd : MonoBehaviour
 {
-    // Static coordination with BannerAdGrow - all banners use same random choice
+    // Static coordination with BounceAd - all banners use same random choice
     private static bool? useBounceForThisSession = null;
     private static bool hasRolled = false;
+    
+    /// <summary>
+    /// Resets static coordination flags. Called by GameModeController when entering NoAdMode.
+    /// </summary>
+    public static void ResetStaticFlags()
+    {
+        useBounceForThisSession = null;
+        hasRolled = false;
+        Debug.Log("BounceAd: Static flags reset");
+    }
     
     public Canvas canvas;
     private RectTransform rectBorder;
@@ -50,6 +60,7 @@ public class BounceAd : MonoBehaviour
     private bool hasStarted = false;
     private float elapsedBounceTime = 0f;
     private Vector2 originalPosition;
+    private bool videoAdTriggered = false; // Prevents multiple video ad triggers
     
     void Awake()
     {
@@ -144,21 +155,23 @@ public class BounceAd : MonoBehaviour
         // Ensure button stays interactable during animation
         EnsureButtonInteractable();
         
-        // Track elapsed time for video ad trigger
-        elapsedBounceTime += Time.deltaTime;
+        // Track elapsed time for video ad trigger (use unscaled time to continue during pause)
+        elapsedBounceTime += Time.unscaledDeltaTime;
         
-        // Check if it's time to play video ad
-        if (elapsedBounceTime >= bounceTimeBeforeAd)
+        // Check if it's time to play video ad (only trigger once)
+        if (!videoAdTriggered && elapsedBounceTime >= bounceTimeBeforeAd)
         {
             Debug.Log($"BounceAd: {bounceTimeBeforeAd} seconds elapsed! Playing unskippable video ad...");
+            videoAdTriggered = true; // Prevent multiple triggers
             PlayVideoAdAndReturnToNormalMode();
             return;
         }
         
+        // Use unscaled time to continue moving during pause
         adRectBorder.anchoredPosition = Vector2.MoveTowards(
             adRectBorder.anchoredPosition,
             pointToGoTo,
-            speed * Time.deltaTime
+            speed * Time.unscaledDeltaTime
         );
     }
     
@@ -189,6 +202,9 @@ public class BounceAd : MonoBehaviour
                 enabled = true;
                 if (growAd != null) growAd.enabled = false;
                 elapsedBounceTime = 0f; // Reset timer
+                videoAdTriggered = false; // Reset video trigger flag
+                
+                Debug.Log($"BounceAd: Timer started. Will trigger video ad after {bounceTimeBeforeAd} seconds");
                 
                 // Ensure button stays interactable
                 EnsureButtonInteractable();
@@ -290,10 +306,10 @@ public class BounceAd : MonoBehaviour
             {
                 Debug.Log("BounceAd: Video ad completed. Switching to Normal Mode.");
                 
-                // Return to Normal Mode after video completes
+                // Return to Normal Mode after video completes (only way to exit NoAdMode)
                 if (gameModeController != null)
                 {
-                    gameModeController.SetGameMode(GameMode.NormalMode);
+                    gameModeController.CompleteNoAdModeAndReturnToNormal();
                 }
             });
         }
@@ -304,7 +320,7 @@ public class BounceAd : MonoBehaviour
             // Fallback: just switch to Normal Mode
             if (gameModeController != null)
             {
-                gameModeController.SetGameMode(GameMode.NormalMode);
+                gameModeController.CompleteNoAdModeAndReturnToNormal();
             }
         }
     }
