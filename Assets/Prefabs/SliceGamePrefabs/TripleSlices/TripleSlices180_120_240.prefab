@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eafa81d3027162f448a579e419a73991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TripleSlices180_120_240
+  childSlice1: {fileID: 7913712653595134}
+  childSlice2: {fileID: 7747837775922241985}
+  childSlice3: {fileID: 3738890327842905657}
 --- !u!61 &8530574535973660509
 BoxCollider2D:
   m_ObjectHideFlags: 0

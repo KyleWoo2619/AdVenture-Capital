@@ -21,6 +21,10 @@ public class TripleSlices : MonoBehaviour
     protected List<SliceSlot> TripleSlotList3 = new List<SliceSlot>();
 
     protected Collider2D sliceCollider;
+
+    [SerializeField] protected Transform childSlice1;
+    [SerializeField] protected Transform childSlice2;
+    [SerializeField] protected Transform childSlice3;
     void Awake()
     {
         originalPos = transform.position;
@@ -47,6 +51,9 @@ public class TripleSlices : MonoBehaviour
         if (isPlaced)
         {
             sliceCollider.enabled = false;
+            childSlice1.GetComponent<SpriteRenderer>().sortingLayerName = "OnPie";
+            childSlice2.GetComponent<SpriteRenderer>().sortingLayerName = "OnPie";
+            childSlice3.GetComponent<SpriteRenderer>().sortingLayerName = "OnPie";
             return;
         }
 
