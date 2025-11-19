@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05515d51aabf104597637d695054098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DualSlice0_60
+  childSlice1: {fileID: 3107551454511994151}
+  childSlice2: {fileID: 5498891918574131514}
 --- !u!1001 &2831988591941079600
 PrefabInstance:
   m_ObjectHideFlags: 0

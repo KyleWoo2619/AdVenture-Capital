@@ -238,9 +238,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6883b1563ae105245bdf8091bb3ccef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DualSlice0_300
+  childSlice1: {fileID: 4620440433047509943}
+  childSlice2: {fileID: 4387317542098463094}
 --- !u!4 &2521584593679009142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5932200359763850554, guid: 75264e1313157a64d99fb26d98c30792, type: 3}
+  m_PrefabInstance: {fileID: 8119179925342056524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4387317542098463094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5498891918574131514, guid: 75264e1313157a64d99fb26d98c30792, type: 3}
   m_PrefabInstance: {fileID: 8119179925342056524}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5474662596498025187 stripped

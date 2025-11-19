@@ -18,10 +18,15 @@ public class DualSlices : MonoBehaviour
     protected List<SliceSlot> DualSlotList2 = new List<SliceSlot>(); //mainly contain 60,120,240,300
 
     protected Collider2D sliceCollider;
+
+    [SerializeField] protected Transform childSlice1;
+    [SerializeField] protected Transform childSlice2;
     void Awake()
     {
         originalPos = transform.position;
         sliceCollider = GetComponent<Collider2D>();
+
+        
     }
 
     void Start()
@@ -46,6 +51,8 @@ public class DualSlices : MonoBehaviour
         if (isPlaced)
         {
             sliceCollider.enabled = false;
+            childSlice1.GetComponent<SpriteRenderer>().sortingLayerName = "OnPie";
+            childSlice2.GetComponent<SpriteRenderer>().sortingLayerName = "OnPie";
             return;
         }
 
