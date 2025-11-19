@@ -6,22 +6,18 @@ public class FindVolumeSettings : MonoBehaviour
     [SerializeField] private VolumeSettings volumeSettingsRef;
     //private Canvas volumeSettingsRefCanvas;
     private Button optionsButton;
-    void Awake()
+    void Start()
     {
         volumeSettingsRef = VolumeSettings.instance;
         optionsButton = GetComponent<Button>();
+        optionsButton.onClick.AddListener(volumeSettingsRef.RendererOn);
         
         //volumeSettingsRefCanvas = VolumeSettings.instance.vRenderer;
 
         
     }
 
-    void OnEnable()
-    {
     
-        
-        optionsButton.onClick.AddListener(volumeSettingsRef.RendererOn);
-    }
 
     
     
