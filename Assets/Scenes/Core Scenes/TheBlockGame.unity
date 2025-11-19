@@ -1868,6 +1868,10 @@ PrefabInstance:
       propertyPath: FailMenuInstance
       value: 
       objectReference: {fileID: 1975260371}
+    - target: {fileID: 4959081485047453944, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_Name
       value: ---Advertisement---
@@ -1875,6 +1879,10 @@ PrefabInstance:
     - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834255524740825974, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6747253721548355679, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_IsActive
@@ -5152,6 +5160,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 197935566153287552, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1287797365803214264, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5232,6 +5244,10 @@ PrefabInstance:
       propertyPath: gameModeController
       value: 
       objectReference: {fileID: 1408491923}
+    - target: {fileID: 7098633403515328863, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7333495698837143889, guid: e6e97febcedf65142827d1666d3c2dde, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
