@@ -25,10 +25,16 @@ public class SlicePiece : MonoBehaviour
 
     protected Collider2D sliceCollider;
 
+    [SerializeField] protected Transform childSlice;
+    [SerializeField] protected SpriteRenderer childRenderer;
+
     void Awake()
     {
         originalPos = transform.position;
         sliceCollider = GetComponent<Collider2D>();
+
+        childSlice = transform.GetChild(0); //get child game object
+        childRenderer = childSlice.GetComponent<SpriteRenderer>(); //references its sprite renderer
     }
 
     void Start()
@@ -50,6 +56,7 @@ public class SlicePiece : MonoBehaviour
         if (isPlaced)
         {
             sliceCollider.enabled = false;
+            childRenderer.sortingLayerName = "OnPie"; //Debug.Log("sorting layer changed"); //change sorting order to 'OnPie' when placed  
             return;
         }
 

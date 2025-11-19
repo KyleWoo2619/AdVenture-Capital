@@ -63,8 +63,8 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6981117915380327713}
   - {fileID: 5856251663984957818}
+  - {fileID: 6981117915380327713}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3941306057018184620
@@ -137,6 +137,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b75c204504a485d44974cf8bc3e3b092, type: 3}
+    - target: {fileID: 2822833471894023883, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822833471894023883, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 2908600689857837689, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -318,6 +326,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a9e00775b90314f4c8e2e40066069406, type: 3}
+    - target: {fileID: 8399608749318076787, guid: a669f6044c685cc47a249e4c4fa35ae3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8399608749318076787, guid: a669f6044c685cc47a249e4c4fa35ae3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 8752555214129128898, guid: a669f6044c685cc47a249e4c4fa35ae3, type: 3}
       propertyPath: m_Name
       value: PizzaSlice120

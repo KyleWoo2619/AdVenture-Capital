@@ -141,6 +141,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9d19e25de80f067488b3b215afbf1088, type: 3}
+    - target: {fileID: 2218144324587893537, guid: 823240e109d6b2f4c813367ee5f5e65b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2218144324587893537, guid: 823240e109d6b2f4c813367ee5f5e65b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 3866727726237350985, guid: 823240e109d6b2f4c813367ee5f5e65b, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -318,6 +326,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9f6a9f030347a2a46a6aff23b029a97f, type: 3}
+    - target: {fileID: 7104376601334755864, guid: 161ff6075c1161849858de5e116cc0ea, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104376601334755864, guid: 161ff6075c1161849858de5e116cc0ea, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 8030452357816037033, guid: 161ff6075c1161849858de5e116cc0ea, type: 3}
       propertyPath: m_Name
       value: PizzaSliceMinus60

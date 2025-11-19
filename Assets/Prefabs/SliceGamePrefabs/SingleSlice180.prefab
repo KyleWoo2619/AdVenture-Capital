@@ -132,6 +132,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b75c204504a485d44974cf8bc3e3b092, type: 3}
+    - target: {fileID: 2822833471894023883, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822833471894023883, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 3083432104875684474, guid: fb5563ac29fd3684f934dbdca29580db, type: 3}
       propertyPath: m_Name
       value: PizzeSlice180

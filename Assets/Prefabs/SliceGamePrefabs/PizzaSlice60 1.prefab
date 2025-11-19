@@ -184,6 +184,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e24c2c5072af5fa469362c145ba45254, type: 3}
+    - target: {fileID: 8543395131443533875, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8543395131443533875, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1360904497
+      objectReference: {fileID: 0}
     - target: {fileID: 8896308717739000962, guid: 92a40e21d9e76fe4bb7406a61211bb29, type: 3}
       propertyPath: m_Name
       value: PizzaSlice60
