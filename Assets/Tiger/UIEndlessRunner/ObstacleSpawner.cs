@@ -20,6 +20,7 @@ public class ObstacleSpawner : MonoBehaviour
     public Vector2 bossSize = new Vector2(300, 300);
 
     public float roundDuration = 30f;
+    public float bossReachTime = 60f;   // Time when boss reaches end (player loses)
 
     [Header("Audio")]
     public AudioSource audioSource; // Drag AudioSource component here
@@ -30,6 +31,7 @@ public class ObstacleSpawner : MonoBehaviour
     float[] lanes;
     float elapsed;
     bool bossSpawned;
+    bool gameEnded = false; // Prevent multiple game over triggers
     bool useUnscaledTime = false; // For working during pause
 
     void Start()
@@ -57,6 +59,28 @@ public class ObstacleSpawner : MonoBehaviour
         {
             SpawnBoss();
             bossSpawned = true;
+        }
+
+        // Check if boss reached the end (time-based loss condition)
+        if (bossSpawned && !gameEnded && elapsed >= bossReachTime)
+        {
+            gameEnded = true;
+            Debug.Log("BOSS REACHED THE END! - Player loses (time expired)");
+            
+            // Play wrong sound
+            if (audioSource != null && wrongSound != null)
+            {
+                audioSource.PlayOneShot(wrongSound);
+            }
+            
+            // Find the boss and trigger defeat (or trigger directly if boss is gone)
+            var activeBosses = track.GetComponentsInChildren<Boss>();
+            if (activeBosses.Length > 0)
+            {
+                activeBosses[0].TriggerDefeat(false); // false = player lost
+            }
+            
+            return; // Stop processing this frame
         }
 
         // normal spawns
@@ -191,6 +215,9 @@ public class ObstacleSpawner : MonoBehaviour
             var brtBoss = (RectTransform)boss.transform;
             if (UIOverlap((RectTransform)player, brtBoss))
             {
+                if (gameEnded) continue; // Skip if game already ended
+                
+                gameEnded = true;
                 Debug.Log("HIT PLAYER (BOSS)! 💥 - Boss reached player, ending game");
                 
                 // Play wrong sound

@@ -1805,6 +1805,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 828771895951500018, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: interactiveAds.Array.data[1].isEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 828771895951500018, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: interactiveAds.Array.data[2].isEnabled
       value: 1
       objectReference: {fileID: 0}
@@ -3361,6 +3365,11 @@ MonoBehaviour:
   - {fileID: 1659412807}
   - {fileID: 1659412806}
   - {fileID: 1612879293}
+  - {fileID: 1258078619}
+  - {fileID: 2067562037}
+  - {fileID: 1659412803}
+  - {fileID: 1659412802}
+  - {fileID: 182279062}
   hideInNoAd:
   - {fileID: 1659412803}
   - {fileID: 1659412802}

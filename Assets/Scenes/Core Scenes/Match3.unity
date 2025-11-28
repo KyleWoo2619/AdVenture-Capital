@@ -2804,7 +2804,13 @@ MonoBehaviour:
   - {fileID: 956214839}
   - {fileID: 1381432767}
   - {fileID: 92997011}
+  - {fileID: 1697944105}
+  - {fileID: 177353111}
+  - {fileID: 1457714998}
   - {fileID: 208313710}
+  - {fileID: 1161099515}
+  - {fileID: 911115060}
+  - {fileID: 2005779881}
   hideInNoAd:
   - {fileID: 2128279011}
   - {fileID: 911115060}

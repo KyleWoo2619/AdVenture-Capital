@@ -890,11 +890,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 713761605414011607, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 713761605414011607, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 828771895951500018, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: sceneToLoad
@@ -970,7 +970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5094836951190999874, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5834255524740825974, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_PlayOnAwake
@@ -4103,7 +4103,11 @@ MonoBehaviour:
   - {fileID: 191104000}
   - {fileID: 1583538402}
   - {fileID: 1583538406}
-  - {fileID: 0}
+  - {fileID: 829573014}
+  - {fileID: 103054639}
+  - {fileID: 428325677}
+  - {fileID: 1583538399}
+  - {fileID: 1583538397}
   hideInNoAd:
   - {fileID: 1583538399}
   - {fileID: 1583538397}
