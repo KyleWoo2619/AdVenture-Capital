@@ -2800,6 +2800,7 @@ MonoBehaviour:
   - {fileID: 221797125}
   - {fileID: 1471892781}
   - {fileID: 1161099515}
+  - {fileID: 1697944105}
   hideInAdFree:
   - {fileID: 956214839}
   - {fileID: 1381432767}
@@ -2816,6 +2817,7 @@ MonoBehaviour:
   - {fileID: 911115060}
   - {fileID: 2005779881}
   - {fileID: 208313710}
+  - {fileID: 1697944105}
   currentMode: 0
 --- !u!114 &1441340009 stripped
 MonoBehaviour:
@@ -4081,23 +4083,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 16.675556
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1037.5579
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111084056006359669, guid: 9580eaa815a8af849a0d14d78a264c2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5647,6 +5649,18 @@ PrefabInstance:
       propertyPath: FailMenuInstance
       value: 
       objectReference: {fileID: 1465620206}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.size
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.data[23].adImage
+      value: 
+      objectReference: {fileID: -1667723461539091807, guid: ec2eecb92af77c1489ccfc3566813afa, type: 3}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.data[24].adImage
+      value: 
+      objectReference: {fileID: 1887233893689377140, guid: 769afc00aeaa55b4fa8135814ba5a020, type: 3}
     - target: {fileID: 4959081485047453944, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0

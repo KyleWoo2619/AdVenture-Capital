@@ -4305,7 +4305,7 @@ PrefabInstance:
       objectReference: {fileID: 904425046}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: adSprites.Array.size
-      value: 23
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: adSprites.Array.data[0].adImage
@@ -4403,6 +4403,14 @@ PrefabInstance:
       propertyPath: adSprites.Array.data[22].adImage
       value: 
       objectReference: {fileID: 6014464973608361220, guid: 3c8192bb49c00d04e85dbe50c8e8b011, type: 3}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: adSprites.Array.data[23].adImage
+      value: 
+      objectReference: {fileID: -1667723461539091807, guid: ec2eecb92af77c1489ccfc3566813afa, type: 3}
+    - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
+      propertyPath: adSprites.Array.data[24].adImage
+      value: 
+      objectReference: {fileID: 1887233893689377140, guid: 769afc00aeaa55b4fa8135814ba5a020, type: 3}
     - target: {fileID: 3243530972535197771, guid: f772a5206611acb4db8bed7bc9dfb9c2, type: 3}
       propertyPath: adSprites.Array.data[21].clickUrl
       value: https://suketsu.itch.io/horizon-angler

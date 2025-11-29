@@ -369,6 +369,9 @@ public class BounceAd : MonoBehaviour
                 
             }
             yield return new WaitUntil(() => AtPoint() == true);
+            
+            // Play haptic when reaching the bounce point
+            MobileHaptics.ImpactLight();
         }
         }
     

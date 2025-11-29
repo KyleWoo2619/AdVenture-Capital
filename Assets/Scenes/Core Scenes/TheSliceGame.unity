@@ -960,6 +960,18 @@ PrefabInstance:
       propertyPath: FailMenuInstance
       value: 
       objectReference: {fileID: 1583538392}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.size
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.data[23].adImage
+      value: 
+      objectReference: {fileID: -1667723461539091807, guid: ec2eecb92af77c1489ccfc3566813afa, type: 3}
+    - target: {fileID: 3536850319828968606, guid: 002c547e19169934b97362ac06f83182, type: 3}
+      propertyPath: adSprites.Array.data[24].adImage
+      value: 
+      objectReference: {fileID: 1887233893689377140, guid: 769afc00aeaa55b4fa8135814ba5a020, type: 3}
     - target: {fileID: 4959081485047453944, guid: 002c547e19169934b97362ac06f83182, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
